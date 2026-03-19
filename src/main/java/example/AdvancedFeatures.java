@@ -2,10 +2,15 @@ package example;
 
 import org.bytedeco.javacpp.*;
 import org.bytedeco.tensorrt_llm.*;
+import org.bytedeco.tensorrt_llm.executor.*;
+import org.bytedeco.tensorrt_llm.runtime.*;
+import org.bytedeco.tensorrt_llm.common.*;
+import org.bytedeco.tensorrt_llm.batch_manager.*;
+import org.bytedeco.tensorrt_llm.mpi.*;
 import org.bytedeco.tensorrt_llm.global.TRTLLM;
 
-import static org.bytedeco.tensorrt_llm.GuidedDecodingParams.kJSON_SCHEMA;
-import static org.bytedeco.tensorrt_llm.GuidedDecodingParams.kREGEX;
+import static org.bytedeco.tensorrt_llm.executor.GuidedDecodingParams.kJSON_SCHEMA;
+import static org.bytedeco.tensorrt_llm.executor.GuidedDecodingParams.kREGEX;
 
 /**
  * 示例 6: 高级配置 - LoRA / 投机解码 / Guided Decoding

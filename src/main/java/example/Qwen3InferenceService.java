@@ -2,6 +2,11 @@ package example;
 
 import org.bytedeco.javacpp.*;
 import org.bytedeco.tensorrt_llm.*;
+import org.bytedeco.tensorrt_llm.executor.*;
+import org.bytedeco.tensorrt_llm.runtime.*;
+import org.bytedeco.tensorrt_llm.common.*;
+import org.bytedeco.tensorrt_llm.batch_manager.*;
+import org.bytedeco.tensorrt_llm.mpi.*;
 import org.bytedeco.tensorrt_llm.global.TRTLLM;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -19,7 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Qwen3InferenceService implements AutoCloseable {
 
-    private final org.bytedeco.tensorrt_llm.Executor executor;
+    private final org.bytedeco.tensorrt_llm.executor.Executor executor;
     private final int defaultMaxTokens;
     private final int eosTokenId;
     private final int padTokenId;
@@ -46,7 +51,7 @@ public class Qwen3InferenceService implements AutoCloseable {
         executorConfig.setKvCacheConfig(kvCacheConfig);
         executorConfig.setEnableChunkedContext(true);
         executorConfig.setMaxBeamWidth(1);
-        executor = new org.bytedeco.tensorrt_llm.Executor(
+        executor = new org.bytedeco.tensorrt_llm.executor.Executor(
                 new BytePointer(engineDir), TRTLLM.ModelType.kDECODER_ONLY, executorConfig
         );
         // 加载引擎

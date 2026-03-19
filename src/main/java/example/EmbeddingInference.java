@@ -2,6 +2,11 @@ package example;
 
 import org.bytedeco.javacpp.*;
 import org.bytedeco.tensorrt_llm.*;
+import org.bytedeco.tensorrt_llm.executor.*;
+import org.bytedeco.tensorrt_llm.runtime.*;
+import org.bytedeco.tensorrt_llm.common.*;
+import org.bytedeco.tensorrt_llm.batch_manager.*;
+import org.bytedeco.tensorrt_llm.mpi.*;
 import org.bytedeco.tensorrt_llm.global.TRTLLM;
 
 /**
@@ -45,7 +50,7 @@ public class EmbeddingInference {
         // ============================================
         // 2. 加载引擎
         // ============================================
-        org.bytedeco.tensorrt_llm.Executor executor = new org.bytedeco.tensorrt_llm.Executor(
+        org.bytedeco.tensorrt_llm.executor.Executor executor = new org.bytedeco.tensorrt_llm.executor.Executor(
                 new BytePointer(engineDir), TRTLLM.ModelType.kDECODER_ONLY, executorConfig
         );
         System.out.println("✅ Embedding 引擎加载成功");

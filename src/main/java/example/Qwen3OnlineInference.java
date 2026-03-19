@@ -2,6 +2,11 @@ package example;
 
 import org.bytedeco.javacpp.*;
 import org.bytedeco.tensorrt_llm.*;
+import org.bytedeco.tensorrt_llm.executor.*;
+import org.bytedeco.tensorrt_llm.runtime.*;
+import org.bytedeco.tensorrt_llm.common.*;
+import org.bytedeco.tensorrt_llm.batch_manager.*;
+import org.bytedeco.tensorrt_llm.mpi.*;
 import org.bytedeco.tensorrt_llm.global.TRTLLM;
 
 /**
@@ -55,7 +60,7 @@ public class Qwen3OnlineInference {
         // 3. 创建 Executor 实例（加载引擎）
         // ============================================
         // Executor 构造时会加载 TRT 引擎到 GPU
-        org.bytedeco.tensorrt_llm.Executor executor = new org.bytedeco.tensorrt_llm.Executor(
+        org.bytedeco.tensorrt_llm.executor.Executor executor = new org.bytedeco.tensorrt_llm.executor.Executor(
                 new BytePointer(engineDir), TRTLLM.ModelType.kDECODER_ONLY, executorConfig
         );
 

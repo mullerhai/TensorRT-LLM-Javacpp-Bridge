@@ -3,6 +3,14 @@
 package org.bytedeco.tensorrt_llm.global;
 
 import org.bytedeco.tensorrt_llm.*;
+import org.bytedeco.tensorrt_llm.batch_manager.*;
+import org.bytedeco.tensorrt_llm.batch_manager.kvcache.*;
+import org.bytedeco.tensorrt_llm.common.*;
+import org.bytedeco.tensorrt_llm.executor.*;
+import org.bytedeco.tensorrt_llm.executor.kvcache.*;
+import org.bytedeco.tensorrt_llm.mpi.*;
+import org.bytedeco.tensorrt_llm.nvinfer.*;
+import org.bytedeco.tensorrt_llm.runtime.*;
 
 import java.nio.*;
 import org.bytedeco.javacpp.*;
