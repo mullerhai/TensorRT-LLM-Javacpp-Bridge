@@ -30,21 +30,21 @@ public class KvCacheStats extends Pointer {
     }
 
     /** \brief Max number of blocks */
-    public native @ByRef SizeType32 maxNumBlocks(); public native KvCacheStats maxNumBlocks(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int maxNumBlocks(); public native KvCacheStats maxNumBlocks(int setter);
     /** \brief Number of free blocks */
-    public native @ByRef SizeType32 freeNumBlocks(); public native KvCacheStats freeNumBlocks(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int freeNumBlocks(); public native KvCacheStats freeNumBlocks(int setter);
     /** \brief Number of used blocks */
-    public native @ByRef SizeType32 usedNumBlocks(); public native KvCacheStats usedNumBlocks(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int usedNumBlocks(); public native KvCacheStats usedNumBlocks(int setter);
     /** \brief Number of tokens per block */
-    public native @ByRef SizeType32 tokensPerBlock(); public native KvCacheStats tokensPerBlock(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int tokensPerBlock(); public native KvCacheStats tokensPerBlock(int setter);
     /** \brief Number of total allocated block */
-    public native @ByRef SizeType32 allocTotalBlocks(); public native KvCacheStats allocTotalBlocks(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int allocTotalBlocks(); public native KvCacheStats allocTotalBlocks(int setter);
     /** \brief Number of newly allocated block */
-    public native @ByRef SizeType32 allocNewBlocks(); public native KvCacheStats allocNewBlocks(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int allocNewBlocks(); public native KvCacheStats allocNewBlocks(int setter);
     /** \brief Number of reused block */
-    public native @ByRef SizeType32 reusedBlocks(); public native KvCacheStats reusedBlocks(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int reusedBlocks(); public native KvCacheStats reusedBlocks(int setter);
     /** \brief Number of not reused block */
-    public native @ByRef SizeType32 missedBlocks(); public native KvCacheStats missedBlocks(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int missedBlocks(); public native KvCacheStats missedBlocks(int setter);
     /** \brief Measuring the KV Cache reuse rate. cacheHitRate = reusedBlocks / (reusedBlocks + missedBlocks). */
     public native float cacheHitRate(); public native KvCacheStats cacheHitRate(float setter);
 }

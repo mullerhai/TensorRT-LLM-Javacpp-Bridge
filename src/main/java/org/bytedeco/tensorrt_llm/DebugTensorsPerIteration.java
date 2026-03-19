@@ -31,5 +31,4 @@ public class DebugTensorsPerIteration extends Pointer {
     /** \brief The iteration id for these tensors */
     public native @Cast("tensorrt_llm::executor::IterationType") long iter(); public native DebugTensorsPerIteration iter(long setter);
     /** \brief The debug tensors for this iteration */
-    public native @ByRef std::map<std::string,tensorrt_llm::executor::Tensor> debugTensors(); public native DebugTensorsPerIteration debugTensors(std::map<std::string,tensorrt_llm::executor::Tensor> setter);
 }

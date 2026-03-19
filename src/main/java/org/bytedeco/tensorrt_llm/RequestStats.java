@@ -31,11 +31,11 @@ public class RequestStats extends Pointer {
     /** \brief The request id */
     public native @Cast("tensorrt_llm::executor::IdType") long id(); public native RequestStats id(long setter);
     /** \brief The current stage the request is in */
-    public native @Cast("tensorrt_llm::executor::RequestStage") int stage(); public native RequestStats stage(int setter);
+    public native RequestStage stage(); public native RequestStats stage(RequestStage setter);
     /** \brief If using chunked context, the current context prefill position */
-    public native @ByRef SizeType32 contextPrefillPosition(); public native RequestStats contextPrefillPosition(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int contextPrefillPosition(); public native RequestStats contextPrefillPosition(int setter);
     /** \brief The number of generated tokens so far */
-    public native @ByRef SizeType32 numGeneratedTokens(); public native RequestStats numGeneratedTokens(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numGeneratedTokens(); public native RequestStats numGeneratedTokens(int setter);
     /** \brief The average number of decoded tokens per iteration. It is >= 1 for speculative decoding. */
     public native float avgNumDecodedTokensPerIter(); public native RequestStats avgNumDecodedTokensPerIter(float setter);
     /** \brief Whether the request is scheduled for the current iteration */
@@ -46,13 +46,13 @@ public class RequestStats extends Pointer {
     /** \brief Stats specific to disaggregated serving */
     public native @Optional DisServingRequestStats disServingStats(); public native RequestStats disServingStats(DisServingRequestStats setter);
     /** \brief Number of total allocated blocks per request */
-    public native @ByRef SizeType32 allocTotalBlocksPerRequest(); public native RequestStats allocTotalBlocksPerRequest(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int allocTotalBlocksPerRequest(); public native RequestStats allocTotalBlocksPerRequest(int setter);
     /** \brief Number of newly allocated blocks per request */
-    public native @ByRef SizeType32 allocNewBlocksPerRequest(); public native RequestStats allocNewBlocksPerRequest(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int allocNewBlocksPerRequest(); public native RequestStats allocNewBlocksPerRequest(int setter);
     /** \brief Number of reused blocks per request */
-    public native @ByRef SizeType32 reusedBlocksPerRequest(); public native RequestStats reusedBlocksPerRequest(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int reusedBlocksPerRequest(); public native RequestStats reusedBlocksPerRequest(int setter);
     /** \brief Number of missed blocks per request */
-    public native @ByRef SizeType32 missedBlocksPerRequest(); public native RequestStats missedBlocksPerRequest(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int missedBlocksPerRequest(); public native RequestStats missedBlocksPerRequest(int setter);
     /** \brief KV Cache Hit Rate per request, defined as reusedBlocks / (reusedBlocks + missedBlocks) */
     public native @Cast("tensorrt_llm::executor::FloatType") float kvCacheHitRatePerRequest(); public native RequestStats kvCacheHitRatePerRequest(float setter);
 }

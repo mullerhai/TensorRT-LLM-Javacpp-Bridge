@@ -24,54 +24,55 @@ public class WorldConfig extends Pointer {
     }
 
 // #if ENABLE_MULTI_DEVICE
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultGpusPerNode();
+    @MemberGetter public static native @Cast("const tensorrt_llm::runtime::SizeType32") int kDefaultGpusPerNode();
+    public static final int kDefaultGpusPerNode = kDefaultGpusPerNode();
 // #else
 // #endif
 
-    public WorldConfig(@ByVal(nullValue = "SizeType32(1)") SizeType32 tensorParallelism, @ByVal(nullValue = "SizeType32(1)") SizeType32 pipelineParallelism,
-            @ByVal(nullValue = "SizeType32(1)") SizeType32 contextParallelism, @ByVal(nullValue = "SizeType32(0)") SizeType32 rank, @ByVal(nullValue = "SizeType32(tensorrt_llm::runtime::WorldConfig::kDefaultGpusPerNode)") SizeType32 gpusPerNode,
-            @Optional std::vector<SizeType32> deviceIds/*=std::nullopt*/, @Cast("bool") boolean enableAttentionDP/*=false*/) { super((Pointer)null); allocate(tensorParallelism, pipelineParallelism, contextParallelism, rank, gpusPerNode, deviceIds, enableAttentionDP); }
-    private native void allocate(@ByVal(nullValue = "SizeType32(1)") SizeType32 tensorParallelism, @ByVal(nullValue = "SizeType32(1)") SizeType32 pipelineParallelism,
-            @ByVal(nullValue = "SizeType32(1)") SizeType32 contextParallelism, @ByVal(nullValue = "SizeType32(0)") SizeType32 rank, @ByVal(nullValue = "SizeType32(tensorrt_llm::runtime::WorldConfig::kDefaultGpusPerNode)") SizeType32 gpusPerNode,
-            @Optional std::vector<SizeType32> deviceIds/*=std::nullopt*/, @Cast("bool") boolean enableAttentionDP/*=false*/);
+    public WorldConfig(@Cast("tensorrt_llm::runtime::SizeType32") int tensorParallelism/*=1*/, @Cast("tensorrt_llm::runtime::SizeType32") int pipelineParallelism/*=1*/,
+            @Cast("tensorrt_llm::runtime::SizeType32") int contextParallelism/*=1*/, @Cast("tensorrt_llm::runtime::SizeType32") int rank/*=0*/, @Cast("tensorrt_llm::runtime::SizeType32") int gpusPerNode/*=tensorrt_llm::runtime::WorldConfig::kDefaultGpusPerNode*/,
+            @StdVector @Optional IntPointer deviceIds/*=std::nullopt*/, @Cast("bool") boolean enableAttentionDP/*=false*/) { super((Pointer)null); allocate(tensorParallelism, pipelineParallelism, contextParallelism, rank, gpusPerNode, deviceIds, enableAttentionDP); }
+    private native void allocate(@Cast("tensorrt_llm::runtime::SizeType32") int tensorParallelism/*=1*/, @Cast("tensorrt_llm::runtime::SizeType32") int pipelineParallelism/*=1*/,
+            @Cast("tensorrt_llm::runtime::SizeType32") int contextParallelism/*=1*/, @Cast("tensorrt_llm::runtime::SizeType32") int rank/*=0*/, @Cast("tensorrt_llm::runtime::SizeType32") int gpusPerNode/*=tensorrt_llm::runtime::WorldConfig::kDefaultGpusPerNode*/,
+            @StdVector @Optional IntPointer deviceIds/*=std::nullopt*/, @Cast("bool") boolean enableAttentionDP/*=false*/);
     public WorldConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getSize();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getSize();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getTensorParallelism();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getTensorParallelism();
 
     public native @Cast("const bool") @NoException(true) boolean isTensorParallel();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getPipelineParallelism();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getPipelineParallelism();
 
     public native @Cast("const bool") @NoException(true) boolean isPipelineParallel();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getContextParallelism();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getContextParallelism();
 
     public native @Cast("const bool") @NoException(true) boolean isContextParallel();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getRank();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getRank();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getGpusPerNode();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getGpusPerNode();
 
-    public native @ByVal @NoException(true) SizeType32 getGpusPerGroup();
+    public native @Cast("tensorrt_llm::runtime::SizeType32") @NoException(true) int getGpusPerGroup();
 
-    public native @ByVal @NoException(true) SizeType32 getDevice();
+    public native @Cast("tensorrt_llm::runtime::SizeType32") @NoException(true) int getDevice();
 
-    public native @ByVal @NoException(true) SizeType32 getDeviceOf(@ByVal SizeType32 rank);
+    public native @Cast("tensorrt_llm::runtime::SizeType32") @NoException(true) int getDeviceOf(@Cast("tensorrt_llm::runtime::SizeType32") int rank);
 
-    public native @Const @ByVal @NoException(true) SizeType32 getPipelineParallelRank();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getPipelineParallelRank();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getTensorParallelRank();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getTensorParallelRank();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getContextParallelRank();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getContextParallelRank();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getLocalRank();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getLocalRank();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getNodeRank();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getNodeRank();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getNodeRankOf(@ByVal SizeType32 rank);
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getNodeRankOf(@Cast("tensorrt_llm::runtime::SizeType32") int rank);
 
     public native @Cast("const bool") @NoException(true) boolean isFirstPipelineParallelRank();
 
@@ -82,19 +83,19 @@ public class WorldConfig extends Pointer {
 
     public native @Cast("const bool") @NoException(true) boolean isFirstContextParallelRank();
 
-    public native @Const @ByVal @NoException(true) SizeType32 getLastRank();
+    public native @Cast("const tensorrt_llm::runtime::SizeType32") @NoException(true) int getLastRank();
 
     public native @Cast("const bool") @NoException(true) boolean enableAttentionDP();
 
-    public native @StdVector SizeType32 getPipelineParallelGroup();
-    public native @StdVector SizeType32 getTensorParallelGroup();
-    public native @StdVector SizeType32 getContextParallelGroup();
+    public native @StdVector @ByVal IntPointer getPipelineParallelGroup();
+    public native @StdVector @ByVal IntPointer getTensorParallelGroup();
+    public native @StdVector @ByVal IntPointer getContextParallelGroup();
 
-    public static native @ByVal WorldConfig mpi(@ByVal(nullValue = "SizeType32(tensorrt_llm::runtime::WorldConfig::kDefaultGpusPerNode)") SizeType32 gpusPerNode,
-            @Optional SizeType32 tensorParallelism/*=std::nullopt*/,
-            @Optional SizeType32 pipelineParallelism/*=std::nullopt*/,
-            @Optional SizeType32 contextParallelism/*=std::nullopt*/,
-            @Optional std::vector<SizeType32> deviceIds/*=std::nullopt*/, @Cast("bool") boolean enableAttentionDP/*=false*/);
+    public static native @ByVal WorldConfig mpi(@Cast("tensorrt_llm::runtime::SizeType32") int gpusPerNode/*=tensorrt_llm::runtime::WorldConfig::kDefaultGpusPerNode*/,
+            @Cast("tensorrt_llm::runtime::SizeType32*") @Optional IntPointer tensorParallelism/*=std::nullopt*/,
+            @Cast("tensorrt_llm::runtime::SizeType32*") @Optional IntPointer pipelineParallelism/*=std::nullopt*/,
+            @Cast("tensorrt_llm::runtime::SizeType32*") @Optional IntPointer contextParallelism/*=std::nullopt*/,
+            @StdVector @Optional IntPointer deviceIds/*=std::nullopt*/, @Cast("bool") boolean enableAttentionDP/*=false*/);
     public static native @ByVal WorldConfig mpi();
 
     public native @Cast("bool") boolean validMpiConfig();

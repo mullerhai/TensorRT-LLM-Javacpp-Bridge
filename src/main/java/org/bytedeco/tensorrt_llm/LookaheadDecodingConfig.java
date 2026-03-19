@@ -26,30 +26,29 @@ public class LookaheadDecodingConfig extends Pointer {
         return new LookaheadDecodingConfig((Pointer)this).offsetAddress(i);
     }
 
-    public LookaheadDecodingConfig(@ByVal SizeType32 windowSize, @ByVal SizeType32 ngramSize, @ByVal SizeType32 verificationSetSize) { super((Pointer)null); allocate(windowSize, ngramSize, verificationSetSize); }
-    private native void allocate(@ByVal SizeType32 windowSize, @ByVal SizeType32 ngramSize, @ByVal SizeType32 verificationSetSize);
+    public LookaheadDecodingConfig(@Cast("tensorrt_llm::executor::SizeType32") int windowSize, @Cast("tensorrt_llm::executor::SizeType32") int ngramSize, @Cast("tensorrt_llm::executor::SizeType32") int verificationSetSize) { super((Pointer)null); allocate(windowSize, ngramSize, verificationSetSize); }
+    private native void allocate(@Cast("tensorrt_llm::executor::SizeType32") int windowSize, @Cast("tensorrt_llm::executor::SizeType32") int ngramSize, @Cast("tensorrt_llm::executor::SizeType32") int verificationSetSize);
 
     public LookaheadDecodingConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
     public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef LookaheadDecodingConfig other);
-    public native @ByVal std::tuple<const tensorrt_llm::executor::SizeType32,const tensorrt_llm::executor::SizeType32,const tensorrt_llm::executor::SizeType32> get();
-    public native @ByVal SizeType32 getWindowSize();
-    public native @ByVal SizeType32 getNgramSize();
-    public native @ByVal SizeType32 getVerificationSetSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getWindowSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getNgramSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getVerificationSetSize();
 
     /** \brief return <maxDecodingTokens, maxPathLen, maxDraftTokens, maxDraftPathLen> */
-    public native @ByVal std::tuple<tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32> calculateSpeculativeResource();
-    public static native @ByVal std::tuple<tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32> calculateSpeculativeResourceTuple(
-            @ByVal SizeType32 windowSize, @ByVal SizeType32 ngramSize, @ByVal SizeType32 verificationSetSize);
 
     /** \brief return true when {@code this} can be executed on resources defined by {@code that} */
     public native @Cast("bool") boolean isLE(@Const @ByRef LookaheadDecodingConfig that);
 
     /** \brief return true when the parameter combination is valid. */
-    public static native @Cast("bool") @NoException(true) boolean isLegal(@ByVal SizeType32 windowSize, @ByVal SizeType32 ngramSize, @ByVal SizeType32 verificationSetSize);
+    public static native @Cast("bool") @NoException(true) boolean isLegal(@Cast("tensorrt_llm::executor::SizeType32") int windowSize, @Cast("tensorrt_llm::executor::SizeType32") int ngramSize, @Cast("tensorrt_llm::executor::SizeType32") int verificationSetSize);
 
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultLookaheadDecodingWindow();
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultLookaheadDecodingNgram();
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultLookaheadDecodingVerificationSet();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultLookaheadDecodingWindow();
+    public static final int kDefaultLookaheadDecodingWindow = kDefaultLookaheadDecodingWindow();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultLookaheadDecodingNgram();
+    public static final int kDefaultLookaheadDecodingNgram = kDefaultLookaheadDecodingNgram();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultLookaheadDecodingVerificationSet();
+    public static final int kDefaultLookaheadDecodingVerificationSet = kDefaultLookaheadDecodingVerificationSet();
 }

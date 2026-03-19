@@ -141,11 +141,11 @@ public class IBuffer extends Pointer {
      *  @param size The size of the view.
      *  @return A view on the {@code buffer}.
      *  */
-    public static tensorrt_llm::runtime::IBuffer slice(tensorrt_llm::runtime::IBuffer buffer, long offset, long size) { return _slice(buffer.asTensorrt_llm::runtime::IBuffer(), offset, size); }
-    private static native @UniquePtr @Name("slice") tensorrt_llm::runtime::IBuffer _slice(@SharedPtr tensorrt_llm::runtime::IBuffer buffer, @Cast("std::size_t") long offset, @Cast("std::size_t") long size);
+    public static IBuffer slice(IBuffer buffer, long offset, long size) { return _slice(buffer.asIBuffer(), offset, size); }
+    private static native @ByVal @Name("slice") IBuffer _slice(@ByVal IBuffer buffer, @Cast("std::size_t") long offset, @Cast("std::size_t") long size);
 
-    public static tensorrt_llm::runtime::IBuffer slice(tensorrt_llm::runtime::IBuffer buffer, long offset) { return _slice(buffer.asTensorrt_llm::runtime::IBuffer(), offset); }
-    private static native @UniquePtr @Name("slice") tensorrt_llm::runtime::IBuffer _slice(@SharedPtr tensorrt_llm::runtime::IBuffer buffer, @Cast("std::size_t") long offset);
+    public static IBuffer slice(IBuffer buffer, long offset) { return _slice(buffer.asIBuffer(), offset); }
+    private static native @ByVal @Name("slice") IBuffer _slice(@ByVal IBuffer buffer, @Cast("std::size_t") long offset);
 
     /**
      *  \brief Returns a view on the underlying {@code tensor} which can be independently resized.
@@ -158,8 +158,8 @@ public class IBuffer extends Pointer {
     //!
     //!
     //!
-    public static tensorrt_llm::runtime::IBuffer view(tensorrt_llm::runtime::IBuffer tensor) { return _view(tensor.asTensorrt_llm::runtime::IBuffer()); }
-    private static native @UniquePtr @Name("view") tensorrt_llm::runtime::IBuffer _view(@SharedPtr tensorrt_llm::runtime::IBuffer tensor);
+    public static IBuffer view(IBuffer tensor) { return _view(tensor.asIBuffer()); }
+    private static native @ByVal @Name("view") IBuffer _view(@ByVal IBuffer tensor);
 
     /**
      *  \brief Returns a view on the underlying {@code tensor} with a different size.
@@ -168,8 +168,8 @@ public class IBuffer extends Pointer {
      *  @param size The size of the view.
      *  @return A view on the {@code tensor}.
      *  */
-    public static tensorrt_llm::runtime::IBuffer view(tensorrt_llm::runtime::IBuffer tensor, long size) { return _view(tensor.asTensorrt_llm::runtime::IBuffer(), size); }
-    private static native @UniquePtr @Name("view") tensorrt_llm::runtime::IBuffer _view(@SharedPtr tensorrt_llm::runtime::IBuffer tensor, @Cast("std::size_t") long size);
+    public static IBuffer view(IBuffer tensor, long size) { return _view(tensor.asIBuffer(), size); }
+    private static native @ByVal @Name("view") IBuffer _view(@ByVal IBuffer tensor, @Cast("std::size_t") long size);
 
     /**
      *  \brief Wraps the given {@code data} in an {@code IBuffer}. The {@code IBuffer} will not own the underlying {@code data} and cannot
@@ -180,9 +180,9 @@ public class IBuffer extends Pointer {
      *  @param size The size of the buffer.
      *  @param capacity The capacity of the buffer.
      *  @return An {@code IBuffer}. */
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer wrap(Pointer data, @ByVal DataType type, @Cast("std::size_t") long size, @Cast("std::size_t") long _capacity);
+    public static native @ByVal IBuffer wrap(Pointer data, @ByVal DataType type, @Cast("std::size_t") long size, @Cast("std::size_t") long _capacity);
 
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer wrap(Pointer data, @ByVal DataType type, @Cast("std::size_t") long size);
+    public static native @ByVal IBuffer wrap(Pointer data, @ByVal DataType type, @Cast("std::size_t") long size);
 
     /**
      *  \brief Determine the memory type of a pointer.

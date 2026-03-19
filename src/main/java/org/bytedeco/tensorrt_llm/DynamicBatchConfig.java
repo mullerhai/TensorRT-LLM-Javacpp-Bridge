@@ -29,25 +29,17 @@ public class DynamicBatchConfig extends Pointer {
 
     /** \brief The default window size for moving average of input and output length which is used to calculate dynamic
      *  batch size and max num tokens */
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultDynamicBatchMovingAverageWindow();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultDynamicBatchMovingAverageWindow();
+    public static final int kDefaultDynamicBatchMovingAverageWindow = kDefaultDynamicBatchMovingAverageWindow();
 
-    public DynamicBatchConfig(@Cast("bool") boolean enableBatchSizeTuning/*=false*/, @Cast("bool") boolean enableMaxNumTokensTuning/*=false*/,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::DynamicBatchConfig::kDefaultDynamicBatchMovingAverageWindow)") SizeType32 dynamicBatchMovingAverageWindow,
-            @StdVector std::pair<tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32> batchSizeTable/*=kDefaultBatchSizeTable*/) { super((Pointer)null); allocate(enableBatchSizeTuning, enableMaxNumTokensTuning, dynamicBatchMovingAverageWindow, batchSizeTable); }
-    private native void allocate(@Cast("bool") boolean enableBatchSizeTuning/*=false*/, @Cast("bool") boolean enableMaxNumTokensTuning/*=false*/,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::DynamicBatchConfig::kDefaultDynamicBatchMovingAverageWindow)") SizeType32 dynamicBatchMovingAverageWindow,
-            @StdVector std::pair<tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32> batchSizeTable/*=kDefaultBatchSizeTable*/);
     public DynamicBatchConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
-    public native @ByVal SizeType32 getDynamicBatchMovingAverageWindow();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getDynamicBatchMovingAverageWindow();
 
     public native @Cast("bool") boolean getEnableBatchSizeTuning();
 
     public native @Cast("bool") boolean getEnableMaxNumTokensTuning();
 
-    public native @StdVector std::pair<tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32> getBatchSizeTable();
-
     /** \brief The default value of batch size table */
-    public static native @StdVector std::pair<tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32> kDefaultBatchSizeTable(); public static native void kDefaultBatchSizeTable(std::pair<tensorrt_llm::executor::SizeType32,tensorrt_llm::executor::SizeType32> setter);
 }

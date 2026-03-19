@@ -28,5 +28,5 @@ public class KVCacheRemovedData extends Pointer {
     }
 
     /** \brief The hashes of blocks being removed */
-    public native @StdVector IdType blockHashes(); public native KVCacheRemovedData blockHashes(IdType setter);
+    public native @Cast("tensorrt_llm::executor::IdType*") @StdVector LongPointer blockHashes(); public native KVCacheRemovedData blockHashes(LongPointer setter);
 }

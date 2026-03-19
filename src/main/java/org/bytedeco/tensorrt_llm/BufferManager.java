@@ -13,8 +13,6 @@ import static org.bytedeco.tensorrt_llm.global.TRTLLM.*;
 @Namespace("tensorrt_llm::runtime") @NoOffset @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
 public class BufferManager extends Pointer {
     static { Loader.load(); }
-    /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-    public BufferManager(Pointer p) { super(p); }
 
     
     //!
@@ -23,85 +21,56 @@ public class BufferManager extends Pointer {
      * 
      *  @param cudaStream [in] The cuda stream to use for all operations on GPU (allocation, de-allocation, copying,
      *  etc.). */
-    public BufferManager(@SharedPtr CudaStream stream, @Cast("bool") boolean trimPool/*=false*/) { super((Pointer)null); allocate(stream, trimPool); }
-    private native void allocate(@SharedPtr CudaStream stream, @Cast("bool") boolean trimPool/*=false*/);
-    public BufferManager(@SharedPtr CudaStream stream) { super((Pointer)null); allocate(stream); }
-    private native void allocate(@SharedPtr CudaStream stream);
+    public BufferManager(@Cast("tensorrt_llm::runtime::BufferManager::CudaStreamPtr") Pointer stream, @Cast("bool") boolean trimPool/*=false*/) { super((Pointer)null); allocate(stream, trimPool); }
+    private native void allocate(@Cast("tensorrt_llm::runtime::BufferManager::CudaStreamPtr") Pointer stream, @Cast("bool") boolean trimPool/*=false*/);
+    public BufferManager(@Cast("tensorrt_llm::runtime::BufferManager::CudaStreamPtr") Pointer stream) { super((Pointer)null); allocate(stream); }
+    private native void allocate(@Cast("tensorrt_llm::runtime::BufferManager::CudaStreamPtr") Pointer stream);
 
     /** \brief Destructor. */
 
-    @MemberGetter public static native @Const @ByRef auto kBYTE_TYPE();
-
     /** \brief Allocates an {@code IBuffer} of the given size on the GPU, using cudaMallocAsync. */
-    public native @UniquePtr tensorrt_llm::runtime::IBuffer gpu(@Cast("std::size_t") long size, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public native @UniquePtr tensorrt_llm::runtime::IBuffer gpu(@Cast("std::size_t") long size);
+    public native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::IBufferPtr*") IBuffer gpu(@Cast("std::size_t") long size);
 
     /** \brief Allocates an {@code ITensor} of the given dimensions on the GPU, using cudaMallocAsync. */
-    public native @UniquePtr tensorrt_llm::runtime::ITensor gpu(@ByVal Dims dims, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public native @UniquePtr tensorrt_llm::runtime::ITensor gpu(@ByVal Dims dims);
 
     /** \brief Allocates an {@code IBuffer} of the given size on the GPU, using cudaMalloc. */
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer gpuSync(@Cast("std::size_t") long size, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer gpuSync(@Cast("std::size_t") long size);
+    public static native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::IBufferPtr*") IBuffer gpuSync(@Cast("std::size_t") long size);
 
     /** \brief Allocates an {@code ITensor} of the given dimensions on the GPU, using cudaMalloc. */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor gpuSync(@ByVal Dims dims, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor gpuSync(@ByVal Dims dims);
 
     /** \brief Allocates an {@code IBuffer} of the given size on the CPU. */
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer cpu(@Cast("std::size_t") long size, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer cpu(@Cast("std::size_t") long size);
+    public static native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::IBufferPtr*") IBuffer cpu(@Cast("std::size_t") long size);
 
     /** \brief Allocates an {@code ITensor} of the given dimensions on the CPU. */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor cpu(@ByVal Dims dims, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor cpu(@ByVal Dims dims);
 
     /** \brief Allocates a pinned {@code IBuffer} of the given size on the CPU. */
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer pinned(@Cast("std::size_t") long size, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer pinned(@Cast("std::size_t") long size);
+    public static native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::IBufferPtr*") IBuffer pinned(@Cast("std::size_t") long size);
 
     /** \brief Allocates a pinned {@code ITensor} of the given dimensions on the CPU. */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor pinned(@ByVal Dims dims, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor pinned(@ByVal Dims dims);
 
     /** \brief Allocates a pinned {@code IBuffer} of the given size on the CPU in the default memory pool. */
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer pinnedPool(@Cast("std::size_t") long size, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer pinnedPool(@Cast("std::size_t") long size);
+    public static native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::IBufferPtr*") IBuffer pinnedPool(@Cast("std::size_t") long size);
 
     /** \brief Allocates a pinned {@code ITensor} of the given dimensions on the CPU in the default memory pool. */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor pinnedPool(@ByVal Dims dims, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor pinnedPool(@ByVal Dims dims);
 
     /** \brief Allocates an {@code IBuffer} of the given size in UVM. */
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer managed(@Cast("std::size_t") long size, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::IBuffer managed(@Cast("std::size_t") long size);
+    public static native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::IBufferPtr*") IBuffer managed(@Cast("std::size_t") long size);
 
     /** \brief Allocates an {@code ITensor} of the given dimensions in UVM. */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor managed(@ByVal Dims dims, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor managed(@ByVal Dims dims);
 
     /** \brief Allocates an {@code ITensor} of the given dimensions for NVLS */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor ipcNvls(@ByVal std::set<int> ranks, @ByVal Dims dims, @ByVal DataType type);
 
     /** \brief Allocates an {@code IBuffer} of the given size and memory type. */
-    public native @UniquePtr @Name("allocate") tensorrt_llm::runtime::IBuffer _allocate(
-            @Cast("tensorrt_llm::runtime::MemoryType") int memoryType, @Cast("std::size_t") long size, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public native @UniquePtr @Name("allocate") tensorrt_llm::runtime::IBuffer _allocate(
+    public native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::IBufferPtr*") @Name("allocate") IBuffer _allocate(
             @Cast("tensorrt_llm::runtime::MemoryType") int memoryType, @Cast("std::size_t") long size);
 
     /** \brief Allocates an {@code ITensor} of the given dimensions and memory type. */
-    public native @UniquePtr @Name("allocate") tensorrt_llm::runtime::ITensor _allocate(
-            @Cast("tensorrt_llm::runtime::MemoryType") int memoryType, @ByVal Dims dims, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public native @UniquePtr @Name("allocate") tensorrt_llm::runtime::ITensor _allocate(
-            @Cast("tensorrt_llm::runtime::MemoryType") int memoryType, @ByVal Dims dims);
 
     /** \brief Create an empty {@code IBuffer} of the given memory type. It may be resized later. */
-    public native @UniquePtr tensorrt_llm::runtime::IBuffer emptyBuffer(@Cast("tensorrt_llm::runtime::MemoryType") int memoryType, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public native @UniquePtr tensorrt_llm::runtime::IBuffer emptyBuffer(@Cast("tensorrt_llm::runtime::MemoryType") int memoryType);
+    public native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::IBufferPtr*") IBuffer emptyBuffer(@Cast("tensorrt_llm::runtime::MemoryType") int memoryType);
 
     /** \brief Create an empty {@code ITensor} of the given memory type. It may be reshaped later. */
-    public native @UniquePtr tensorrt_llm::runtime::ITensor emptyTensor(@Cast("tensorrt_llm::runtime::MemoryType") int memoryType, @ByVal(nullValue = "nvinfer1::DataType(tensorrt_llm::runtime::BufferManager::kBYTE_TYPE)") DataType type);
-    public native @UniquePtr tensorrt_llm::runtime::ITensor emptyTensor(@Cast("tensorrt_llm::runtime::MemoryType") int memoryType);
+    public native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::ITensorPtr*") ITensor emptyTensor(@Cast("tensorrt_llm::runtime::MemoryType") int memoryType);
 
     /** \brief Set the contents of the given {@code buffer} to value. */
     public void setMem(IBuffer buffer, int value) { _setMem(buffer.asIBuffer(), value); }
@@ -132,11 +101,11 @@ public class BufferManager extends Pointer {
     private native @Name("copy") void _copy(@Const @ByRef IBuffer src, @ByRef IBuffer dst);
 
     /** \brief Copy {@code src} into a new {@code IBuffer} with a potentially different memory type. */
-    public tensorrt_llm::runtime::IBuffer copyFrom(IBuffer src, int memoryType) { return _copyFrom(src.asIBuffer(), memoryType); }
-    private native @UniquePtr @Name("copyFrom") tensorrt_llm::runtime::IBuffer _copyFrom(@Const @ByRef IBuffer src, @Cast("tensorrt_llm::runtime::MemoryType") int memoryType);
+    public IBuffer copyFrom(IBuffer src, int memoryType) { return _copyFrom(src.asIBuffer(), memoryType); }
+    private native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::IBufferPtr*") @Name("copyFrom") IBuffer _copyFrom(@Const @ByRef IBuffer src, @Cast("tensorrt_llm::runtime::MemoryType") int memoryType);
 
     /** \brief Copy {@code src} into a new {@code ITensor} with a potentially different memory type. */
-    public native @UniquePtr tensorrt_llm::runtime::ITensor copyFrom(@Const @ByRef ITensor src, @Cast("tensorrt_llm::runtime::MemoryType") int memoryType);
+    public native @ByVal @Cast("tensorrt_llm::runtime::BufferManager::ITensorPtr*") ITensor copyFrom(@Const @ByRef ITensor src, @Cast("tensorrt_llm::runtime::MemoryType") int memoryType);
 
     /** \brief Copy {@code src} into a new {@code IBuffer} with a potentially different memory type. */
 
@@ -145,7 +114,7 @@ public class BufferManager extends Pointer {
     /** \brief Copy {@code src} into a new {@code ITensor} with a potentially different memory type. */
 
     /** \brief Get the underlying cuda stream. */
-    public native @Const @ByRef CudaStream getStream();
+    public native @Cast("const tensorrt_llm::runtime::CudaStream*") @ByRef Pointer getStream();
 
     /** \brief The current size of the memory reserved by the memory pool. */
     public native @Cast("std::size_t") long memoryPoolReserved();

@@ -35,12 +35,12 @@ public class GuidedDecodingParams extends Pointer {
         /** \brief The generated text is amenable to the XGrammar structural tag. */
         kSTRUCTURAL_TAG = 4;
 
-    public GuidedDecodingParams(@Cast("tensorrt_llm::executor::GuidedDecodingParams::GuideType") int guideType, @Cast("std::string*") @Optional BytePointer guide/*=std::nullopt*/) { super((Pointer)null); allocate(guideType, guide); }
-    private native void allocate(@Cast("tensorrt_llm::executor::GuidedDecodingParams::GuideType") int guideType, @Cast("std::string*") @Optional BytePointer guide/*=std::nullopt*/);
+    public GuidedDecodingParams(@Cast("tensorrt_llm::executor::GuidedDecodingParams::GuideType") int guideType, @StdString @Optional BytePointer guide/*=std::nullopt*/) { super((Pointer)null); allocate(guideType, guide); }
+    private native void allocate(@Cast("tensorrt_llm::executor::GuidedDecodingParams::GuideType") int guideType, @StdString @Optional BytePointer guide/*=std::nullopt*/);
     public GuidedDecodingParams(@Cast("tensorrt_llm::executor::GuidedDecodingParams::GuideType") int guideType) { super((Pointer)null); allocate(guideType); }
     private native void allocate(@Cast("tensorrt_llm::executor::GuidedDecodingParams::GuideType") int guideType);
 
     public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef GuidedDecodingParams other);
     public native @Cast("tensorrt_llm::executor::GuidedDecodingParams::GuideType") int getGuideType();
-    public native @Cast("std::string*") @Optional BytePointer getGuide();
+    public native @StdString @Optional BytePointer getGuide();
 }

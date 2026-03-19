@@ -18,13 +18,13 @@ public class AdditionalModelOutput extends Pointer {
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public AdditionalModelOutput(Pointer p) { super(p); }
 
-    public AdditionalModelOutput(@ByVal @Cast("std::string*") BytePointer name, @Cast("bool") boolean gatherContext/*=false*/) { super((Pointer)null); allocate(name, gatherContext); }
-    private native void allocate(@ByVal @Cast("std::string*") BytePointer name, @Cast("bool") boolean gatherContext/*=false*/);
-    public AdditionalModelOutput(@ByVal @Cast("std::string*") BytePointer name) { super((Pointer)null); allocate(name); }
-    private native void allocate(@ByVal @Cast("std::string*") BytePointer name);
+    public AdditionalModelOutput(@StdString BytePointer name, @Cast("bool") boolean gatherContext/*=false*/) { super((Pointer)null); allocate(name, gatherContext); }
+    private native void allocate(@StdString BytePointer name, @Cast("bool") boolean gatherContext/*=false*/);
+    public AdditionalModelOutput(@StdString BytePointer name) { super((Pointer)null); allocate(name); }
+    private native void allocate(@StdString BytePointer name);
 
     public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef AdditionalModelOutput other);
 
-    public native @ByRef @Cast("std::string*") BytePointer name(); public native AdditionalModelOutput name(BytePointer setter);
+    public native @StdString BytePointer name(); public native AdditionalModelOutput name(BytePointer setter);
     public native @Cast("bool") boolean gatherContext(); public native AdditionalModelOutput gatherContext(boolean setter);
 }

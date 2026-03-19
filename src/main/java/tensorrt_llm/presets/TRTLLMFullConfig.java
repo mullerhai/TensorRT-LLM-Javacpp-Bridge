@@ -10,22 +10,22 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         value = @Platform(
                 includepath = {"/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include"},
                 include = {
-                        // --- 严格按你提供的树状图列出核心入口 ---
                         "tensorrt_llm/common/config.h",
-//                        "tensorrt_llm/common/dataType.h",
                         "tensorrt_llm/common/logger.h",
                         "tensorrt_llm/common/tllmException.h",
+                        "tensorrt_llm/common/assert.h",
                         "tensorrt_llm/executor/executor.h",
                         "tensorrt_llm/executor/types.h",
+                        "tensorrt_llm/executor/tensor.h",
+                        "tensorrt_llm/executor/serialization.h",
                         "tensorrt_llm/runtime/iBuffer.h",
                         "tensorrt_llm/runtime/iTensor.h",
                         "tensorrt_llm/runtime/bufferManager.h",
                         "tensorrt_llm/runtime/samplingConfig.h",
                         "tensorrt_llm/runtime/worldConfig.h",
-//                        "tensorrt_llm/batch_manager/batchManager.h",
                         "tensorrt_llm/batch_manager/llmRequest.h",
-//                        "tensorrt_llm/kernels/decodingCommon.h",
-//                        "tensorrt_llm/layers/defaultDecodingParams.h"
+                        "tensorrt_llm/batch_manager/kvCacheType.h",
+                        "tensorrt_llm/batch_manager/common.h"
                 }
         ),
         target = "org.bytedeco.tensorrt_llm",
@@ -35,438 +35,308 @@ public class TRTLLMFullConfig implements InfoMapper {
 
     @Override
     public void map(InfoMap infoMap) {
-        // --- 1. 精准爆破 dataType.h 的错误 ---
-        // 报错是因为 Parser 处理不了 switch-case 逻辑，我们直接 skip 函数体
-        infoMap.put(new Info(
-                "tensorrt_llm::common::getDTypeSize",
+
+        // ======================================================
+        // 1. Config macros - 定义为空，避免生成无效代码
+        // ======================================================
+        infoMap.put(new Info("TRTLLM_ABI_NAMESPACE", "TRTLLM_ABI_NAMESPACE_BEGIN", "TRTLLM_ABI_NAMESPACE_END",
+                "TRTLLM_NAMESPACE_BEGIN", "TRTLLM_NAMESPACE_END", "_v1")
+                .cppText("#define TRTLLM_ABI_NAMESPACE\n#define TRTLLM_ABI_NAMESPACE_BEGIN\n" +
+                        "#define TRTLLM_ABI_NAMESPACE_END\n#define TRTLLM_NAMESPACE_BEGIN\n#define TRTLLM_NAMESPACE_END\n#define _v1 1\n"));
+
+        // ======================================================
+        // 2. CUDA 和编译器属性 - 定义为空
+        // ======================================================
+        infoMap.put(new Info("__device__", "__host__", "__forceinline__", "__global__", "__constant__", "__shared__",
+                "__restrict__", "__restrict", "[[fallthrough]]", "[[maybe_unused]]", "[[nodiscard]]")
+                .annotations().cppText("#define __device__\n#define __host__\n#define __forceinline__\n" +
+                        "#define __global__\n#define __constant__\n#define __shared__\n" +
+                        "#define __restrict__\n#define __restrict\n"));
+
+        // ======================================================
+        // 3. 跳过的宏
+        // ======================================================
+        infoMap.put(new Info("TLLM_THROW", "TLLM_CHECK", "TLLM_CHECK_WITH_INFO",
+                "TLLM_LOG_DEBUG", "TLLM_LOG_INFO", "TLLM_LOG_WARNING", "TLLM_LOG_ERROR",
+                "TLLM_CUDA_CHECK", "TLLM_NCCL_CHECK", "NEW_TLLM_EXCEPTION", "TLLM_WRAP",
+                "TLLM_REQUEST_EXCEPTION", "ENABLE_BF16", "ENABLE_FP8")
+                .skip());
+
+        // ======================================================
+        // 4. 核心类型别名映射 - 这是最关键的！把 C++ typedef 映射到 Java 类型
+        // ======================================================
+        // int32_t 类型
+        infoMap.put(new Info("tensorrt_llm::executor::SizeType32", "tensorrt_llm::runtime::SizeType32",
+                "SizeType32")
+                .cast().valueTypes("int").pointerTypes("IntPointer"));
+        infoMap.put(new Info("tensorrt_llm::executor::TokenIdType", "tensorrt_llm::runtime::TokenIdType",
+                "TokenIdType")
+                .cast().valueTypes("int").pointerTypes("IntPointer"));
+        infoMap.put(new Info("tensorrt_llm::executor::RetentionPriority", "RetentionPriority")
+                .cast().valueTypes("int").pointerTypes("IntPointer"));
+
+        // int64_t 类型
+        infoMap.put(new Info("tensorrt_llm::executor::SizeType64", "tensorrt_llm::runtime::SizeType64",
+                "SizeType64")
+                .cast().valueTypes("long").pointerTypes("LongPointer"));
+
+        // uint64_t 类型
+        infoMap.put(new Info("tensorrt_llm::executor::IdType", "IdType",
+                "tensorrt_llm::executor::RequestIdType", "RequestIdType")
+                .cast().valueTypes("long").pointerTypes("LongPointer"));
+        infoMap.put(new Info("tensorrt_llm::executor::IterationType", "IterationType",
+                "tensorrt_llm::executor::RandomSeedType", "RandomSeedType",
+                "tensorrt_llm::runtime::LoraTaskIdType", "LoraTaskIdType",
+                "tensorrt_llm::runtime::TokenExtraIdType", "TokenExtraIdType",
+                "tensorrt_llm::executor::CacheSaltIDType", "CacheSaltIDType")
+                .cast().valueTypes("long").pointerTypes("LongPointer"));
+
+        // float 类型
+        infoMap.put(new Info("tensorrt_llm::executor::FloatType", "FloatType",
+                "tensorrt_llm::executor::PriorityType", "PriorityType")
+                .cast().valueTypes("float").pointerTypes("FloatPointer"));
+
+        // uint32_t 类型
+        infoMap.put(new Info("uint32_t").cast().valueTypes("int").pointerTypes("IntPointer"));
+        infoMap.put(new Info("uint64_t").cast().valueTypes("long").pointerTypes("LongPointer"));
+
+        // chrono
+        infoMap.put(new Info("tensorrt_llm::executor::MillisecondsType", "MillisecondsType",
+                "std::chrono::milliseconds", "std::chrono::time_point", "std::chrono::steady_clock")
+                .cast().valueTypes("long").pointerTypes("LongPointer"));
+
+        // ======================================================
+        // 5. 指针和智能指针类型映射
+        // ======================================================
+        infoMap.put(new Info("tensorrt_llm::executor::TensorPtr", "TensorPtr")
+                .valueTypes("@SharedPtr Tensor").pointerTypes("Tensor"));
+        infoMap.put(new Info("tensorrt_llm::executor::StreamPtr", "StreamPtr",
+                "tensorrt_llm::executor::CudaStreamPtr", "CudaStreamPtr",
+                "tensorrt_llm::runtime::CudaStream")
+                .cast().pointerTypes("Pointer"));
+
+        // IBuffer/ITensor 的 UniquePtr 和 SharedPtr
+        infoMap.put(new Info("tensorrt_llm::runtime::IBuffer::UniquePtr",
+                "tensorrt_llm::runtime::IBuffer::SharedPtr")
+                .pointerTypes("IBuffer"));
+        infoMap.put(new Info("tensorrt_llm::runtime::ITensor::UniquePtr",
+                "tensorrt_llm::runtime::ITensor::SharedPtr")
+                .pointerTypes("ITensor"));
+
+        // std::shared_ptr/unique_ptr/optional 泛型跳过
+        infoMap.put(new Info("std::shared_ptr", "std::unique_ptr", "std::weak_ptr").annotations("@SharedPtr"));
+        infoMap.put(new Info("std::optional").skip());
+        infoMap.put(new Info("std::nullopt").skip());
+        infoMap.put(new Info("std::variant").skip());
+
+        // ======================================================
+        // 6. STL 容器映射
+        // ======================================================
+        infoMap.put(new Info("std::string").annotations("@StdString").valueTypes("BytePointer").pointerTypes("BytePointer"));
+        infoMap.put(new Info("std::vector<int32_t>", "std::vector<int>",
+                "tensorrt_llm::executor::VecTokens", "VecTokens")
+                .annotations("@StdVector").pointerTypes("IntPointer"));
+        infoMap.put(new Info("std::vector<float>",
+                "tensorrt_llm::executor::VecLogProbs", "VecLogProbs")
+                .annotations("@StdVector").pointerTypes("FloatPointer"));
+        infoMap.put(new Info("std::vector<int64_t>", "std::vector<long long>")
+                .annotations("@StdVector").pointerTypes("LongPointer"));
+        infoMap.put(new Info("std::vector<uint8_t>", "std::vector<unsigned char>")
+                .annotations("@StdVector").pointerTypes("BytePointer"));
+        infoMap.put(new Info("std::vector<bool>").annotations("@StdVector").pointerTypes("BooleanPointer"));
+
+        // 复杂容器 - 跳过
+        infoMap.put(new Info("std::vector<std::vector", "std::vector<std::string>",
+                "std::vector<std::pair", "std::list", "std::deque",
+                "tensorrt_llm::executor::BeamTokens", "BeamTokens",
+                "tensorrt_llm::executor::VecTokenExtraIds", "VecTokenExtraIds",
+                "tensorrt_llm::executor::VecUniqueTokens", "VecUniqueTokens",
+                "tensorrt_llm::executor::MedusaChoices", "MedusaChoices",
+                "tensorrt_llm::executor::EagleChoices", "EagleChoices")
+                .skip());
+
+        // vector<SizeType32> 映射
+        infoMap.put(new Info("std::vector<tensorrt_llm::executor::SizeType32>",
+                "std::vector<tensorrt_llm::runtime::SizeType32>")
+                .annotations("@StdVector").pointerTypes("IntPointer"));
+        // vector<TokenIdType>
+        infoMap.put(new Info("std::vector<tensorrt_llm::executor::TokenIdType>",
+                "std::vector<tensorrt_llm::runtime::TokenIdType>")
+                .annotations("@StdVector").pointerTypes("IntPointer"));
+        // vector<AdditionalModelOutput> 等复杂 vector
+        infoMap.put(new Info("std::vector<tensorrt_llm::executor::AdditionalModelOutput>")
+                .skip());
+        // vector<Response>
+        infoMap.put(new Info("std::vector<tensorrt_llm::executor::Response>")
+                .skip());
+        infoMap.put(new Info("std::pair", "std::tuple", "std::array",
+                "std::map", "std::unordered_map", "std::set", "std::unordered_set",
+                "std::queue", "std::priority_queue")
+                .skip());
+        infoMap.put(new Info("std::function", "std::bind", "std::placeholders",
+                "tensorrt_llm::executor::LogitsPostProcessor",
+                "tensorrt_llm::executor::LogitsPostProcessorMap",
+                "tensorrt_llm::executor::LogitsPostProcessorBatched")
+                .skip());
+        infoMap.put(new Info("std::ostream", "std::istream", "std::iostream",
+                "std::ofstream", "std::ifstream")
+                .skip());
+        infoMap.put(new Info("std::filesystem::path").pointerTypes("BytePointer"));
+        infoMap.put(new Info("tensorrt_llm::executor::KVCacheEventData", "KVCacheEventData").skip());
+
+        // ======================================================
+        // 7. 枚举冲突处理 - 重命名冲突的枚举常量
+        // ======================================================
+        // DataType 和 MemoryType 都有 kUNKNOWN
+        infoMap.put(new Info("tensorrt_llm::executor::DataType").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::MemoryType").enumerate());
+        // 其他可能冲突的枚举
+        infoMap.put(new Info("tensorrt_llm::executor::RequestType").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::ModelType").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::BatchingType").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::CapacitySchedulerPolicy").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::ContextChunkingPolicy").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::CommunicationType").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::CommunicationMode").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::RequestStage").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::FinishReason").enumerate());
+        infoMap.put(new Info("tensorrt_llm::executor::KvCacheTransferMode").enumerate());
+        infoMap.put(new Info("tensorrt_llm::batch_manager::kv_cache_manager::CacheType").enumerate());
+
+        // ======================================================
+        // 8. DecodingMode 处理 - auto constexpr 返回值问题
+        // ======================================================
+        // DecodingMode 的 static auto constexpr 工厂方法无法正确生成
+        // 跳过整个类，后续可以手写 Java wrapper
+        infoMap.put(new Info("tensorrt_llm::executor::DecodingMode").skip());
+
+        // ======================================================
+        // 9. Shape 基类问题 - 跳过基类但保留 Shape 本身
+        // ======================================================
+        infoMap.put(new Info("tensorrt_llm::common::ArrayView<const tensorrt_llm::executor::detail::DimType64>",
+                "tensorrt_llm::common::ArrayView<detail::DimType64 const>",
+                "tensorrt_llm::common::ArrayView")
+                .pointerTypes("Pointer").base("Pointer"));
+        infoMap.put(new Info("std::initializer_list", "std::initializer_list<tensorrt_llm::executor::Shape::DimType64>")
+                .skip());
+        infoMap.put(new Info("tensorrt_llm::executor::detail::DimType64", "detail::DimType64")
+                .cast().valueTypes("long").pointerTypes("LongPointer"));
+
+        // ======================================================
+        // 10. LlmRequest 模板基类
+        // ======================================================
+        infoMap.put(new Info("tensorrt_llm::batch_manager::GenericLlmRequest",
+                "tensorrt_llm::batch_manager::GenericLlmRequest<tensorrt_llm::runtime::ITensor::SharedPtr>")
+                .skip());
+
+        // ======================================================
+        // 11. 外部依赖 (TensorRT / CUDA / NCCL)
+        // ======================================================
+        infoMap.put(new Info("nvinfer1", "nvinfer1::DataType", "nvinfer1::Dims",
+                "NvInferRuntime.h", "NvInfer.h", "NvInferPlugin.h")
+                .skip());
+        infoMap.put(new Info("cudaStream_t", "cudaEvent_t", "cudaDeviceProp",
+                "ncclComm_t", "cublasHandle_t", "cudnnHandle_t")
+                .cast().valueTypes("Pointer").pointerTypes("Pointer"));
+        infoMap.put(new Info("cudaError_t").cast().valueTypes("int"));
+        infoMap.put(new Info("cuda_runtime.h", "cuda.h", "nccl.h",
+                "cuda_fp16.h", "cuda_bf16.h", "cuda_fp8.h",
+                "curand_kernel.h")
+                .skip());
+        infoMap.put(new Info("half", "__half", "__nv_bfloat16", "__nv_fp8_e4m3")
+                .cast().valueTypes("short").pointerTypes("ShortPointer"));
+
+        // ======================================================
+        // 12. 跳过无法解析的函数和模板特化
+        // ======================================================
+        infoMap.put(new Info("tensorrt_llm::common::getDTypeSize",
                 "tensorrt_llm::common::getDTypeSizeInBits",
-                "tensorrt_llm::common::getDtypeString"
-        ).skip());
+                "tensorrt_llm::common::getDtypeString")
+                .skip());
+        infoMap.put(new Info("tensorrt_llm::layers::DefaultDecodingParams").skip());
+        infoMap.put(new Info("tensorrt_llm::runtime::CudaEvent").skip());
+        infoMap.put(new Info("tensorrt_llm::kernels").skip());
 
-        // --- 2. 宏与语法补丁 ---
-        infoMap.put(new Info("__device__", "__host__", "__forceinline__").cppText("#define __device__\n#define __host__\n#define __forceinline__"));
-        infoMap.put(new Info("TLLM_THROW", "TLLM_CHECK", "TLLM_CHECK_WITH_INFO", "[[fallthrough]]", "[[maybe_unused]]").skip());
-        infoMap.put(new Info("tensorrt_llm::runtime::IBuffer").upcast()); // 消除虚继承警告
+        // 模板特化跳过
+        infoMap.put(new Info("TypeTraits", "DataTypeTraits", "TRTDataType",
+                "MemoryTypeString", "KVCacheEventDiff", "BufferDataType")
+                .skip());
 
-        // --- 3. 严格分包 (Namespace -> Java Package) ---
-        infoMap.put(new Info("tensorrt_llm::executor").javaNames("org.bytedeco.tensorrt_llm.executor"));
-        infoMap.put(new Info("tensorrt_llm::runtime").javaNames("org.bytedeco.tensorrt_llm.runtime"));
+        // hash 函数
+        infoMap.put(new Info("tensorrt_llm::batch_manager::kv_cache_manager::hash32Mix",
+                "tensorrt_llm::batch_manager::kv_cache_manager::hash64Mix")
+                .skip());
 
-        infoMap.put(new Info("tensorrt_llm::common").javaNames("org.bytedeco.tensorrt_llm.common"));
-        infoMap.put(new Info("tensorrt_llm::batch_manager").javaNames("org.bytedeco.tensorrt_llm.batch_manager"));
+        // operator<< 跳过
+        infoMap.put(new Info("operator <<", "operator>>").skip());
 
-        // --- 4. 容器与智能指针补丁 (全量的关键) ---
-        infoMap.put(new Info("std::shared_ptr", "std::unique_ptr", "std::optional").skip());
-        infoMap.put(new Info("std::vector<int64_t>", "std::vector<long long>").pointerTypes("LongPointer"));
-        infoMap.put(new Info("std::vector<int32_t>", "std::vector<int>").pointerTypes("IntPointer"));
-        infoMap.put(new Info("std::vector<float>").pointerTypes("FloatPointer"));
-        infoMap.put(new Info("std::string").pointerTypes("BytePointer").cast());
+        // ======================================================
+        // 13. IBuffer/ITensor upcast 处理
+        // ======================================================
+        infoMap.put(new Info("tensorrt_llm::runtime::IBuffer").upcast());
 
-        // --- 5. 拍平继承链 ---
-        infoMap.put(new Info("tensorrt_llm::runtime::ITensor").flatten());
+        // ======================================================
+        // 14. BufferManager 中依赖 CUDA 的内部类型
+        // ======================================================
+        infoMap.put(new Info("tensorrt_llm::runtime::CudaMemPool", "tensorrt_llm::runtime::BufferManager::CudaMemPoolPtr")
+                .cast().pointerTypes("Pointer"));
+        infoMap.put(new Info("tensorrt_llm::runtime::IExecutionContext")
+                .cast().pointerTypes("Pointer"));
 
-        // --- 6. 屏蔽外部依赖 (Mac 缺少的头文件) ---
-        infoMap.put(new Info("nvinfer1").skip());
-        infoMap.put(new Info("NvInferRuntime.h", "NvInfer.h").skip());
-        infoMap.put(new Info("cudaStream_t", "cudaEvent_t").cppTypes("void*"));
+        // 跳过 BufferManager 测试类
+        infoMap.put(new Info("tensorrt_llm::runtime::BufferManager::IBufferManagedTest").skip());
+
+        // DimType64 和复杂类型表达式
+        infoMap.put(new Info("tensorrt_llm::runtime::ITensor::DimType64",
+                "tensorrt_llm::executor::Shape::DimType64",
+                "detail::DimType64",
+                "std::remove_reference_t")
+                .cast().valueTypes("long").pointerTypes("LongPointer"));
+
+        // vector<Response> 用于 Executor.awaitResponses
+        infoMap.put(new Info("std::vector<tensorrt_llm::executor::Response>").skip());
+
+        // 更多复杂 vector 类型
+        infoMap.put(new Info("std::vector<tensorrt_llm::executor::VecLogProbs>",
+                "std::vector<std::optional<std::string> >",
+                "std::vector<std::optional",
+                "std::shared_ptr<tensorrt_llm::executor::KVCacheEventManager>")
+                .skip());
+
+        // 跳过 Executor 中返回 vector<Response> 和 getKVCacheEventManager 的方法
+        infoMap.put(new Info("tensorrt_llm::executor::Executor::awaitResponses",
+                "tensorrt_llm::executor::Executor::getKVCacheEventManager")
+                .skip());
+
+        // BufferView 类型
+        infoMap.put(new Info("tensorrt_llm::executor::BufferView", "BufferView",
+                "std::basic_string_view", "std::string_view")
+                .pointerTypes("BytePointer"));
+
+        // ======================================================
+        // 15. 缺失类型的映射
+        // ======================================================
+        // C++ auto 返回值
+        infoMap.put(new Info("auto").skip());
+        // size_type
+        infoMap.put(new Info("size_type", "std::size_t", "size_t",
+                "tensorrt_llm::executor::Shape::size_type")
+                .cast().valueTypes("long").pointerTypes("LongPointer"));
+        // runtime_error 基类
+        infoMap.put(new Info("std::runtime_error").pointerTypes("Pointer").base("Pointer"));
+        // RuntimeDefaults
+        infoMap.put(new Info("tensorrt_llm::runtime::RuntimeDefaults", "RuntimeDefaults").skip());
+        // BlockKey / AgentState / UniqueToken / VecUniqueTokens - 映射为 Pointer 而不是 skip
+        infoMap.put(new Info("tensorrt_llm::batch_manager::kv_cache_manager::BlockKey", "BlockKey")
+                .pointerTypes("Pointer"));
+        infoMap.put(new Info("tensorrt_llm::executor::AgentState", "AgentState")
+                .pointerTypes("Pointer"));
+        infoMap.put(new Info("tensorrt_llm::executor::UniqueToken", "UniqueToken")
+                .pointerTypes("Pointer"));
+        // MultimodalInput 中的 vector<optional<string>>
+        infoMap.put(new Info("std::vector<std::optional<std::string>>",
+                "std::vector<std::optional<std::string> >")
+                .skip());
     }
 }
 
-//package tensorrt_llm.presets;
-//
-//import org.bytedeco.javacpp.annotation.Platform;
-//import org.bytedeco.javacpp.annotation.Properties;
-//import org.bytedeco.javacpp.tools.Info;
-//import org.bytedeco.javacpp.tools.InfoMap;
-//import org.bytedeco.javacpp.tools.InfoMapper;
-//
-//@Properties(
-//        value = @Platform(
-//                includepath = {"/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include"},
-//                include = {
-//                        "tensorrt_llm/common/config.h",
-////                        "tensorrt_llm/common/dataType.h",
-//                        "tensorrt_llm/common/logger.h",
-//                        "tensorrt_llm/executor/executor.h",
-//                        "tensorrt_llm/runtime/iBuffer.h",
-//                        "tensorrt_llm/runtime/iTensor.h",
-//                        "tensorrt_llm/runtime/tllmRuntime.h",
-//                        "tensorrt_llm/batch_manager/batchManager.h",
-//                        "tensorrt_llm/batch_manager/llmRequest.h"
-//                }
-//        ),
-//        target = "org.bytedeco.tensorrt_llm",
-//        global = "org.bytedeco.tensorrt_llm.global.TRTLLM"
-//)
-//public class TRTLLMFullConfig implements InfoMapper {
-//
-//    @Override
-//    public void map(InfoMap infoMap) {
-//        // --- 1. 核心修复：跳过导致解析崩溃的函数体 ---
-//        // JavaCPP 主要是为了映射接口，不需要这些静态 helper 函数的逻辑
-//        infoMap.put(new Info(
-//                "tensorrt_llm::common::getDTypeSize",
-//                "tensorrt_llm::common::getDTypeSizeInBits",
-//                "tensorrt_llm::common::getDtypeString"
-//        ).skip());
-//
-//        // --- 2. 宏定义补丁 ---
-//        infoMap.put(new Info("__device__", "__host__", "__forceinline__").cppText("#define __device__\n#define __host__\n#define __forceinline__"));
-//        // 屏蔽所有可能干扰解析的宏
-//        infoMap.put(new Info("TLLM_THROW", "TLLM_CHECK", "TLLM_CHECK_WITH_INFO", "[[fallthrough]]", "[[maybe_unused]]").skip());
-//
-//        // --- 3. 命名空间分包 ---
-//        infoMap.put(new Info("tensorrt_llm::executor").javaNames("org.bytedeco.tensorrt_llm.executor"));
-//        infoMap.put(new Info("tensorrt_llm::runtime").javaNames("org.bytedeco.tensorrt_llm.runtime"));
-//        infoMap.put(new Info("tensorrt_llm::common").javaNames("org.bytedeco.tensorrt_llm.common"));
-//        infoMap.put(new Info("tensorrt_llm::batch_manager").javaNames("org.bytedeco.tensorrt_llm.batch_manager"));
-//
-//        // --- 4. 指针与容器补丁 ---
-//        infoMap.put(new Info("std::shared_ptr", "std::unique_ptr", "std::optional").skip());
-//        infoMap.put(new Info("std::vector<int64_t>", "std::vector<long long>").pointerTypes("LongPointer"));
-//        infoMap.put(new Info("std::vector<int32_t>", "std::vector<int>").pointerTypes("IntPointer"));
-//        infoMap.put(new Info("std::vector<float>").pointerTypes("FloatPointer"));
-//        infoMap.put(new Info("std::string").pointerTypes("BytePointer").cast());
-//
-//        // --- 5. 屏蔽外部头文件引用 (NvInferRuntime.h 是 Mac 上没有的) ---
-//        infoMap.put(new Info("nvinfer1::DataType").cast().valueTypes("int"));
-//        infoMap.put(new Info("NvInferRuntime.h", "NvInfer.h").skip());
-//    }
-//}
-
-//package tensorrt_llm.presets;
-//
-//import org.bytedeco.javacpp.annotation.Platform;
-//import org.bytedeco.javacpp.annotation.Properties;
-//import org.bytedeco.javacpp.tools.Info;
-//import org.bytedeco.javacpp.tools.InfoMap;
-//import org.bytedeco.javacpp.tools.InfoMapper;
-//
-//@Properties(
-//        value = @Platform(
-//                includepath = {"/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include"},
-//                include = {
-//                        "tensorrt_llm/common/config.h",
-////                        "tensorrt_llm/common/dataType.h", // 报错就在这里
-//                        "tensorrt_llm/common/logger.h",
-//                        "tensorrt_llm/executor/executor.h",
-//                        "tensorrt_llm/runtime/iBuffer.h",
-//                        "tensorrt_llm/runtime/iTensor.h",
-//                        "tensorrt_llm/runtime/tllmRuntime.h",
-//                        "tensorrt_llm/batch_manager/batchManager.h",
-//                        "tensorrt_llm/batch_manager/llmRequest.h"
-//                }
-//        ),
-//        target = "org.bytedeco.tensorrt_llm",
-//        global = "org.bytedeco.tensorrt_llm.global.TRTLLM"
-//)
-//public class TRTLLMFullConfig implements InfoMapper {
-//
-//    @Override
-//    public void map(InfoMap infoMap) {
-//        // --- 1. 核心补丁：处理 dataType.h 中的 Unexpected token '2' ---
-//        // 我们直接定位报错的头文件，并把里面可能导致解析失败的行“伪造”成 Parser 能理解的简单常量
-//        // 同时也把 C++20 的 constexpr 替换为 const 降低解析难度
-//        infoMap.put(new Info("constexpr").cppText("const"));
-//        infoMap.put(new Info("uint8_t", "int8_t", "uint16_t", "int16_t", "uint32_t", "int32_t", "uint64_t", "int64_t").cast());
-//
-//        // --- 2. 宏定义补丁 ---
-//        infoMap.put(new Info("__device__", "__host__", "__forceinline__").cppText("#define __device__\n#define __host__\n#define __forceinline__"));
-//        infoMap.put(new Info("TLLM_THROW", "TLLM_CHECK", "TLLM_CHECK_WITH_INFO", "TLLM_LOG_DEBUG", "TLLM_LOG_INFO").skip());
-//
-//        // --- 3. 命名空间分包 (全量 Package 映射) ---
-//        infoMap.put(new Info("tensorrt_llm::executor").javaNames("org.bytedeco.tensorrt_llm.executor"));
-//        infoMap.put(new Info("tensorrt_llm::runtime").javaNames("org.bytedeco.tensorrt_llm.runtime"));
-//        infoMap.put(new Info("tensorrt_llm::common").javaNames("org.bytedeco.tensorrt_llm.common"));
-//        infoMap.put(new Info("tensorrt_llm::batch_manager").javaNames("org.bytedeco.tensorrt_llm.batch_manager"));
-//
-//        // --- 4. 关键类型映射 (解决 std::shared_ptr 导致的 API 缺失) ---
-//        infoMap.put(new Info("std::shared_ptr", "std::unique_ptr", "std::optional").skip());
-//        infoMap.put(new Info("std::vector<int64_t>", "std::vector<long long>").pointerTypes("LongPointer"));
-//        infoMap.put(new Info("std::vector<int32_t>", "std::vector<int>").pointerTypes("IntPointer"));
-//        infoMap.put(new Info("std::vector<float>").pointerTypes("FloatPointer"));
-//        infoMap.put(new Info("std::string").pointerTypes("BytePointer").cast());
-//
-//        // --- 5. 拍平核心类 ---
-//        infoMap.put(new Info("tensorrt_llm::runtime::ITensor").flatten());
-//        infoMap.put(new Info("tensorrt_llm::runtime::IBuffer").flatten());
-//
-//        // --- 6. 屏蔽外部依赖 ---
-//        infoMap.put(new Info("nvinfer1").skip());
-//        infoMap.put(new Info("cudaStream_t", "cudaEvent_t", "cudaDeviceProp").cppTypes("void*"));
-//    }
-//
-
-
-
-
-//    @Override
-//    public void map(InfoMap infoMap) {
-//        // --- 1. 强力宏补丁：解决 Unexpected token '2' 等解析错误 ---
-//        infoMap.put(new Info("__device__", "__host__", "__forceinline__").cppText("#define __device__\n#define __host__\n#define __forceinline__"));
-//
-//        // 如果 dataType.h 38行左右有 constexpr 或者特定的 C++20 语法，我们直接通过定义宏来“欺骗”Parser
-//        infoMap.put(new Info("TLLM_CUDA_CHECK", "TLLM_THROW", "TLLM_CHECK").skip());
-//
-//        // --- 2. 针对 dataType.h 的精准打击 ---
-//        // 很多时候是解析器不认识 C++20 的字面量，我们把 dataType 相关的类名占个位，防止它去深挖
-//        infoMap.put(new Info("tensorrt_llm::common::DataType").cast());
-//
-//        // 如果还是报错，直接把报错的那一部分内容用空文本替换（根据你的报错行数 38 行尝试）
-//        // 这里我们把一些复杂的字面量或者 constexpr 屏蔽
-//        infoMap.put(new Info("constexpr").cppText("const"));
-//
-//        // --- 3. 命名空间分包 (保持之前的工业级规范) ---
-//        infoMap.put(new Info("tensorrt_llm::executor").javaNames("org.bytedeco.tensorrt_llm.executor"));
-//        infoMap.put(new Info("tensorrt_llm::runtime").javaNames("org.bytedeco.tensorrt_llm.runtime"));
-//        infoMap.put(new Info("tensorrt_llm::common").javaNames("org.bytedeco.tensorrt_llm.common"));
-//        infoMap.put(new Info("tensorrt_llm::batch_manager").javaNames("org.bytedeco.tensorrt_llm.batch_manager"));
-//
-//        // --- 4. 核心类型映射 ---
-//        infoMap.put(new Info("std::shared_ptr", "std::unique_ptr", "std::optional").skip());
-//        infoMap.put(new Info("std::vector<int64_t>", "std::vector<long long>").pointerTypes("LongPointer"));
-//        infoMap.put(new Info("std::vector<int32_t>", "std::vector<int>").pointerTypes("IntPointer"));
-//        infoMap.put(new Info("std::string").pointerTypes("BytePointer").cast());
-//
-//        // --- 5. 继承链拍平 ---
-//        infoMap.put(new Info("tensorrt_llm::runtime::ITensor").flatten());
-//        infoMap.put(new Info("tensorrt_llm::runtime::IBuffer").flatten());
-//    }
-//}
-
-//package tensorrt_llm.presets;
-//
-//import org.bytedeco.javacpp.annotation.Platform;
-//import org.bytedeco.javacpp.annotation.Properties;
-//import org.bytedeco.javacpp.tools.Info;
-//import org.bytedeco.javacpp.tools.InfoMap;
-//import org.bytedeco.javacpp.tools.InfoMapper;
-//
-//@Properties(
-//        value = @Platform(
-//                includepath = {"/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include"},
-//                include = {
-//                        // --- Common 模块 ---
-////                        "tensorrt_llm/common/config.h",
-////                        "tensorrt_llm/common/dataType.h",
-////                        "tensorrt_llm/common/logger.h",
-////                        "tensorrt_llm/common/tllmException.h",
-////                        "tensorrt_llm/common/cudaUtils.h",
-////                        "tensorrt_llm/common/algorithm.h",
-////                        "tensorrt_llm/common/quantization.h",
-//
-//                        // --- Executor 模块 (入口) ---
-//                        "tensorrt_llm/executor/executor.h",
-//                        "tensorrt_llm/executor/types.h",
-//                        "tensorrt_llm/executor/tensor.h",
-//                        "tensorrt_llm/executor/serialization.h",
-//
-//                        // --- Runtime 模块 ---
-//                        "tensorrt_llm/runtime/iBuffer.h",
-//                        "tensorrt_llm/runtime/iTensor.h",
-//                        "tensorrt_llm/runtime/bufferManager.h",
-//                        "tensorrt_llm/runtime/tllmRuntime.h",
-//                        "tensorrt_llm/runtime/samplingConfig.h",
-//                        "tensorrt_llm/runtime/worldConfig.h",
-//                        "tensorrt_llm/runtime/modelConfig.h",
-//                        "tensorrt_llm/runtime/gptDecoderBatched.h",
-//                        "tensorrt_llm/runtime/cudaStream.h",
-//                        "tensorrt_llm/runtime/cudaEvent.h",
-//
-//                        // --- Batch Manager 模块 (全量导入) ---
-//                        "tensorrt_llm/batch_manager/batchManager.h",
-//                        "tensorrt_llm/batch_manager/llmRequest.h",
-//                        "tensorrt_llm/batch_manager/kvCacheManager.h",
-//                        "tensorrt_llm/batch_manager/capacityScheduler.h",
-//                        "tensorrt_llm/batch_manager/decoderBuffers.h",
-//                        "tensorrt_llm/batch_manager/kvCacheType.h",
-//                        "tensorrt_llm/batch_manager/microBatchScheduler.h",
-//                        "tensorrt_llm/batch_manager/peftCacheManager.h",
-//
-//                        // --- Kernels & Layers & Plugins ---
-//                        "tensorrt_llm/kernels/decodingCommon.h",
-//                        "tensorrt_llm/layers/defaultDecodingParams.h",
-//                        "tensorrt_llm/plugins/api/tllmPlugin.h"
-//                }
-//        ),
-//        target = "org.bytedeco.tensorrt_llm",
-//        global = "org.bytedeco.tensorrt_llm.global.TRTLLM"
-//)
-//public class TRTLLMFullConfig implements InfoMapper {
-//
-//    @Override
-//    public void map(InfoMap infoMap) {
-//        // --- 1. 宏与符号预处理 ---
-//        infoMap.put(new Info("__device__", "__host__", "__forceinline__").cppText("#define __device__\n#define __host__\n#define __forceinline__"));
-//        // 仅屏蔽导致解析中断的宏，保留其他逻辑
-//        infoMap.put(new Info("TLLM_THROW", "TLLM_CHECK", "TLLM_CHECK_WITH_INFO").skip());
-//
-////        infoMap.put(new Info("tensorrt_llm::common::DataType").cast());
-//        // --- 2. 严格分包映射 (按 Namespace 分 Package) ---
-//        infoMap.put(new Info("tensorrt_llm::executor").javaNames("org.bytedeco.tensorrt_llm.executor"));
-//        infoMap.put(new Info("tensorrt_llm::runtime").javaNames("org.bytedeco.tensorrt_llm.runtime"));
-////        infoMap.put(new Info("tensorrt_llm::common").javaNames("org.bytedeco.tensorrt_llm.common"));
-//        infoMap.put(new Info("tensorrt_llm::batch_manager").javaNames("org.bytedeco.tensorrt_llm.batch_manager"));
-//        infoMap.put(new Info("tensorrt_llm::layers").javaNames("org.bytedeco.tensorrt_llm.layers"));
-//        infoMap.put(new Info("tensorrt_llm::plugins").javaNames("org.bytedeco.tensorrt_llm.plugins"));
-//
-//        // --- 3. 核心容器与指针映射 (解决 API “消失”问题的关键) ---
-//        infoMap.put(new Info("std::shared_ptr").skip());
-//        infoMap.put(new Info("std::unique_ptr").skip());
-//        infoMap.put(new Info("std::optional").skip());
-//
-//        // 映射所有核心 vector，确保函数重载不会失败
-//        infoMap.put(new Info("std::vector<int64_t>", "std::vector<long long>").pointerTypes("LongPointer"));
-//        infoMap.put(new Info("std::vector<int32_t>", "std::vector<int>").pointerTypes("IntPointer"));
-//        infoMap.put(new Info("std::vector<float>").pointerTypes("FloatPointer"));
-//        infoMap.put(new Info("std::vector<double>").pointerTypes("DoublePointer"));
-//        infoMap.put(new Info("std::string").pointerTypes("BytePointer").cast());
-//
-//        // --- 4. 拍平核心继承链 (爆炸式增加代码量的秘诀) ---
-//        infoMap.put(new Info("tensorrt_llm::runtime::ITensor").flatten());
-//        infoMap.put(new Info("tensorrt_llm::runtime::IBuffer").flatten());
-//        infoMap.put(new Info("tensorrt_llm::executor::Executor").flatten());
-//
-//        // --- 5. 外部依赖处理 ---
-//        infoMap.put(new Info("nvinfer1").skip());
-//        infoMap.put(new Info("cudaStream_t", "cudaEvent_t", "cudaDeviceProp", "ncclComm_t").cppTypes("void*"));
-//    }
-//}
-
-//package tensorrt_llm.presets;
-//
-//import org.bytedeco.javacpp.annotation.Platform;
-//import org.bytedeco.javacpp.annotation.Properties;
-//import org.bytedeco.javacpp.tools.Info;
-//import org.bytedeco.javacpp.tools.InfoMap;
-//import org.bytedeco.javacpp.tools.InfoMapper;
-//
-//@Properties(
-//        value = @Platform(
-//                // includepath 必须指向 include 这一层
-//                includepath = {"/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include"},
-//                include = {
-//                        // --- 核心模块全覆盖 ---
-//                        "tensorrt_llm/common/common.h",
-//                        "tensorrt_llm/common/logger.h",
-//                        "tensorrt_llm/common/dataType.h",
-//                        "tensorrt_llm/executor/executor.h",
-//                        "tensorrt_llm/executor/types.h",
-//                        "tensorrt_llm/runtime/iBuffer.h",
-//                        "tensorrt_llm/runtime/iTensor.h",
-//                        "tensorrt_llm/runtime/bufferManager.h",
-//                        "tensorrt_llm/runtime/tllmRuntime.h",
-//                        "tensorrt_llm/runtime/samplingConfig.h",
-//                        "tensorrt_llm/runtime/worldConfig.h",
-//                        "tensorrt_llm/runtime/modelConfig.h",
-//                        "tensorrt_llm/batch_manager/batchManager.h",
-//                        "tensorrt_llm/batch_manager/llmRequest.h",
-//                        "tensorrt_llm/batch_manager/kvCacheManager.h"
-//                }
-//        ),
-//        target = "org.bytedeco.tensorrt_llm",
-//        global = "org.bytedeco.tensorrt_llm.global.TRTLLM"
-//)
-//public class TRTLLMFullConfig implements InfoMapper {
-//
-//    @Override
-//    public void map(InfoMap infoMap) {
-//        // --- 1. 宏定义伪造：绕过 CUDA/Linux 特有语法 ---
-//        infoMap.put(new Info("__device__", "__host__", "__forceinline__").cppText("#define __device__\n#define __host__\n#define __forceinline__"));
-//        infoMap.put(new Info("TLLM_THROW", "TLLM_CHECK", "TLLM_LOG_DEBUG", "TLLM_LOG_INFO").skip());
-//
-//        // --- 2. 核心：分包映射 (Namespace -> Package) ---
-//        // 这样生成的代码会按文件夹归类，不再乱成一团
-//        infoMap.put(new Info("tensorrt_llm::executor").javaNames("org.bytedeco.tensorrt_llm.executor"));
-//        infoMap.put(new Info("tensorrt_llm::runtime").javaNames("org.bytedeco.tensorrt_llm.runtime"));
-//        infoMap.put(new Info("tensorrt_llm::common").javaNames("org.bytedeco.tensorrt_llm.common"));
-//        infoMap.put(new Info("tensorrt_llm::batch_manager").javaNames("org.bytedeco.tensorrt_llm.batch_manager"));
-//
-//        // --- 3. 屏蔽无法在 Mac 解析的外部依赖 ---
-//        infoMap.put(new Info("nvinfer1").skip());
-//        infoMap.put(new Info("nvToolsExt.h").skip());
-//        infoMap.put(new Info("cudaStream_t", "cudaEvent_t", "cudaDeviceProp").cppTypes("void*"));
-//
-//        // --- 4. 容器与高级类型补丁 ---
-//        // TRT-LLM 极度依赖智能指针，必须处理，否则很多方法会消失
-//        infoMap.put(new Info("std::shared_ptr").skip());
-//        infoMap.put(new Info("std::unique_ptr").skip());
-//        infoMap.put(new Info("std::optional").skip());
-//
-//        // 映射 std::vector 家族
-//        infoMap.put(new Info("std::vector<int64_t>", "std::vector<long long>").pointerTypes("LongPointer"));
-//        infoMap.put(new Info("std::vector<int32_t>", "std::vector<int>").pointerTypes("IntPointer"));
-//        infoMap.put(new Info("std::vector<float>").pointerTypes("FloatPointer"));
-//        infoMap.put(new Info("std::string").pointerTypes("BytePointer").cast());
-//
-//        // --- 5. 拍平继承链 (Flattening) ---
-//        // 这样 ITensor 会继承 IBuffer 的所有方法
-//        infoMap.put(new Info("tensorrt_llm::runtime::ITensor").flatten());
-//        infoMap.put(new Info("tensorrt_llm::runtime::IBuffer").flatten());
-//    }
-//}
-//
-////package tensorrt_llm.presets;
-////
-////import org.bytedeco.javacpp.annotation.Platform;
-////import org.bytedeco.javacpp.annotation.Properties;
-////import org.bytedeco.javacpp.tools.Info;
-////import org.bytedeco.javacpp.tools.InfoMap;
-////import org.bytedeco.javacpp.tools.InfoMapper;
-////
-/////**
-//// * 核心：通过 target 指定基础包，通过 InfoMap 映射子包
-//// */
-////@Properties(
-////        value = @Platform(
-//////                value = "linux-x86_64",
-////                includepath = {"/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include"},
-////                include = {
-////                        "tensorrt_llm/common/common.h",
-////                        "tensorrt_llm/common/logger.h",
-////                        "tensorrt_llm/executor/executor.h",
-////                        "tensorrt_llm/runtime/iBuffer.h",
-////                        "tensorrt_llm/runtime/iTensor.h",
-////                        "tensorrt_llm/runtime/tllmRuntime.h",
-////                        "tensorrt_llm/runtime/worldConfig.h",
-////                        "tensorrt_llm/batch_manager/batchManager.h"
-////                }
-////        ),
-////        target = "org.bytedeco.tensorrt_llm", // 基础包
-////        global = "org.bytedeco.tensorrt_llm.global.TRTLLM" // Global 隔离包
-////)
-////public class TRTLLMFullConfig implements InfoMapper {
-////    @Override
-////    public void map(InfoMap infoMap) {
-////        // --- 1. 宏定义补丁 (防止 Mac 解析中断) ---
-////        infoMap.put(new Info("__device__", "__host__", "__forceinline__").cppText("#define __device__\n#define __host__\n#define __forceinline__"));
-////        infoMap.put(new Info("TLLM_THROW", "TLLM_CHECK", "TLLM_LOG_DEBUG", "TLLM_LOG_INFO").skip());
-////
-////        // --- 2. 核心：分包映射逻辑 ---
-////        // JavaCPP 会根据 javaNames 里的包名路径自动创建文件夹
-////        infoMap.put(new Info("tensorrt_llm::executor").javaNames("org.bytedeco.tensorrt_llm.executor"));
-////        infoMap.put(new Info("tensorrt_llm::runtime").javaNames("org.bytedeco.tensorrt_llm.runtime"));
-////        infoMap.put(new Info("tensorrt_llm::common").javaNames("org.bytedeco.tensorrt_llm.common"));
-////        infoMap.put(new Info("tensorrt_llm::batch_manager").javaNames("org.bytedeco.tensorrt_llm.batch_manager"));
-////
-////        // --- 3. 强制递归与类型扩展 ---
-////        // 映射 std::shared_ptr 为虚指针，否则使用该返回值的函数会消失
-////        infoMap.put(new Info("std::shared_ptr").skip());
-////        infoMap.put(new Info("std::unique_ptr").skip());
-////        infoMap.put(new Info("std::optional").skip());
-////
-////        // --- 4. 显存管理与数据结构 (全量核心) ---
-////        infoMap.put(new Info("tensorrt_llm::runtime::ITensor").flatten());
-////        infoMap.put(new Info("tensorrt_llm::runtime::IBuffer").flatten());
-////
-////        // 映射所有常见的 std 容器，否则大量方法会因为无法映射参数而失效
-////        infoMap.put(new Info("std::vector<int64_t>").pointerTypes("LongPointer"));
-////        infoMap.put(new Info("std::vector<int32_t>").pointerTypes("IntPointer"));
-////        infoMap.put(new Info("std::vector<float>").pointerTypes("FloatPointer"));
-////        infoMap.put(new Info("std::string").pointerTypes("BytePointer").cast());
-////
-////        // --- 5. 屏蔽外部不可解析依赖 ---
-////        infoMap.put(new Info("nvinfer1").skip());
-////        infoMap.put(new Info("cudaStream_t", "cudaEvent_t").cppTypes("void*"));
-////    }
-////}

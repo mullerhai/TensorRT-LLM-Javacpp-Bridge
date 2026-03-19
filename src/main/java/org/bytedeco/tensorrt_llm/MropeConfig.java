@@ -16,9 +16,9 @@ public class MropeConfig extends Pointer {
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public MropeConfig(Pointer p) { super(p); }
 
-    public MropeConfig(@ByVal Tensor mropeRoratySinCos, @ByVal SizeType32 mropePositionDeltas) { super((Pointer)null); allocate(mropeRoratySinCos, mropePositionDeltas); }
-    private native void allocate(@ByVal Tensor mropeRoratySinCos, @ByVal SizeType32 mropePositionDeltas);
+    public MropeConfig(@ByVal Tensor mropeRoratySinCos, @Cast("tensorrt_llm::executor::SizeType32") int mropePositionDeltas) { super((Pointer)null); allocate(mropeRoratySinCos, mropePositionDeltas); }
+    private native void allocate(@ByVal Tensor mropeRoratySinCos, @Cast("tensorrt_llm::executor::SizeType32") int mropePositionDeltas);
 
     public native @ByVal Tensor getMRopeRotaryCosSin();
-    public native @ByVal SizeType32 getMRopePositionDeltas();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getMRopePositionDeltas();
 }

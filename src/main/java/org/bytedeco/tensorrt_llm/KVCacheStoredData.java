@@ -28,7 +28,7 @@ public class KVCacheStoredData extends Pointer {
     }
 
     /** \brief The parent of this sequence of stored blocks */
-    public native @Optional IdType parentHash(); public native KVCacheStoredData parentHash(IdType setter);
+    public native @Cast("tensorrt_llm::executor::IdType*") @Optional LongPointer parentHash(); public native KVCacheStoredData parentHash(LongPointer setter);
     /** \brief A sequence of blocks. The parent of block {@code i} is block {@code i-1} */
     public native @StdVector KVCacheStoredBlockData blocks(); public native KVCacheStoredData blocks(KVCacheStoredBlockData setter);
 }

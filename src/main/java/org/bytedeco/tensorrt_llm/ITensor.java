@@ -28,7 +28,7 @@ public class ITensor extends IBuffer {
     
     //!
     //!
-    public native @Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims getShape();
+    public native @Const @ByRef Shape getShape();
 
     /**
      *  \brief Returns the tensor n-th dimension. If n is negative, returns the (nbDims - n)th dimension.
@@ -37,7 +37,7 @@ public class ITensor extends IBuffer {
     /**
      *  \brief Sets the tensor dimensions. The new size of the tensor will be {@code volume(dims)}
      *  */
-    public native void reshape(@Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims dims);
+    public native void reshape(@Const @ByRef Shape dims);
 
     
     
@@ -62,7 +62,7 @@ public class ITensor extends IBuffer {
     
     //!
     //!
-    public static native @Cast("std::int64_t") long volume(@Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims dims);
+    public static native @Cast("std::int64_t") long volume(@Const @ByRef Shape dims);
 
     /**
      *  \brief Returns the volume of the dimensions. Throws if {@code d.nbDims < 0}.
@@ -71,7 +71,7 @@ public class ITensor extends IBuffer {
     
     //!
     //!
-    public static native @Cast("std::size_t") long volumeNonNegative(@Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims shape);
+    public static native @Cast("std::size_t") long volumeNonNegative(@Const @ByRef Shape shape);
 
     /**
      *  \brief Returns the strides of each dimemsion in a Shape.
@@ -81,7 +81,7 @@ public class ITensor extends IBuffer {
     //!
     //!
     //!
-    public static native @ByVal @Cast("tensorrt_llm::runtime::ITensor::Shape*") Dims strides(@Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims dims);
+    public static native @ByVal Shape strides(@Const @ByRef Shape dims);
 
     /**
      *  \brief Removes the given *unit* dimension from {@code shape}.
@@ -95,7 +95,7 @@ public class ITensor extends IBuffer {
     //!
     //!
     //!
-    public static native @ByVal @Cast("tensorrt_llm::runtime::ITensor::Shape*") Dims squeeze(@Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims shape, @ByVal SizeType32 dim);
+    public static native @ByVal Shape squeeze(@Const @ByRef Shape shape, @Cast("tensorrt_llm::runtime::SizeType32") int dim);
 
     /**
      *  \brief Add a *unit* dimension to {@code shape} at the specified position.
@@ -108,7 +108,7 @@ public class ITensor extends IBuffer {
     
     //!
     //!
-    public static native @ByVal @Cast("tensorrt_llm::runtime::ITensor::Shape*") Dims unsqueeze(@Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims shape, @ByVal SizeType32 dim);
+    public static native @ByVal Shape unsqueeze(@Const @ByRef Shape shape, @Cast("tensorrt_llm::runtime::SizeType32") int dim);
 
     /**
      *  \brief Removes the given *unit* dimensions from this tensor.
@@ -117,7 +117,7 @@ public class ITensor extends IBuffer {
     
     //!
     //!
-    public native void squeeze(@ByVal SizeType32 dim);
+    public native void squeeze(@Cast("tensorrt_llm::runtime::SizeType32") int dim);
 
     /**
      *  \brief Adds a *unit* dimension at the specified position
@@ -127,7 +127,7 @@ public class ITensor extends IBuffer {
     //!
     //!
     //!
-    public native void unsqueeze(@ByVal SizeType32 dim);
+    public native void unsqueeze(@Cast("tensorrt_llm::runtime::SizeType32") int dim);
 
     /**
      *  \brief Creates a sliced view on the underlying {@code tensor}. The view will have the same data type as {@code tensor}.
@@ -137,9 +137,9 @@ public class ITensor extends IBuffer {
      *  @param size The size of the view w.r.t. dimension 0 of the tensor.
      *  @return A view on the {@code buffer}.
      *  */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor slice(@SharedPtr tensorrt_llm::runtime::ITensor tensor, @Cast("std::size_t") long offset, @Cast("std::size_t") long size);
+    public static native @ByVal ITensor slice(@ByVal ITensor tensor, @Cast("std::size_t") long offset, @Cast("std::size_t") long size);
 
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor slice(@SharedPtr tensorrt_llm::runtime::ITensor tensor, @Cast("std::size_t") long offset);
+    public static native @ByVal ITensor slice(@ByVal ITensor tensor, @Cast("std::size_t") long offset);
 
     /**
      *  @param offsetDims The offset in multiple dimensions.
@@ -151,24 +151,18 @@ public class ITensor extends IBuffer {
      *          or [size] when @param offsetDims specifies all dimensions.
      *  @throws Whenever offset overflows or the last dimension offset+size overflows.
      *  */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor slice(@SharedPtr tensorrt_llm::runtime::ITensor tensor, @Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims offsetDims, @ByVal @Cast("tensorrt_llm::runtime::ITensor::DimType64*") std::remove_reference_t<decltype(Shape::d[0])> size);
-
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor slice(@SharedPtr tensorrt_llm::runtime::ITensor tensor, @Const @ByRef std::initializer_list<tensorrt_llm::runtime::ITensor::DimType64> offsetDims, @ByVal @Cast("tensorrt_llm::runtime::ITensor::DimType64*") std::remove_reference_t<decltype(Shape::d[0])> size);
+    public static native @ByVal ITensor slice(@ByVal ITensor tensor, @Const @ByRef Shape offsetDims, @Cast("tensorrt_llm::runtime::ITensor::DimType64") long size);
 
     /**
      *  \brief return the rest slices at the last dimension when {@code size} omitted.
      *  */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor slice(@SharedPtr tensorrt_llm::runtime::ITensor tensor, @Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims offsetDims);
-
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor slice(@SharedPtr tensorrt_llm::runtime::ITensor tensor, @Const @ByRef std::initializer_list<tensorrt_llm::runtime::ITensor::DimType64> offsetDims);
+    public static native @ByVal ITensor slice(@ByVal ITensor tensor, @Const @ByRef Shape offsetDims);
 
     /**
      *  @return Just the block at the point, with shape of [the rest dimensions]
      *          or [1] when @param offsetDims specifies all dimensions.
      *  */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor at(@SharedPtr tensorrt_llm::runtime::ITensor tensor, @Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims offsetDims);
-
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor at(@SharedPtr tensorrt_llm::runtime::ITensor tensor, @Const @ByRef std::initializer_list<tensorrt_llm::runtime::ITensor::DimType64> offsetDims);
+    public static native @ByVal ITensor at(@ByVal ITensor tensor, @Const @ByRef Shape offsetDims);
 
     /**
      *  \brief Returns a view on the underlying {@code buffer} (or tensor) with the given shape.
@@ -177,8 +171,8 @@ public class ITensor extends IBuffer {
      *  @param shape The shape of the view.
      *  @return A view on the {@code tensor}.
      *  */
-    public static tensorrt_llm::runtime::ITensor view(tensorrt_llm::runtime::IBuffer buffer, Dims dims) { return _view(buffer.asTensorrt_llm::runtime::IBuffer(), dims); }
-    private static native @UniquePtr @Name("view") tensorrt_llm::runtime::ITensor _view(@SharedPtr tensorrt_llm::runtime::IBuffer buffer, @Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims dims);
+    public static ITensor view(IBuffer buffer, Shape dims) { return _view(buffer.asIBuffer(), dims); }
+    private static native @ByVal @Name("view") ITensor _view(@ByVal IBuffer buffer, @Const @ByRef Shape dims);
 
     /**
      *  \brief Returns a view on the underlying {@code tensor} which can be independently reshaped.
@@ -191,7 +185,7 @@ public class ITensor extends IBuffer {
     //!
     //!
     //!
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor view(@SharedPtr tensorrt_llm::runtime::ITensor tensor);
+    public static native @ByVal ITensor view(@ByVal ITensor tensor);
 
     /**
      *  \brief Returns a flattened view on the underlying {@code tensor} which can be independently reshaped.
@@ -204,8 +198,8 @@ public class ITensor extends IBuffer {
     
     //!
     //!
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor flattenN(@SharedPtr tensorrt_llm::runtime::ITensor tensor, @Cast("std::int64_t") long sliceN/*=-1*/);
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor flattenN(@SharedPtr tensorrt_llm::runtime::ITensor tensor);
+    public static native @ByVal ITensor flattenN(@ByVal ITensor tensor, @Cast("std::int64_t") long sliceN/*=-1*/);
+    public static native @ByVal ITensor flattenN(@ByVal ITensor tensor);
 
     /**
      *  \brief Wraps the given {@code data} in an {@code ITensor}. The {@code ITensor} will not own the underlying {@code data} and cannot
@@ -216,18 +210,10 @@ public class ITensor extends IBuffer {
      *  @param shape The shape of the tensor.
      *  @param capacity The capacity of the buffer.
      *  @return An {@code ITensor}. */
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor wrap(Pointer data, @ByVal DataType type, @Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims shape, @Cast("std::size_t") long _capacity);
-
-    public static native @UniquePtr tensorrt_llm::runtime::ITensor wrap(Pointer data, @ByVal DataType type, @Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims shape);
 
     /**
      *  \brief A convenience function to create a tensor shape with the given dimensions.
      *  */
-    
-    
-    //!
-    //!
-    public static native @ByVal @Cast("tensorrt_llm::runtime::ITensor::Shape*") Dims makeShape(@Const @ByRef std::initializer_list<tensorrt_llm::runtime::ITensor::DimType64> dims);
 
     /**
      *  \brief A convenience function for converting a tensor shape to a {@code string}.
@@ -236,7 +222,7 @@ public class ITensor extends IBuffer {
     
     //!
     //!
-    public static native @ByVal @Cast("std::string*") BytePointer toString(@Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims dims);
+    public static native @StdString BytePointer toString(@Const @ByRef Shape dims);
 
     /**
      *  \brief A convenience function to compare shapes.
@@ -245,13 +231,11 @@ public class ITensor extends IBuffer {
     
     //!
     //!
-    public static native @Cast("bool") boolean shapeEquals(@Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims lhs, @Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims rhs);
+    public static native @Cast("bool") boolean shapeEquals(@Const @ByRef Shape lhs, @Const @ByRef Shape rhs);
 
     /**
      *  \brief A convenience function to compare shapes.
      *  */
 
-    public native @Cast("bool") boolean shapeEquals(@Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims other);
-
-    public native @Cast("bool") boolean shapeEquals(@Const @ByRef std::initializer_list<SizeType32> other);
+    public native @Cast("bool") boolean shapeEquals(@Const @ByRef Shape other);
 }

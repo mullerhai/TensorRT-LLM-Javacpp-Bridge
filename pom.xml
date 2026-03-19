@@ -7,6 +7,10 @@
     <groupId>org.bytedeco.tensorrt_llm</groupId>
     <artifactId>trtllm-bridge</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>TensorRT-LLM Java Bridge</name>
+    <description>JavaCPP bindings for NVIDIA TensorRT-LLM</description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -15,6 +19,10 @@
         <javacpp.version>1.5.13</javacpp.version>
         <javacpp.parser.skip>false</javacpp.parser.skip>
         <javacpp.compiler.skip>true</javacpp.compiler.skip>
+
+        <!-- TensorRT-LLM paths -->
+        <trtllm.include.path>/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include</trtllm.include.path>
+        <trtllm.lib.path>/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/build</trtllm.lib.path>
     </properties>
 
     <dependencies>
@@ -41,12 +49,19 @@
             <plugin>
                 <groupId>org.bytedeco</groupId>
                 <artifactId>javacpp</artifactId>
-                <version>1.5.13</version>
+                <version>${javacpp.version}</version>
                 <configuration>
+                    <skip>${javacpp.parser.skip}</skip>
                     <classOrPackageNames>
                         <classOrPackageName>tensorrt_llm.presets.TRTLLMFullConfig</classOrPackageName>
                     </classOrPackageNames>
                     <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                    <includePaths>
+                        <includePath>${trtllm.include.path}</includePath>
+                    </includePaths>
+                    <linkPaths>
+                        <linkPath>${trtllm.lib.path}</linkPath>
+                    </linkPaths>
                 </configuration>
             </plugin>
 

@@ -34,32 +34,32 @@ public class ParallelConfig extends Pointer {
      *  model. The first participant is considered to be the leader.
      *  @param orchestratorConfig The orchestrator configuration. See OrchestratorConfig.
      *  @param numNodes The number of nodes to use for execution. Default is 1. */
-    public ParallelConfig(@ByVal(nullValue = "CommunicationType::kMPI") CommunicationType commType,
-            @ByVal(nullValue = "CommunicationMode::kLEADER") CommunicationMode commMode,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> deviceIds/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> participantIds/*=std::nullopt*/,
+    public ParallelConfig(CommunicationType commType/*=tensorrt_llm::executor::CommunicationType::kMPI*/,
+            CommunicationMode commMode/*=tensorrt_llm::executor::CommunicationMode::kLEADER*/,
+            @StdVector @Optional IntPointer deviceIds/*=std::nullopt*/,
+            @StdVector @Optional IntPointer participantIds/*=std::nullopt*/,
             @Optional OrchestratorConfig orchestratorConfig/*=std::nullopt*/,
-            @Optional SizeType32 numNodes/*=std::nullopt*/) { super((Pointer)null); allocate(commType, commMode, deviceIds, participantIds, orchestratorConfig, numNodes); }
-    private native void allocate(@ByVal(nullValue = "CommunicationType::kMPI") CommunicationType commType,
-            @ByVal(nullValue = "CommunicationMode::kLEADER") CommunicationMode commMode,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> deviceIds/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> participantIds/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer numNodes/*=std::nullopt*/) { super((Pointer)null); allocate(commType, commMode, deviceIds, participantIds, orchestratorConfig, numNodes); }
+    private native void allocate(CommunicationType commType/*=tensorrt_llm::executor::CommunicationType::kMPI*/,
+            CommunicationMode commMode/*=tensorrt_llm::executor::CommunicationMode::kLEADER*/,
+            @StdVector @Optional IntPointer deviceIds/*=std::nullopt*/,
+            @StdVector @Optional IntPointer participantIds/*=std::nullopt*/,
             @Optional OrchestratorConfig orchestratorConfig/*=std::nullopt*/,
-            @Optional SizeType32 numNodes/*=std::nullopt*/);
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer numNodes/*=std::nullopt*/);
     public ParallelConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
-    public native @ByVal CommunicationType getCommunicationType();
-    public native @ByVal CommunicationMode getCommunicationMode();
-    public native @Optional std::vector<tensorrt_llm::executor::SizeType32> getDeviceIds();
-    public native @Optional std::vector<tensorrt_llm::executor::SizeType32> getParticipantIds();
+    public native CommunicationType getCommunicationType();
+    public native CommunicationMode getCommunicationMode();
+    public native @StdVector @Optional IntPointer getDeviceIds();
+    public native @StdVector @Optional IntPointer getParticipantIds();
     public native @Optional OrchestratorConfig getOrchestratorConfig();
-    public native @Optional SizeType32 getNumNodes();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getNumNodes();
 
-    public native void setCommunicationType(@ByVal CommunicationType type);
-    public native void setCommunicationMode(@ByVal CommunicationMode mode);
-    public native void setDeviceIds(@StdVector SizeType32 deviceIds);
-    public native void setParticipantIds(@StdVector SizeType32 participantIds);
+    public native void setCommunicationType(CommunicationType type);
+    public native void setCommunicationMode(CommunicationMode mode);
+    public native void setDeviceIds(@Const @StdVector @ByRef IntPointer deviceIds);
+    public native void setParticipantIds(@Const @StdVector @ByRef IntPointer participantIds);
     public native void setOrchestratorConfig(@Const @ByRef OrchestratorConfig orchestratorConfig);
-    public native void setNumNodes(@ByVal SizeType32 numNodes);
+    public native void setNumNodes(@Cast("tensorrt_llm::executor::SizeType32") int numNodes);
 }

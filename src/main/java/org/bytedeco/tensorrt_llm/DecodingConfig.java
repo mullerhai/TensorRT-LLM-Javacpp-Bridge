@@ -25,14 +25,6 @@ public class DecodingConfig extends Pointer {
         return new DecodingConfig((Pointer)this).offsetAddress(i);
     }
 
-    public DecodingConfig(@Optional DecodingMode decodingMode/*=std::nullopt*/,
-            @Optional LookaheadDecodingConfig lookaheadDecodingConfig/*=std::nullopt*/,
-            @Optional MedusaChoices medusaChoices/*=std::nullopt*/,
-            @Optional EagleConfig eagleConfig/*=std::nullopt*/) { super((Pointer)null); allocate(decodingMode, lookaheadDecodingConfig, medusaChoices, eagleConfig); }
-    private native void allocate(@Optional DecodingMode decodingMode/*=std::nullopt*/,
-            @Optional LookaheadDecodingConfig lookaheadDecodingConfig/*=std::nullopt*/,
-            @Optional MedusaChoices medusaChoices/*=std::nullopt*/,
-            @Optional EagleConfig eagleConfig/*=std::nullopt*/);
     public DecodingConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
@@ -40,20 +32,16 @@ public class DecodingConfig extends Pointer {
 
     // Decoding mode.
     /** \brief Sets decoding mode. Some modes require the use of their own setters. */
-    public native void setDecodingMode(@Const @ByRef DecodingMode arg0);
-    public native @Optional DecodingMode getDecodingMode();
 
     // Lookahead methods.
     /** \brief Sets lookahead decoding mode and config. */
     public native void setLookaheadDecodingConfig(@Const @ByRef LookaheadDecodingConfig lookaheadDecodingConfig);
     public native void enableSeamlessLookaheadDecoding();
     public native @Optional LookaheadDecodingConfig getLookaheadDecodingConfig();
-    public native @ByVal SizeType32 getLookaheadDecodingMaxNumRequest();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getLookaheadDecodingMaxNumRequest();
 
     // Medusa methods.
     /** \brief Sets medusa mode and config. */
-    public native void setMedusaChoices(@Const @ByRef MedusaChoices arg0);
-    public native @Optional MedusaChoices getMedusaChoices();
 
     // EAGLE methods.
     /** \brief Sets eagle mode and config. */

@@ -28,55 +28,17 @@ public class ExecutorConfig extends Pointer {
     @MemberGetter public static native @Cast("const uint64_t") long kDefaultMaxSeqIdleMicroseconds();
     public static final long kDefaultMaxSeqIdleMicroseconds = kDefaultMaxSeqIdleMicroseconds();
 
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultIterStatsMaxIterations();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultIterStatsMaxIterations();
+    public static final int kDefaultIterStatsMaxIterations = kDefaultIterStatsMaxIterations();
 
     // Per request stats may have additional overhead due to going through all requests. Turned off by default.
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultRequestStatsMaxIterations();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultRequestStatsMaxIterations();
+    public static final int kDefaultRequestStatsMaxIterations = kDefaultRequestStatsMaxIterations();
 
-    public ExecutorConfig(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 maxBeamWidth, @ByVal(nullValue = "tensorrt_llm::executor::SchedulerConfig()") SchedulerConfig schedulerConfig,
-            @ByVal(nullValue = "tensorrt_llm::executor::KvCacheConfig()") KvCacheConfig kvCacheConfig, @Cast("bool") boolean enableChunkedContext/*=true*/, @Cast("bool") boolean normalizeLogProbs/*=true*/,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::ExecutorConfig::kDefaultIterStatsMaxIterations)") SizeType32 iterStatsMaxIterations,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::ExecutorConfig::kDefaultRequestStatsMaxIterations)") SizeType32 requestStatsMaxIterations,
-            @ByVal(nullValue = "BatchingType::kINFLIGHT") BatchingType batchingType, @Optional SizeType32 maxBatchSize/*=std::nullopt*/,
-            @Optional SizeType32 maxNumTokens/*=std::nullopt*/,
-            @Optional ParallelConfig parallelConfig/*=std::nullopt*/,
-            @Optional PeftCacheConfig peftCacheConfig/*=std::nullopt*/,
-            @Optional LogitsPostProcessorConfig logitsPostProcessorConfig/*=std::nullopt*/,
-            @Optional DecodingConfig decodingConfig/*=std::nullopt*/, @Cast("bool") boolean useGpuDirectStorage/*=false*/,
-            float gpuWeightsPercent/*=1*/, @Optional SizeType32 maxQueueSize/*=std::nullopt*/,
-            @Const @ByRef(nullValue = "tensorrt_llm::executor::ExtendedRuntimePerfKnobConfig()") ExtendedRuntimePerfKnobConfig extendedRuntimePerfKnobConfig,
-            @Optional DebugConfig debugConfig/*=std::nullopt*/, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 recvPollPeriodMs,
-            @Cast("uint64_t") long maxSeqIdleMicroseconds/*=tensorrt_llm::executor::ExecutorConfig::kDefaultMaxSeqIdleMicroseconds*/,
-            @Optional SpeculativeDecodingConfig specDecConfig/*=std::nullopt*/,
-            @Optional GuidedDecodingConfig guidedDecodingConfig/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::AdditionalModelOutput> additionalModelOutputs/*=std::nullopt*/,
-            @Optional CacheTransceiverConfig cacheTransceiverConfig/*=std::nullopt*/,
-            @Cast("bool") boolean gatherGenerationLogits/*=false*/, @Cast("bool") boolean promptTableOffloading/*=false*/, @Cast("bool") boolean enableTrtOverlap/*=false*/,
-            @Cast("bool") boolean failFastOnAttentionWindowTooLarge/*=false*/) { super((Pointer)null); allocate(maxBeamWidth, schedulerConfig, kvCacheConfig, enableChunkedContext, normalizeLogProbs, iterStatsMaxIterations, requestStatsMaxIterations, batchingType, maxBatchSize, maxNumTokens, parallelConfig, peftCacheConfig, logitsPostProcessorConfig, decodingConfig, useGpuDirectStorage, gpuWeightsPercent, maxQueueSize, extendedRuntimePerfKnobConfig, debugConfig, recvPollPeriodMs, maxSeqIdleMicroseconds, specDecConfig, guidedDecodingConfig, additionalModelOutputs, cacheTransceiverConfig, gatherGenerationLogits, promptTableOffloading, enableTrtOverlap, failFastOnAttentionWindowTooLarge); }
-    private native void allocate(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 maxBeamWidth, @ByVal(nullValue = "tensorrt_llm::executor::SchedulerConfig()") SchedulerConfig schedulerConfig,
-            @ByVal(nullValue = "tensorrt_llm::executor::KvCacheConfig()") KvCacheConfig kvCacheConfig, @Cast("bool") boolean enableChunkedContext/*=true*/, @Cast("bool") boolean normalizeLogProbs/*=true*/,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::ExecutorConfig::kDefaultIterStatsMaxIterations)") SizeType32 iterStatsMaxIterations,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::ExecutorConfig::kDefaultRequestStatsMaxIterations)") SizeType32 requestStatsMaxIterations,
-            @ByVal(nullValue = "BatchingType::kINFLIGHT") BatchingType batchingType, @Optional SizeType32 maxBatchSize/*=std::nullopt*/,
-            @Optional SizeType32 maxNumTokens/*=std::nullopt*/,
-            @Optional ParallelConfig parallelConfig/*=std::nullopt*/,
-            @Optional PeftCacheConfig peftCacheConfig/*=std::nullopt*/,
-            @Optional LogitsPostProcessorConfig logitsPostProcessorConfig/*=std::nullopt*/,
-            @Optional DecodingConfig decodingConfig/*=std::nullopt*/, @Cast("bool") boolean useGpuDirectStorage/*=false*/,
-            float gpuWeightsPercent/*=1*/, @Optional SizeType32 maxQueueSize/*=std::nullopt*/,
-            @Const @ByRef(nullValue = "tensorrt_llm::executor::ExtendedRuntimePerfKnobConfig()") ExtendedRuntimePerfKnobConfig extendedRuntimePerfKnobConfig,
-            @Optional DebugConfig debugConfig/*=std::nullopt*/, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 recvPollPeriodMs,
-            @Cast("uint64_t") long maxSeqIdleMicroseconds/*=tensorrt_llm::executor::ExecutorConfig::kDefaultMaxSeqIdleMicroseconds*/,
-            @Optional SpeculativeDecodingConfig specDecConfig/*=std::nullopt*/,
-            @Optional GuidedDecodingConfig guidedDecodingConfig/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::AdditionalModelOutput> additionalModelOutputs/*=std::nullopt*/,
-            @Optional CacheTransceiverConfig cacheTransceiverConfig/*=std::nullopt*/,
-            @Cast("bool") boolean gatherGenerationLogits/*=false*/, @Cast("bool") boolean promptTableOffloading/*=false*/, @Cast("bool") boolean enableTrtOverlap/*=false*/,
-            @Cast("bool") boolean failFastOnAttentionWindowTooLarge/*=false*/);
     public ExecutorConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
-    public native @ByVal SizeType32 getMaxBeamWidth();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getMaxBeamWidth();
     public native @ByVal SchedulerConfig getSchedulerConfig();
     public native @ByVal KvCacheConfig getKvCacheConfig();
     // These functions return references and are useful for defining pybind properties.
@@ -86,55 +48,53 @@ public class ExecutorConfig extends Pointer {
     public native @ByRef KvCacheConfig getKvCacheConfigRef();
     public native @Cast("bool") boolean getEnableChunkedContext();
     public native @Cast("bool") boolean getNormalizeLogProbs();
-    public native @ByVal SizeType32 getIterStatsMaxIterations();
-    public native @ByVal SizeType32 getRequestStatsMaxIterations();
-    public native @ByVal BatchingType getBatchingType();
-    public native @Optional SizeType32 getMaxBatchSize();
-    public native @Optional SizeType32 getMaxNumTokens();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getIterStatsMaxIterations();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getRequestStatsMaxIterations();
+    public native BatchingType getBatchingType();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getMaxBatchSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getMaxNumTokens();
     public native @Optional ParallelConfig getParallelConfig();
     public native @Optional PeftCacheConfig getPeftCacheConfig();
     public native @Optional LogitsPostProcessorConfig getLogitsPostProcessorConfig();
     public native @Optional DecodingConfig getDecodingConfig();
     public native @Cast("bool") boolean getUseGpuDirectStorage();
     public native float getGpuWeightsPercent();
-    public native @Optional SizeType32 getMaxQueueSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getMaxQueueSize();
     public native @ByVal ExtendedRuntimePerfKnobConfig getExtendedRuntimePerfKnobConfig();
     public native @Optional DebugConfig getDebugConfig();
-    public native @ByVal SizeType32 getRecvPollPeriodMs();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getRecvPollPeriodMs();
     public native @Cast("uint64_t") long getMaxSeqIdleMicroseconds();
     public native @Optional SpeculativeDecodingConfig getSpecDecConfig();
     public native @Optional GuidedDecodingConfig getGuidedDecodingConfig();
-    public native @Optional std::vector<tensorrt_llm::executor::AdditionalModelOutput> getAdditionalModelOutputs();
     public native @Cast("bool") boolean getGatherGenerationLogits();
     public native @Cast("bool") boolean getPromptTableOffloading();
     public native @Optional CacheTransceiverConfig getCacheTransceiverConfig();
     public native @Cast("bool") boolean getEnableTrtOverlap();
     public native @Cast("bool") boolean getFailFastOnAttentionWindowTooLarge();
 
-    public native void setMaxBeamWidth(@ByVal SizeType32 maxBeamWidth);
-    public native void setMaxBatchSize(@ByVal SizeType32 maxBatchSize);
-    public native void setMaxNumTokens(@ByVal SizeType32 maxNumTokens);
+    public native void setMaxBeamWidth(@Cast("tensorrt_llm::executor::SizeType32") int maxBeamWidth);
+    public native void setMaxBatchSize(@Cast("tensorrt_llm::executor::SizeType32") int maxBatchSize);
+    public native void setMaxNumTokens(@Cast("tensorrt_llm::executor::SizeType32") int maxNumTokens);
     public native void setSchedulerConfig(@Const @ByRef SchedulerConfig schedulerConfig);
     public native void setKvCacheConfig(@Const @ByRef KvCacheConfig kvCacheConfig);
     public native void setEnableChunkedContext(@Cast("bool") boolean enableChunkedContext);
     public native void setNormalizeLogProbs(@Cast("bool") boolean normalizeLogProbs);
-    public native void setIterStatsMaxIterations(@ByVal SizeType32 iterStatsMaxIterations);
-    public native void setRequestStatsMaxIterations(@ByVal SizeType32 requestStatsMaxIterations);
-    public native void setBatchingType(@ByVal BatchingType batchingType);
+    public native void setIterStatsMaxIterations(@Cast("tensorrt_llm::executor::SizeType32") int iterStatsMaxIterations);
+    public native void setRequestStatsMaxIterations(@Cast("tensorrt_llm::executor::SizeType32") int requestStatsMaxIterations);
+    public native void setBatchingType(BatchingType batchingType);
     public native void setParallelConfig(@Const @ByRef ParallelConfig parallelConfig);
     public native void setPeftCacheConfig(@Const @ByRef PeftCacheConfig peftCacheConfig);
     public native void setLogitsPostProcessorConfig(@Const @ByRef LogitsPostProcessorConfig logitsPostProcessorConfig);
     public native void setDecodingConfig(@Const @ByRef DecodingConfig decodingConfig);
     public native void setUseGpuDirectStorage(@Cast("const bool") boolean useGpuDirectStorage);
     public native void setGpuWeightsPercent(float gpuWeightsPercent);
-    public native void setMaxQueueSize(@Optional SizeType32 maxQueueSize);
+    public native void setMaxQueueSize(@Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer maxQueueSize);
     public native void setExtendedRuntimePerfKnobConfig(@Const @ByRef ExtendedRuntimePerfKnobConfig extendedRuntimePerfKnobConfig);
     public native void setDebugConfig(@Const @ByRef DebugConfig debugConfig);
-    public native void setRecvPollPeriodMs(@Const @ByRef SizeType32 recvPollPeriodMs);
+    public native void setRecvPollPeriodMs(@Cast("const tensorrt_llm::executor::SizeType32") int recvPollPeriodMs);
     public native void setMaxSeqIdleMicroseconds(@Cast("uint64_t") long maxSeqIdleMicroseconds);
     public native void setSpecDecConfig(@Const @ByRef SpeculativeDecodingConfig specDecConfig);
     public native void setGuidedDecodingConfig(@Const @ByRef GuidedDecodingConfig guidedDecodingConfig);
-    public native void setAdditionalModelOutputs(@StdVector AdditionalModelOutput additionalModelOutputs);
     public native void setGatherGenerationLogits(@Cast("bool") boolean gatherGenerationLogits);
     public native void setPromptTableOffloading(@Cast("bool") boolean promptTableOffloading);
     public native void setCacheTransceiverConfig(@Const @ByRef CacheTransceiverConfig cacheTransceiverConfig);

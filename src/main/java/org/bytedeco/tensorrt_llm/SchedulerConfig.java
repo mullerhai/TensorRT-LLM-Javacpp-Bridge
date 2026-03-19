@@ -26,11 +26,11 @@ public class SchedulerConfig extends Pointer {
     }
 
     public SchedulerConfig(
-            @ByVal(nullValue = "CapacitySchedulerPolicy::kGUARANTEED_NO_EVICT") CapacitySchedulerPolicy capacitySchedulerPolicy,
+            CapacitySchedulerPolicy capacitySchedulerPolicy/*=tensorrt_llm::executor::CapacitySchedulerPolicy::kGUARANTEED_NO_EVICT*/,
             @Optional ContextChunkingPolicy contextChunkingPolicy/*=std::nullopt*/,
             @Optional DynamicBatchConfig dynamicBatchConfig/*=std::nullopt*/) { super((Pointer)null); allocate(capacitySchedulerPolicy, contextChunkingPolicy, dynamicBatchConfig); }
     private native void allocate(
-            @ByVal(nullValue = "CapacitySchedulerPolicy::kGUARANTEED_NO_EVICT") CapacitySchedulerPolicy capacitySchedulerPolicy,
+            CapacitySchedulerPolicy capacitySchedulerPolicy/*=tensorrt_llm::executor::CapacitySchedulerPolicy::kGUARANTEED_NO_EVICT*/,
             @Optional ContextChunkingPolicy contextChunkingPolicy/*=std::nullopt*/,
             @Optional DynamicBatchConfig dynamicBatchConfig/*=std::nullopt*/);
     public SchedulerConfig() { super((Pointer)null); allocate(); }
@@ -38,7 +38,7 @@ public class SchedulerConfig extends Pointer {
 
     public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef SchedulerConfig other);
 
-    public native @ByVal CapacitySchedulerPolicy getCapacitySchedulerPolicy();
+    public native CapacitySchedulerPolicy getCapacitySchedulerPolicy();
 
     public native @Optional ContextChunkingPolicy getContextChunkingPolicy();
 

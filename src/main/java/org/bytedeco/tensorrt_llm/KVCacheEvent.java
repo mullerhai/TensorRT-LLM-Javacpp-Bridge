@@ -9,25 +9,30 @@ import org.bytedeco.javacpp.annotation.*;
 import static org.bytedeco.tensorrt_llm.global.TRTLLM.*;
 
 
-@Namespace("tensorrt_llm::executor") @NoOffset @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
+@Namespace("tensorrt_llm::executor") @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
 public class KVCacheEvent extends Pointer {
     static { Loader.load(); }
+    /** Default native constructor. */
+    public KVCacheEvent() { super((Pointer)null); allocate(); }
+    /** Native array allocator. Access with {@link Pointer#position(long)}. */
+    public KVCacheEvent(long size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public KVCacheEvent(Pointer p) { super(p); }
+    private native void allocate();
+    private native void allocateArray(long size);
+    @Override public KVCacheEvent position(long position) {
+        return (KVCacheEvent)super.position(position);
+    }
+    @Override public KVCacheEvent getPointer(long i) {
+        return new KVCacheEvent((Pointer)this).offsetAddress(i);
+    }
 
-    public KVCacheEvent(@ByVal IdType eventId, @ByVal @Cast("tensorrt_llm::executor::KVCacheEventData*") std::variant<tensorrt_llm::executor::KVCacheCreatedData,tensorrt_llm::executor::KVCacheStoredData,tensorrt_llm::executor::KVCacheRemovedData,tensorrt_llm::executor::KVCacheUpdatedData> data, @ByVal SizeType32 windowSize,
-            @Optional SizeType32 attentionDpRank/*=std::nullopt*/) { super((Pointer)null); allocate(eventId, data, windowSize, attentionDpRank); }
-    private native void allocate(@ByVal IdType eventId, @ByVal @Cast("tensorrt_llm::executor::KVCacheEventData*") std::variant<tensorrt_llm::executor::KVCacheCreatedData,tensorrt_llm::executor::KVCacheStoredData,tensorrt_llm::executor::KVCacheRemovedData,tensorrt_llm::executor::KVCacheUpdatedData> data, @ByVal SizeType32 windowSize,
-            @Optional SizeType32 attentionDpRank/*=std::nullopt*/);
-    public KVCacheEvent(@ByVal IdType eventId, @ByVal @Cast("tensorrt_llm::executor::KVCacheEventData*") std::variant<tensorrt_llm::executor::KVCacheCreatedData,tensorrt_llm::executor::KVCacheStoredData,tensorrt_llm::executor::KVCacheRemovedData,tensorrt_llm::executor::KVCacheUpdatedData> data, @ByVal SizeType32 windowSize) { super((Pointer)null); allocate(eventId, data, windowSize); }
-    private native void allocate(@ByVal IdType eventId, @ByVal @Cast("tensorrt_llm::executor::KVCacheEventData*") std::variant<tensorrt_llm::executor::KVCacheCreatedData,tensorrt_llm::executor::KVCacheStoredData,tensorrt_llm::executor::KVCacheRemovedData,tensorrt_llm::executor::KVCacheUpdatedData> data, @ByVal SizeType32 windowSize);
 
     /** \brief The unique id of this event */
-    public native @ByRef IdType eventId(); public native KVCacheEvent eventId(IdType setter);
+    public native @Cast("tensorrt_llm::executor::IdType") long eventId(); public native KVCacheEvent eventId(long setter);
     /** \brief The data corresponding to this event */
-    public native @ByRef @Cast("tensorrt_llm::executor::KVCacheEventData*") std::variant<tensorrt_llm::executor::KVCacheCreatedData,tensorrt_llm::executor::KVCacheStoredData,tensorrt_llm::executor::KVCacheRemovedData,tensorrt_llm::executor::KVCacheUpdatedData> data(); public native KVCacheEvent data(std::variant<tensorrt_llm::executor::KVCacheCreatedData,tensorrt_llm::executor::KVCacheStoredData,tensorrt_llm::executor::KVCacheRemovedData,tensorrt_llm::executor::KVCacheUpdatedData> setter);
     /** \brief The sliding window size */
-    public native @ByRef SizeType32 windowSize(); public native KVCacheEvent windowSize(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int windowSize(); public native KVCacheEvent windowSize(int setter);
     /** \brief The attention DP rank of the event, if applicable */
-    public native @Optional SizeType32 attentionDpRank(); public native KVCacheEvent attentionDpRank(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer attentionDpRank(); public native KVCacheEvent attentionDpRank(IntPointer setter);
 }

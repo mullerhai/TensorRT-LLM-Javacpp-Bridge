@@ -28,5 +28,5 @@ public class KVCacheCreatedData extends Pointer {
     }
 
     /** \brief The amount of blocks at each cache level */
-    public native @StdVector SizeType32 numBlocksPerCacheLevel(); public native KVCacheCreatedData numBlocksPerCacheLevel(SizeType32 setter);
+    public native @StdVector @ByRef IntPointer numBlocksPerCacheLevel(); public native KVCacheCreatedData numBlocksPerCacheLevel(IntPointer setter);
 }

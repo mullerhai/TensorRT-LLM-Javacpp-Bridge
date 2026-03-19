@@ -25,9 +25,12 @@ public class KvCacheRetentionConfig extends Pointer {
         return new KvCacheRetentionConfig((Pointer)this).offsetAddress(i);
     }
 
-    @MemberGetter public static native @ByRef @Cast("const tensorrt_llm::executor::RetentionPriority*") SizeType32 kMinRetentionPriority();
-    @MemberGetter public static native @ByRef @Cast("const tensorrt_llm::executor::RetentionPriority*") SizeType32 kMaxRetentionPriority();
-    @MemberGetter public static native @ByRef @Cast("const tensorrt_llm::executor::RetentionPriority*") SizeType32 kDefaultRetentionPriority();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::RetentionPriority") int kMinRetentionPriority();
+    public static final int kMinRetentionPriority = kMinRetentionPriority();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::RetentionPriority") int kMaxRetentionPriority();
+    public static final int kMaxRetentionPriority = kMaxRetentionPriority();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::RetentionPriority") int kDefaultRetentionPriority();
+    public static final int kDefaultRetentionPriority = kDefaultRetentionPriority();
 
     /** \brief A single entry to set block priorities over a token range. Earlier ranges always take priority over later
      *  ones. For example, with a block size of 16, a range of [0, 17] would be applied to the first two blocks. */
@@ -36,54 +39,54 @@ public class KvCacheRetentionConfig extends Pointer {
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public TokenRangeRetentionConfig(Pointer p) { super(p); }
     
-        public TokenRangeRetentionConfig(@ByVal SizeType32 tokenStart, @Optional SizeType32 tokenEnd/*=std::nullopt*/,
-                    @ByVal(nullValue = "tensorrt_llm::executor::RetentionPriority(tensorrt_llm::executor::KvCacheRetentionConfig::kDefaultRetentionPriority)") @Cast("tensorrt_llm::executor::RetentionPriority*") SizeType32 priority,
-                    @Optional milliseconds durationMs/*=std::nullopt*/) { super((Pointer)null); allocate(tokenStart, tokenEnd, priority, durationMs); }
-        private native void allocate(@ByVal SizeType32 tokenStart, @Optional SizeType32 tokenEnd/*=std::nullopt*/,
-                    @ByVal(nullValue = "tensorrt_llm::executor::RetentionPriority(tensorrt_llm::executor::KvCacheRetentionConfig::kDefaultRetentionPriority)") @Cast("tensorrt_llm::executor::RetentionPriority*") SizeType32 priority,
-                    @Optional milliseconds durationMs/*=std::nullopt*/);
-        public TokenRangeRetentionConfig(@ByVal SizeType32 tokenStart) { super((Pointer)null); allocate(tokenStart); }
-        private native void allocate(@ByVal SizeType32 tokenStart);
+        public TokenRangeRetentionConfig(@Cast("tensorrt_llm::executor::SizeType32") int tokenStart, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer tokenEnd/*=std::nullopt*/,
+                    @Cast("tensorrt_llm::executor::RetentionPriority") int priority/*=tensorrt_llm::executor::KvCacheRetentionConfig::kDefaultRetentionPriority*/,
+                    @Cast("std::chrono::milliseconds*") @Optional LongPointer durationMs/*=std::nullopt*/) { super((Pointer)null); allocate(tokenStart, tokenEnd, priority, durationMs); }
+        private native void allocate(@Cast("tensorrt_llm::executor::SizeType32") int tokenStart, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer tokenEnd/*=std::nullopt*/,
+                    @Cast("tensorrt_llm::executor::RetentionPriority") int priority/*=tensorrt_llm::executor::KvCacheRetentionConfig::kDefaultRetentionPriority*/,
+                    @Cast("std::chrono::milliseconds*") @Optional LongPointer durationMs/*=std::nullopt*/);
+        public TokenRangeRetentionConfig(@Cast("tensorrt_llm::executor::SizeType32") int tokenStart) { super((Pointer)null); allocate(tokenStart); }
+        private native void allocate(@Cast("tensorrt_llm::executor::SizeType32") int tokenStart);
 
         public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef TokenRangeRetentionConfig other);
 
         /** \brief The first token of this range. */
-        public native @ByRef SizeType32 tokenStart(); public native TokenRangeRetentionConfig tokenStart(SizeType32 setter);
+        public native @Cast("tensorrt_llm::executor::SizeType32") int tokenStart(); public native TokenRangeRetentionConfig tokenStart(int setter);
         /** \brief The final token of this range. The end is not included in the range. This can be set to std::nullopt
          *  to extend the range to the end of the sequence. */
-        public native @Optional SizeType32 tokenEnd(); public native TokenRangeRetentionConfig tokenEnd(SizeType32 setter);
+        public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer tokenEnd(); public native TokenRangeRetentionConfig tokenEnd(IntPointer setter);
         /** \brief The priority of this token range. Higher priorities are less likely to be evicted or offloaded. */
-        public native @ByRef @Cast("tensorrt_llm::executor::RetentionPriority*") SizeType32 priority(); public native TokenRangeRetentionConfig priority(SizeType32 setter);
+        public native @Cast("tensorrt_llm::executor::RetentionPriority") int priority(); public native TokenRangeRetentionConfig priority(int setter);
         /** \brief The duration in ms that the block should remain at the given priority level. Set to std::nullopt to
          *  have no expiration time, and keep the block at the given priority level until it gets reclaimed. After the
          *  duration has passed, the block will be moved back to the {@code kDefaultRetentionPriority} level. */
-        public native @Optional milliseconds durationMs(); public native TokenRangeRetentionConfig durationMs(milliseconds setter);
+        public native @Cast("std::chrono::milliseconds*") @Optional LongPointer durationMs(); public native TokenRangeRetentionConfig durationMs(LongPointer setter);
     }
 
     public KvCacheRetentionConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
     public KvCacheRetentionConfig(@StdVector TokenRangeRetentionConfig tokenRangeRetentionPriorities,
-            @ByVal(nullValue = "tensorrt_llm::executor::RetentionPriority(tensorrt_llm::executor::KvCacheRetentionConfig::kDefaultRetentionPriority)") @Cast("tensorrt_llm::executor::RetentionPriority*") SizeType32 decodeRetentionPriority,
-            @Optional milliseconds decodeDurationMs/*=std::nullopt*/,
-            @ByVal(nullValue = "KvCacheTransferMode::DRAM") KvCacheTransferMode transferMode, @Cast("const std::string*") @ByRef(nullValue = "std::string(\"\")") BytePointer directory) { super((Pointer)null); allocate(tokenRangeRetentionPriorities, decodeRetentionPriority, decodeDurationMs, transferMode, directory); }
+            @Cast("tensorrt_llm::executor::RetentionPriority") int decodeRetentionPriority/*=tensorrt_llm::executor::KvCacheRetentionConfig::kDefaultRetentionPriority*/,
+            @Cast("std::chrono::milliseconds*") @Optional LongPointer decodeDurationMs/*=std::nullopt*/,
+            KvCacheTransferMode transferMode/*=tensorrt_llm::executor::KvCacheTransferMode::DRAM*/, @StdString BytePointer directory/*=""*/) { super((Pointer)null); allocate(tokenRangeRetentionPriorities, decodeRetentionPriority, decodeDurationMs, transferMode, directory); }
     private native void allocate(@StdVector TokenRangeRetentionConfig tokenRangeRetentionPriorities,
-            @ByVal(nullValue = "tensorrt_llm::executor::RetentionPriority(tensorrt_llm::executor::KvCacheRetentionConfig::kDefaultRetentionPriority)") @Cast("tensorrt_llm::executor::RetentionPriority*") SizeType32 decodeRetentionPriority,
-            @Optional milliseconds decodeDurationMs/*=std::nullopt*/,
-            @ByVal(nullValue = "KvCacheTransferMode::DRAM") KvCacheTransferMode transferMode, @Cast("const std::string*") @ByRef(nullValue = "std::string(\"\")") BytePointer directory);
+            @Cast("tensorrt_llm::executor::RetentionPriority") int decodeRetentionPriority/*=tensorrt_llm::executor::KvCacheRetentionConfig::kDefaultRetentionPriority*/,
+            @Cast("std::chrono::milliseconds*") @Optional LongPointer decodeDurationMs/*=std::nullopt*/,
+            KvCacheTransferMode transferMode/*=tensorrt_llm::executor::KvCacheTransferMode::DRAM*/, @StdString BytePointer directory/*=""*/);
     public KvCacheRetentionConfig(@StdVector TokenRangeRetentionConfig tokenRangeRetentionPriorities) { super((Pointer)null); allocate(tokenRangeRetentionPriorities); }
     private native void allocate(@StdVector TokenRangeRetentionConfig tokenRangeRetentionPriorities);
 
     public native @StdVector TokenRangeRetentionConfig getTokenRangeRetentionConfigs();
-    public native @ByVal @Cast("tensorrt_llm::executor::RetentionPriority*") SizeType32 getDecodeRetentionPriority();
-    public native @Optional milliseconds getDecodeDurationMs();
-    public native @ByVal KvCacheTransferMode getTransferMode();
-    public native @Cast("const std::string*") @ByRef BytePointer getDirectory();
+    public native @Cast("tensorrt_llm::executor::RetentionPriority") int getDecodeRetentionPriority();
+    public native @Cast("std::chrono::milliseconds*") @Optional LongPointer getDecodeDurationMs();
+    public native KvCacheTransferMode getTransferMode();
+    public native @StdString BytePointer getDirectory();
 
     /** \brief Convert the token range data into an entry per kv block. Returns a tuple of vectors corresponding to the
      *  priorities and durations for each block. */
     public native @StdVector RetentionPriorityAndDuration getPerBlockRetentionPriorityDuration(
-            @ByVal SizeType32 blockSize, @ByVal SizeType32 seqLen);
+            @Cast("tensorrt_llm::executor::SizeType32") int blockSize, @Cast("tensorrt_llm::executor::SizeType32") int seqLen);
 
     public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef KvCacheRetentionConfig other);
 }

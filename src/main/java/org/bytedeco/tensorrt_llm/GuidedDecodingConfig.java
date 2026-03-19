@@ -23,14 +23,6 @@ public class GuidedDecodingConfig extends Pointer {
         /** \brief Enable guided decoding with LLGuidance backend. */
         kLLGUIDANCE = 1;
 
-    public GuidedDecodingConfig(@Cast("tensorrt_llm::executor::GuidedDecodingConfig::GuidedDecodingBackend") int backend,
-            @Optional std::vector<std::string> encodedVocab/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer tokenizerStr/*=std::nullopt*/,
-            @Optional std::vector<TokenIdType> stopTokenIds/*=std::nullopt*/) { super((Pointer)null); allocate(backend, encodedVocab, tokenizerStr, stopTokenIds); }
-    private native void allocate(@Cast("tensorrt_llm::executor::GuidedDecodingConfig::GuidedDecodingBackend") int backend,
-            @Optional std::vector<std::string> encodedVocab/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer tokenizerStr/*=std::nullopt*/,
-            @Optional std::vector<TokenIdType> stopTokenIds/*=std::nullopt*/);
     public GuidedDecodingConfig(@Cast("tensorrt_llm::executor::GuidedDecodingConfig::GuidedDecodingBackend") int backend) { super((Pointer)null); allocate(backend); }
     private native void allocate(@Cast("tensorrt_llm::executor::GuidedDecodingConfig::GuidedDecodingBackend") int backend);
 
@@ -39,14 +31,11 @@ public class GuidedDecodingConfig extends Pointer {
     public native void setBackend(@Cast("const tensorrt_llm::executor::GuidedDecodingConfig::GuidedDecodingBackend") int backend);
     public native @Cast("tensorrt_llm::executor::GuidedDecodingConfig::GuidedDecodingBackend") int getBackend();
 
-    public native void setEncodedVocab(@Cast("std::string*") @StdVector BytePointer encodedVocab);
-    public native @Optional std::vector<std::string> getEncodedVocab();
+    public native void setTokenizerStr(@StdString BytePointer tokenizerStr);
+    public native @StdString @Optional BytePointer getTokenizerStr();
 
-    public native void setTokenizerStr(@Cast("const std::string*") @ByRef BytePointer tokenizerStr);
-    public native @Cast("std::string*") @Optional BytePointer getTokenizerStr();
-
-    public native void setStopTokenIds(@StdVector TokenIdType stopTokenIds);
-    public native @Optional std::vector<TokenIdType> getStopTokenIds();
+    public native void setStopTokenIds(@Const @StdVector @ByRef IntPointer stopTokenIds);
+    public native @StdVector @Optional IntPointer getStopTokenIds();
 
     public native void validate();
 }

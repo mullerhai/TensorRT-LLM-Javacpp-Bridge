@@ -8,10 +8,10 @@ import org.bytedeco.javacpp.annotation.*;
 
 import static org.bytedeco.tensorrt_llm.global.TRTLLM.*;
 
-@Namespace("tensorrt_llm::batch_manager") @Opaque @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
-public class LlmRequest extends Pointer {
+@Namespace("tensorrt_llm::executor::kv_cache") @Opaque @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
+public class CommState extends Pointer {
     /** Empty constructor. Calls {@code super((Pointer)null)}. */
-    public LlmRequest() { super((Pointer)null); }
+    public CommState() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-    public LlmRequest(Pointer p) { super(p); }
+    public CommState(Pointer p) { super(p); }
 }

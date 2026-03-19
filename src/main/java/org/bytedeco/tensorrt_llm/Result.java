@@ -32,13 +32,11 @@ public class Result extends Pointer {
     public native @Cast("bool") boolean isFinal(); public native Result isFinal(boolean setter);
 
     /** \brief The output tokens for each beam */
-    public native @ByRef BeamTokens outputTokenIds(); public native Result outputTokenIds(BeamTokens setter);
 
     /** \brief The cumulative log probabilities. Size beamSize. */
-    public native @Optional VecLogProbs cumLogProbs(); public native Result cumLogProbs(VecLogProbs setter);
+    public native @StdVector @Optional FloatPointer cumLogProbs(); public native Result cumLogProbs(FloatPointer setter);
 
     /** \brief The log probabilities for each generated token. Size [beamSize, outputLen] */
-    public native @Optional std::vector<VecLogProbs> logProbs(); public native Result logProbs(std::vector<VecLogProbs> setter);
 
     /** \brief The context logits. Size [promptLen, vocabSizePadded] */
     public native @Optional Tensor contextLogits(); public native Result contextLogits(Tensor setter);
@@ -65,7 +63,7 @@ public class Result extends Pointer {
      *  In autoregressive decoding, it is equal to the maximum length of the beam in outputTokenIds.
      *  In speculative decoding, might be less than maximum length of the beam in outputTokenIds as more than
      *  one token can be generated per iteration. Used for speculative decoding statistics. */
-    public native @ByRef SizeType32 decodingIter(); public native Result decodingIter(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int decodingIter(); public native Result decodingIter(int setter);
 
     /** \brief The average number of decoded tokens per iteration. For standard model it is 1.
      *  For speculative decoding model >= 1 -- number of draft tokens accepted per step + 1. */
@@ -74,7 +72,7 @@ public class Result extends Pointer {
     /** \brief The index of the output sequence of this result where 0 <= sequenceIndex < numReturnSequences.
      *  In beam search (beamWidth > 1), this index will be always zero because all beams to be returned are included
      *  in this result. */
-    public native @ByRef SizeType32 sequenceIndex(); public native Result sequenceIndex(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int sequenceIndex(); public native Result sequenceIndex(int setter);
 
     /** \brief Indicates if this is the final result for a given sequence in the request
      *  In beam search (beamWidth > 1), the value will always equal to the value of isFinal. */

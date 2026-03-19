@@ -24,18 +24,8 @@ public class LogitsPostProcessorConfig extends Pointer {
         return new LogitsPostProcessorConfig((Pointer)this).offsetAddress(i);
     }
 
-    public LogitsPostProcessorConfig(@Optional LogitsPostProcessorMap processorMap/*=std::nullopt*/,
-            @Optional LogitsPostProcessorBatched processorBatched/*=std::nullopt*/, @Cast("bool") boolean replicate/*=true*/) { super((Pointer)null); allocate(processorMap, processorBatched, replicate); }
-    private native void allocate(@Optional LogitsPostProcessorMap processorMap/*=std::nullopt*/,
-            @Optional LogitsPostProcessorBatched processorBatched/*=std::nullopt*/, @Cast("bool") boolean replicate/*=true*/);
     public LogitsPostProcessorConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
-
-    public native @Optional LogitsPostProcessorMap getProcessorMap();
-    public native @Optional LogitsPostProcessorBatched getProcessorBatched();
     public native @Cast("bool") boolean getReplicate();
-
-    public native void setProcessorMap(@Const @ByRef LogitsPostProcessorMap processorMap);
-    public native void setProcessorBatched(@Const @ByRef LogitsPostProcessorBatched processorBatched);
     public native void setReplicate(@Cast("bool") boolean replicate);
 }

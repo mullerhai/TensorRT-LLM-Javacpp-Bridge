@@ -25,64 +25,39 @@ public class KvCacheConfig extends Pointer {
         return new KvCacheConfig((Pointer)this).offsetAddress(i);
     }
 
-    @MemberGetter public static native @Const @ByRef auto kDefaultGpuMemFraction();
 
-    public KvCacheConfig(@Cast("bool") boolean enableBlockReuse/*=true*/, @Optional SizeType32 maxTokens/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> maxAttentionWindowVec/*=std::nullopt*/,
-            @Optional SizeType32 sinkTokenLength/*=std::nullopt*/,
-            @Optional FloatType freeGpuMemoryFraction/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer hostCacheSize/*=std::nullopt*/, @Cast("bool") boolean onboardBlocks/*=true*/,
-            @Optional FloatType crossKvCacheFraction/*=std::nullopt*/,
-            @Cast("tensorrt_llm::executor::RetentionPriority*") @Optional SizeType32 secondaryOffloadMinPriority/*=std::nullopt*/, @Cast("size_t") long eventBufferMaxSize/*=0*/,
-            @Cast("bool") boolean enablePartialReuse/*=true*/, @Cast("bool") boolean copyOnPartialReuse/*=true*/, @Cast("bool") boolean useUvm/*=false*/,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(5)") SizeType32 attentionDpEventsGatherPeriodMs,
-            @Optional RuntimeDefaults runtimeDefaults/*=std::nullopt*/,
-            @Cast("const uint64_t") long maxGpuTotalBytes/*=0*/) { super((Pointer)null); allocate(enableBlockReuse, maxTokens, maxAttentionWindowVec, sinkTokenLength, freeGpuMemoryFraction, hostCacheSize, onboardBlocks, crossKvCacheFraction, secondaryOffloadMinPriority, eventBufferMaxSize, enablePartialReuse, copyOnPartialReuse, useUvm, attentionDpEventsGatherPeriodMs, runtimeDefaults, maxGpuTotalBytes); }
-    private native void allocate(@Cast("bool") boolean enableBlockReuse/*=true*/, @Optional SizeType32 maxTokens/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> maxAttentionWindowVec/*=std::nullopt*/,
-            @Optional SizeType32 sinkTokenLength/*=std::nullopt*/,
-            @Optional FloatType freeGpuMemoryFraction/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer hostCacheSize/*=std::nullopt*/, @Cast("bool") boolean onboardBlocks/*=true*/,
-            @Optional FloatType crossKvCacheFraction/*=std::nullopt*/,
-            @Cast("tensorrt_llm::executor::RetentionPriority*") @Optional SizeType32 secondaryOffloadMinPriority/*=std::nullopt*/, @Cast("size_t") long eventBufferMaxSize/*=0*/,
-            @Cast("bool") boolean enablePartialReuse/*=true*/, @Cast("bool") boolean copyOnPartialReuse/*=true*/, @Cast("bool") boolean useUvm/*=false*/,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(5)") SizeType32 attentionDpEventsGatherPeriodMs,
-            @Optional RuntimeDefaults runtimeDefaults/*=std::nullopt*/,
-            @Cast("const uint64_t") long maxGpuTotalBytes/*=0*/);
     public KvCacheConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
     public native @Cast("bool") boolean getEnableBlockReuse();
     public native @Cast("bool") boolean getEnablePartialReuse();
     public native @Cast("bool") boolean getCopyOnPartialReuse();
-    public native @Optional SizeType32 getMaxTokens();
-    public native @Optional std::vector<tensorrt_llm::executor::SizeType32> getMaxAttentionWindowVec();
-    public native @Optional SizeType32 getSinkTokenLength();
-    public native @Optional FloatType getFreeGpuMemoryFraction();
-    public native @Optional FloatType getCrossKvCacheFraction();
-    public native @Cast("size_t*") @Optional SizeTPointer getHostCacheSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getMaxTokens();
+    public native @StdVector @Optional IntPointer getMaxAttentionWindowVec();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getSinkTokenLength();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getFreeGpuMemoryFraction();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getCrossKvCacheFraction();
+    public native @Cast("size_t*") @Optional LongPointer getHostCacheSize();
     public native @Cast("bool") boolean getOnboardBlocks();
-    public native @Cast("tensorrt_llm::executor::RetentionPriority*") @Optional SizeType32 getSecondaryOffloadMinPriority();
+    public native @Cast("tensorrt_llm::executor::RetentionPriority*") @Optional IntPointer getSecondaryOffloadMinPriority();
     public native @Cast("size_t") long getEventBufferMaxSize();
     public native @Cast("bool") boolean getUseUvm();
-    public native @ByVal SizeType32 getAttentionDpEventsGatherPeriodMs();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getAttentionDpEventsGatherPeriodMs();
     public native @Cast("uint64_t") long getMaxGpuTotalBytes();
 
     public native void setEnableBlockReuse(@Cast("bool") boolean enableBlockReuse);
     public native void setEnablePartialReuse(@Cast("bool") boolean enablePartialReuse);
     public native void setCopyOnPartialReuse(@Cast("bool") boolean copyOnPartialReuse);
-    public native void setMaxTokens(@Optional SizeType32 maxTokens);
-    public native void setMaxAttentionWindowVec(@StdVector SizeType32 maxAttentionWindowVec);
-    public native void setSinkTokenLength(@ByVal SizeType32 sinkTokenLength);
-    public native void setFreeGpuMemoryFraction(@ByVal FloatType freeGpuMemoryFraction);
-    public native void setCrossKvCacheFraction(@ByVal FloatType crossKvCacheFraction);
+    public native void setMaxTokens(@Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer maxTokens);
+    public native void setMaxAttentionWindowVec(@StdVector @ByVal IntPointer maxAttentionWindowVec);
+    public native void setSinkTokenLength(@Cast("tensorrt_llm::executor::SizeType32") int sinkTokenLength);
+    public native void setFreeGpuMemoryFraction(@Cast("tensorrt_llm::executor::FloatType") float freeGpuMemoryFraction);
+    public native void setCrossKvCacheFraction(@Cast("tensorrt_llm::executor::FloatType") float crossKvCacheFraction);
     public native void setHostCacheSize(@Cast("size_t") long hostCacheSize);
     public native void setOnboardBlocks(@Cast("bool") boolean onboardBlocks);
-    public native void setSecondaryOffloadMinPriority(@Cast("tensorrt_llm::executor::RetentionPriority*") @Optional SizeType32 secondaryOffloadMinPriority);
+    public native void setSecondaryOffloadMinPriority(@Cast("tensorrt_llm::executor::RetentionPriority*") @Optional IntPointer secondaryOffloadMinPriority);
     public native void setEventBufferMaxSize(@Cast("size_t") long eventBufferMaxSize);
     public native void setUseUvm(@Cast("bool") boolean useUvm);
-    public native void setAttentionDpEventsGatherPeriodMs(@ByVal SizeType32 attentionDpEventsGatherPeriodMs);
+    public native void setAttentionDpEventsGatherPeriodMs(@Cast("tensorrt_llm::executor::SizeType32") int attentionDpEventsGatherPeriodMs);
     public native void setMaxGpuTotalBytes(@Cast("uint64_t") long maxGpuTotalBytes);
-
-    public native void fillEmptyFieldsFromRuntimeDefaults(@Const @ByRef RuntimeDefaults runtimeDefaults);
 }

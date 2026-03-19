@@ -26,9 +26,9 @@ public class ExtendedRuntimePerfKnobConfig extends Pointer {
     }
 
     public ExtendedRuntimePerfKnobConfig(@Cast("bool") boolean multiBlockMode/*=true*/, @Cast("bool") boolean enableContextFMHAFP32Acc/*=false*/,
-            @Cast("bool") boolean cudaGraphMode/*=false*/, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 cudaGraphCacheSize) { super((Pointer)null); allocate(multiBlockMode, enableContextFMHAFP32Acc, cudaGraphMode, cudaGraphCacheSize); }
+            @Cast("bool") boolean cudaGraphMode/*=false*/, @Cast("tensorrt_llm::executor::SizeType32") int cudaGraphCacheSize/*=0*/) { super((Pointer)null); allocate(multiBlockMode, enableContextFMHAFP32Acc, cudaGraphMode, cudaGraphCacheSize); }
     private native void allocate(@Cast("bool") boolean multiBlockMode/*=true*/, @Cast("bool") boolean enableContextFMHAFP32Acc/*=false*/,
-            @Cast("bool") boolean cudaGraphMode/*=false*/, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 cudaGraphCacheSize);
+            @Cast("bool") boolean cudaGraphMode/*=false*/, @Cast("tensorrt_llm::executor::SizeType32") int cudaGraphCacheSize/*=0*/);
     public ExtendedRuntimePerfKnobConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
@@ -37,10 +37,10 @@ public class ExtendedRuntimePerfKnobConfig extends Pointer {
     public native @Cast("bool") boolean getMultiBlockMode();
     public native @Cast("bool") boolean getEnableContextFMHAFP32Acc();
     public native @Cast("bool") boolean getCudaGraphMode();
-    public native @ByVal SizeType32 getCudaGraphCacheSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getCudaGraphCacheSize();
 
     public native void setMultiBlockMode(@Cast("bool") boolean multiBlockMode);
     public native void setEnableContextFMHAFP32Acc(@Cast("bool") boolean enableContextFMHAFP32Acc);
     public native void setCudaGraphMode(@Cast("bool") boolean cudaGraphMode);
-    public native void setCudaGraphCacheSize(@ByVal SizeType32 cacheSize);
+    public native void setCudaGraphCacheSize(@Cast("tensorrt_llm::executor::SizeType32") int cacheSize);
 }

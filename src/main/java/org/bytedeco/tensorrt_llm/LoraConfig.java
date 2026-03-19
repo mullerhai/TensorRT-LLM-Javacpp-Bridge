@@ -17,15 +17,15 @@ public class LoraConfig extends Pointer {
     public LoraConfig(Pointer p) { super(p); }
 
     public LoraConfig(
-            @ByVal IdType taskId, @Optional Tensor weights/*=std::nullopt*/, @Optional Tensor config/*=std::nullopt*/) { super((Pointer)null); allocate(taskId, weights, config); }
+            @Cast("tensorrt_llm::executor::IdType") long taskId, @Optional Tensor weights/*=std::nullopt*/, @Optional Tensor config/*=std::nullopt*/) { super((Pointer)null); allocate(taskId, weights, config); }
     private native void allocate(
-            @ByVal IdType taskId, @Optional Tensor weights/*=std::nullopt*/, @Optional Tensor config/*=std::nullopt*/);
+            @Cast("tensorrt_llm::executor::IdType") long taskId, @Optional Tensor weights/*=std::nullopt*/, @Optional Tensor config/*=std::nullopt*/);
     public LoraConfig(
-            @ByVal IdType taskId) { super((Pointer)null); allocate(taskId); }
+            @Cast("tensorrt_llm::executor::IdType") long taskId) { super((Pointer)null); allocate(taskId); }
     private native void allocate(
-            @ByVal IdType taskId);
+            @Cast("tensorrt_llm::executor::IdType") long taskId);
 
-    public native @ByVal IdType getTaskId();
+    public native @Cast("tensorrt_llm::executor::IdType") long getTaskId();
     public native @Optional Tensor getWeights();
     public native @Optional Tensor getConfig();
 }

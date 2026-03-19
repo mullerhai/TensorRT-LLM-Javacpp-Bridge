@@ -8,11 +8,10 @@ import org.bytedeco.javacpp.annotation.*;
 
 import static org.bytedeco.tensorrt_llm.global.TRTLLM.*;
 
-// #endif
-@Namespace("tensorrt_llm::runtime") @Opaque @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
-public class CudaStream extends Pointer {
+@Namespace("tensorrt_llm::executor::kv_cache") @Opaque @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
+public class CacheState extends Pointer {
     /** Empty constructor. Calls {@code super((Pointer)null)}. */
-    public CudaStream() { super((Pointer)null); }
+    public CacheState() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-    public CudaStream(Pointer p) { super(p); }
+    public CacheState(Pointer p) { super(p); }
 }

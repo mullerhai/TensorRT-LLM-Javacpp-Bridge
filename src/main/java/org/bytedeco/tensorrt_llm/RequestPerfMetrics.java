@@ -47,17 +47,17 @@ public class RequestPerfMetrics extends Pointer {
         }
     
         /** \brief The time when the request arrived */
-        public native @ByRef @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint*") std::chrono::time_point<std::chrono::steady_clock> arrivalTime(); public native TimingMetrics arrivalTime(std::chrono::time_point<std::chrono::steady_clock> setter);
+        public native @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint") long arrivalTime(); public native TimingMetrics arrivalTime(long setter);
         /** \brief The time when the request was first scheduled */
-        public native @ByRef @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint*") std::chrono::time_point<std::chrono::steady_clock> firstScheduledTime(); public native TimingMetrics firstScheduledTime(std::chrono::time_point<std::chrono::steady_clock> setter);
+        public native @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint") long firstScheduledTime(); public native TimingMetrics firstScheduledTime(long setter);
         /** \brief The time when the first token was generated */
-        public native @ByRef @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint*") std::chrono::time_point<std::chrono::steady_clock> firstTokenTime(); public native TimingMetrics firstTokenTime(std::chrono::time_point<std::chrono::steady_clock> setter);
+        public native @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint") long firstTokenTime(); public native TimingMetrics firstTokenTime(long setter);
         /** \brief The time when the request was finished */
-        public native @ByRef @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint*") std::chrono::time_point<std::chrono::steady_clock> lastTokenTime(); public native TimingMetrics lastTokenTime(std::chrono::time_point<std::chrono::steady_clock> setter);
+        public native @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint") long lastTokenTime(); public native TimingMetrics lastTokenTime(long setter);
         /** \brief Start time of the KV cache transfer for disaggregated serving */
-        public native @ByRef @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint*") std::chrono::time_point<std::chrono::steady_clock> kvCacheTransferStart(); public native TimingMetrics kvCacheTransferStart(std::chrono::time_point<std::chrono::steady_clock> setter);
+        public native @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint") long kvCacheTransferStart(); public native TimingMetrics kvCacheTransferStart(long setter);
         /** \brief End time of the KV cache transfer for disaggregated serving */
-        public native @ByRef @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint*") std::chrono::time_point<std::chrono::steady_clock> kvCacheTransferEnd(); public native TimingMetrics kvCacheTransferEnd(std::chrono::time_point<std::chrono::steady_clock> setter);
+        public native @Cast("tensorrt_llm::executor::RequestPerfMetrics::TimePoint") long kvCacheTransferEnd(); public native TimingMetrics kvCacheTransferEnd(long setter);
         /** \brief KV Cache size transfer for disaggregated serving */
         public native @Cast("size_t") long kvCacheSize(); public native TimingMetrics kvCacheSize(long setter);
     }
@@ -80,13 +80,13 @@ public class RequestPerfMetrics extends Pointer {
         }
     
         /** \brief Number of total allocated blocks */
-        public native @ByRef SizeType32 numTotalAllocatedBlocks(); public native KvCacheMetrics numTotalAllocatedBlocks(SizeType32 setter);
+        public native @Cast("tensorrt_llm::executor::SizeType32") int numTotalAllocatedBlocks(); public native KvCacheMetrics numTotalAllocatedBlocks(int setter);
         /** \brief Number of newly allocated blocks */
-        public native @ByRef SizeType32 numNewAllocatedBlocks(); public native KvCacheMetrics numNewAllocatedBlocks(SizeType32 setter);
+        public native @Cast("tensorrt_llm::executor::SizeType32") int numNewAllocatedBlocks(); public native KvCacheMetrics numNewAllocatedBlocks(int setter);
         /** \brief Number of reused blocks */
-        public native @ByRef SizeType32 numReusedBlocks(); public native KvCacheMetrics numReusedBlocks(SizeType32 setter);
+        public native @Cast("tensorrt_llm::executor::SizeType32") int numReusedBlocks(); public native KvCacheMetrics numReusedBlocks(int setter);
         /** \brief Number of missed blocks */
-        public native @ByRef SizeType32 numMissedBlocks(); public native KvCacheMetrics numMissedBlocks(SizeType32 setter);
+        public native @Cast("tensorrt_llm::executor::SizeType32") int numMissedBlocks(); public native KvCacheMetrics numMissedBlocks(int setter);
         /** \brief KV Cache Hit Rate, defined as reusedBlocks / (reusedBlocks + missedBlocks) */
         public native @Cast("tensorrt_llm::executor::FloatType") float kvCacheHitRate(); public native KvCacheMetrics kvCacheHitRate(float setter);
     }
@@ -111,9 +111,9 @@ public class RequestPerfMetrics extends Pointer {
         /** \brief Token acceptance rate for speculative decoding requests */
         public native @Cast("tensorrt_llm::executor::FloatType") float acceptanceRate(); public native SpeculativeDecodingMetrics acceptanceRate(float setter);
         /** \brief Total number of accepted draft tokens */
-        public native @ByRef SizeType32 totalAcceptedDraftTokens(); public native SpeculativeDecodingMetrics totalAcceptedDraftTokens(SizeType32 setter);
+        public native @Cast("tensorrt_llm::executor::SizeType32") int totalAcceptedDraftTokens(); public native SpeculativeDecodingMetrics totalAcceptedDraftTokens(int setter);
         /** \brief Total number of draft tokens used in the request */
-        public native @ByRef SizeType32 totalDraftTokens(); public native SpeculativeDecodingMetrics totalDraftTokens(SizeType32 setter);
+        public native @Cast("tensorrt_llm::executor::SizeType32") int totalDraftTokens(); public native SpeculativeDecodingMetrics totalDraftTokens(int setter);
     }
 
     public native @ByRef TimingMetrics timingMetrics(); public native RequestPerfMetrics timingMetrics(TimingMetrics setter);

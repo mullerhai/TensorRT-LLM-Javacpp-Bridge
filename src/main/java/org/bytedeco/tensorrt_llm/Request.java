@@ -16,7 +16,8 @@ public class Request extends Pointer {
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Request(Pointer p) { super(p); }
 
-    @MemberGetter public static native @Const @ByRef PriorityType kDefaultPriority();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::PriorityType") float kDefaultPriority();
+    public static final float kDefaultPriority = kDefaultPriority();
 
     /** \brief The Request constructor
      <p>
@@ -65,86 +66,24 @@ public class Request extends Pointer {
      *  that may involve multiple micro-batches). A request can be timed-out before ever being scheduled.
      *  @param cacheSaltID Salt ID for KV cache blocks to limit the kv cache reuse to the requests with the same string.
      *  @param disaggRequestId Disaggregated request ID. */
-    public Request(@ByVal VecTokens inputTokenIds, @ByVal SizeType32 maxTokens, @Cast("bool") boolean streaming/*=false*/,
-            @Const @ByRef(nullValue = "tensorrt_llm::executor::SamplingConfig()") SamplingConfig samplingConfig, @Const @ByRef(nullValue = "tensorrt_llm::executor::OutputConfig()") OutputConfig outputConfig,
-            @Optional SizeType32 endId/*=std::nullopt*/, @Optional SizeType32 padId/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> positionIds/*=std::nullopt*/,
-            @Optional std::list<VecTokens> badWords/*=std::nullopt*/,
-            @Optional std::list<VecTokens> stopWords/*=std::nullopt*/,
-            @Optional Tensor embeddingBias/*=std::nullopt*/,
-            @Optional ExternalDraftTokensConfig externalDraftTokensConfig/*=std::nullopt*/,
-            @Optional PromptTuningConfig pTuningConfig/*=std::nullopt*/,
-            @Optional MultimodalInput multimodalInput/*=std::nullopt*/,
-            @Optional Tensor multimodalEmbedding/*=std::nullopt*/, @Optional MropeConfig mRopeConfig/*=std::nullopt*/,
-            @Optional LoraConfig loraConfig/*=std::nullopt*/,
-            @Optional LookaheadDecodingConfig lookaheadConfig/*=std::nullopt*/,
-            @Optional KvCacheRetentionConfig kvCacheRetentionConfig/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer logitsPostProcessorName/*=std::nullopt*/,
-            @Optional LogitsPostProcessor logitsPostProcessor/*=std::nullopt*/,
-            @Optional VecTokens encoderInputTokenIds/*=std::nullopt*/, @Optional IdType clientId/*=std::nullopt*/,
-            @Cast("bool") boolean returnAllGeneratedTokens/*=false*/, @ByVal(nullValue = "PriorityType(tensorrt_llm::executor::Request::kDefaultPriority)") PriorityType priority,
-            @ByVal(nullValue = "RequestType::REQUEST_TYPE_CONTEXT_AND_GENERATION") RequestType type,
-            @Optional ContextPhaseParams contextPhaseParams/*=std::nullopt*/,
-            @Optional Tensor encoderInputFeatures/*=std::nullopt*/,
-            @Optional SizeType32 encoderOutputLength/*=std::nullopt*/,
-            @Optional Tensor crossAttentionMask/*=std::nullopt*/, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numReturnSequences,
-            @Optional EagleConfig eagleConfig/*=std::nullopt*/, @Optional Tensor skipCrossAttnBlocks/*=std::nullopt*/,
-            @Optional GuidedDecodingParams guidedDecodingParams/*=std::nullopt*/,
-            @Optional SizeType32 languageAdapterUid/*=std::nullopt*/,
-            @Optional MillisecondsType allottedTimeMs/*=std::nullopt*/,
-            @Optional CacheSaltIDType cacheSaltID/*=std::nullopt*/,
-            @Optional IdType disaggRequestId/*=std::nullopt*/) { super((Pointer)null); allocate(inputTokenIds, maxTokens, streaming, samplingConfig, outputConfig, endId, padId, positionIds, badWords, stopWords, embeddingBias, externalDraftTokensConfig, pTuningConfig, multimodalInput, multimodalEmbedding, mRopeConfig, loraConfig, lookaheadConfig, kvCacheRetentionConfig, logitsPostProcessorName, logitsPostProcessor, encoderInputTokenIds, clientId, returnAllGeneratedTokens, priority, type, contextPhaseParams, encoderInputFeatures, encoderOutputLength, crossAttentionMask, numReturnSequences, eagleConfig, skipCrossAttnBlocks, guidedDecodingParams, languageAdapterUid, allottedTimeMs, cacheSaltID, disaggRequestId); }
-    private native void allocate(@ByVal VecTokens inputTokenIds, @ByVal SizeType32 maxTokens, @Cast("bool") boolean streaming/*=false*/,
-            @Const @ByRef(nullValue = "tensorrt_llm::executor::SamplingConfig()") SamplingConfig samplingConfig, @Const @ByRef(nullValue = "tensorrt_llm::executor::OutputConfig()") OutputConfig outputConfig,
-            @Optional SizeType32 endId/*=std::nullopt*/, @Optional SizeType32 padId/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> positionIds/*=std::nullopt*/,
-            @Optional std::list<VecTokens> badWords/*=std::nullopt*/,
-            @Optional std::list<VecTokens> stopWords/*=std::nullopt*/,
-            @Optional Tensor embeddingBias/*=std::nullopt*/,
-            @Optional ExternalDraftTokensConfig externalDraftTokensConfig/*=std::nullopt*/,
-            @Optional PromptTuningConfig pTuningConfig/*=std::nullopt*/,
-            @Optional MultimodalInput multimodalInput/*=std::nullopt*/,
-            @Optional Tensor multimodalEmbedding/*=std::nullopt*/, @Optional MropeConfig mRopeConfig/*=std::nullopt*/,
-            @Optional LoraConfig loraConfig/*=std::nullopt*/,
-            @Optional LookaheadDecodingConfig lookaheadConfig/*=std::nullopt*/,
-            @Optional KvCacheRetentionConfig kvCacheRetentionConfig/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer logitsPostProcessorName/*=std::nullopt*/,
-            @Optional LogitsPostProcessor logitsPostProcessor/*=std::nullopt*/,
-            @Optional VecTokens encoderInputTokenIds/*=std::nullopt*/, @Optional IdType clientId/*=std::nullopt*/,
-            @Cast("bool") boolean returnAllGeneratedTokens/*=false*/, @ByVal(nullValue = "PriorityType(tensorrt_llm::executor::Request::kDefaultPriority)") PriorityType priority,
-            @ByVal(nullValue = "RequestType::REQUEST_TYPE_CONTEXT_AND_GENERATION") RequestType type,
-            @Optional ContextPhaseParams contextPhaseParams/*=std::nullopt*/,
-            @Optional Tensor encoderInputFeatures/*=std::nullopt*/,
-            @Optional SizeType32 encoderOutputLength/*=std::nullopt*/,
-            @Optional Tensor crossAttentionMask/*=std::nullopt*/, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numReturnSequences,
-            @Optional EagleConfig eagleConfig/*=std::nullopt*/, @Optional Tensor skipCrossAttnBlocks/*=std::nullopt*/,
-            @Optional GuidedDecodingParams guidedDecodingParams/*=std::nullopt*/,
-            @Optional SizeType32 languageAdapterUid/*=std::nullopt*/,
-            @Optional MillisecondsType allottedTimeMs/*=std::nullopt*/,
-            @Optional CacheSaltIDType cacheSaltID/*=std::nullopt*/,
-            @Optional IdType disaggRequestId/*=std::nullopt*/);
-    public Request(@ByVal VecTokens inputTokenIds, @ByVal SizeType32 maxTokens) { super((Pointer)null); allocate(inputTokenIds, maxTokens); }
-    private native void allocate(@ByVal VecTokens inputTokenIds, @ByVal SizeType32 maxTokens);
+    public Request(@StdVector @ByVal IntPointer inputTokenIds, @Cast("tensorrt_llm::executor::SizeType32") int maxTokens) { super((Pointer)null); allocate(inputTokenIds, maxTokens); }
+    private native void allocate(@StdVector @ByVal IntPointer inputTokenIds, @Cast("tensorrt_llm::executor::SizeType32") int maxTokens);
 
     /** \brief This logits postprocessor name will dispatch to the batched logits postprocessor */
-    @MemberGetter public static native @Const @ByRef auto kBatchedPostProcessorName();
     /** \brief Dynamic logits postprocessor name will be "dynamic" + requestId */
-    @MemberGetter public static native @Const @ByRef auto kDynamicPostProcessorNamePrefix();
 
     public Request(@Const @ByRef Request other) { super((Pointer)null); allocate(other); }
     private native void allocate(@Const @ByRef Request other);
     public native @ByRef @Name("operator =") Request put(@Const @ByRef Request other);
 
-    public native @ByVal VecTokens getInputTokenIds();
-    public native @ByVal SizeType32 getMaxTokens();
+    public native @StdVector @ByVal IntPointer getInputTokenIds();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getMaxTokens();
     public native @Cast("bool") boolean getStreaming();
     public native @ByVal SamplingConfig getSamplingConfig();
     public native @ByVal OutputConfig getOutputConfig();
-    public native @Optional SizeType32 getEndId();
-    public native @Optional SizeType32 getPadId();
-    public native @Optional std::vector<tensorrt_llm::executor::SizeType32> getPositionIds();
-    public native @Optional std::list<VecTokens> getBadWords();
-    public native @Optional std::list<VecTokens> getStopWords();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getEndId();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getPadId();
+    public native @StdVector @Optional IntPointer getPositionIds();
     public native @Optional Tensor getEmbeddingBias();
     public native @Optional ExternalDraftTokensConfig getExternalDraftTokensConfig();
     public native @Optional PromptTuningConfig getPromptTuningConfig();
@@ -154,34 +93,30 @@ public class Request extends Pointer {
     public native @Optional LoraConfig getLoraConfig();
     public native @Optional LookaheadDecodingConfig getLookaheadConfig();
     public native @Optional KvCacheRetentionConfig getKvCacheRetentionConfig();
-    public native @Cast("std::string*") @Optional BytePointer getLogitsPostProcessorName();
-    public native @Optional LogitsPostProcessor getLogitsPostProcessor();
-    public native @Optional VecTokens getEncoderInputTokenIds();
-    public native @Optional IdType getClientId();
-    public native @ByVal PriorityType getPriority();
+    public native @StdString @Optional BytePointer getLogitsPostProcessorName();
+    public native @StdVector @Optional IntPointer getEncoderInputTokenIds();
+    public native @Cast("tensorrt_llm::executor::IdType*") @Optional LongPointer getClientId();
+    public native @Cast("tensorrt_llm::executor::PriorityType") float getPriority();
     public native @Cast("bool") boolean getReturnAllGeneratedTokens();
     public native @Optional ContextPhaseParams getContextPhaseParams();
     public native @Optional Tensor getEncoderInputFeatures();
-    public native @Optional SizeType32 getEncoderOutputLength();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getEncoderOutputLength();
     public native @Optional Tensor getCrossAttentionMask();
-    public native @ByVal RequestType getRequestType();
+    public native RequestType getRequestType();
     public native @Optional EagleConfig getEagleConfig();
     public native @Optional Tensor getSkipCrossAttnBlocks();
     public native @Optional GuidedDecodingParams getGuidedDecodingParams();
-    public native @Optional SizeType32 getLanguageAdapterUid();
-    public native @Optional MillisecondsType getAllottedTimeMs();
-    public native @Optional CacheSaltIDType getCacheSaltID();
-    public native @Optional std::vector<std::string> getAdditionalOutputNames();
-    public native @Optional IdType getDisaggRequestId();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getLanguageAdapterUid();
+    public native @Cast("tensorrt_llm::executor::MillisecondsType*") @Optional LongPointer getAllottedTimeMs();
+    public native @Cast("tensorrt_llm::executor::CacheSaltIDType*") @Optional LongPointer getCacheSaltID();
+    public native @Cast("tensorrt_llm::executor::IdType*") @Optional LongPointer getDisaggRequestId();
 
     public native void setStreaming(@Cast("bool") boolean streaming);
     public native void setSamplingConfig(@Const @ByRef SamplingConfig config);
     public native void setOutputConfig(@Const @ByRef OutputConfig outputConfig);
-    public native void setEndId(@ByVal SizeType32 endId);
-    public native void setPadId(@ByVal SizeType32 padId);
-    public native void setPositionIds(@StdVector SizeType32 positionIds);
-    public native void setBadWords(@Const @ByRef std::list<VecTokens> badWords);
-    public native void setStopWords(@Const @ByRef std::list<VecTokens> stopWords);
+    public native void setEndId(@Cast("tensorrt_llm::executor::SizeType32") int endId);
+    public native void setPadId(@Cast("tensorrt_llm::executor::SizeType32") int padId);
+    public native void setPositionIds(@Const @StdVector @ByRef IntPointer positionIds);
     public native void setEmbeddingBias(@Const @ByRef Tensor embeddingBias);
     public native void setExternalDraftTokensConfig(@Const @ByRef ExternalDraftTokensConfig externalDraftTokensConfig);
     public native void setPromptTuningConfig(@Const @ByRef PromptTuningConfig pTuningConfig);
@@ -191,22 +126,21 @@ public class Request extends Pointer {
     public native void setLoraConfig(@Const @ByRef LoraConfig loraConfig);
     public native void setLookaheadConfig(@Const @ByRef LookaheadDecodingConfig lookaheadConfig);
     public native void setKvCacheRetentionConfig(@Const @ByRef KvCacheRetentionConfig kvCacheRetentionConfig);
-    public native void setLogitsPostProcessorName(@Cast("const std::string*") @ByRef BytePointer logitsPostProcessorName);
-    public native void setLogitsPostProcessor(@Optional LogitsPostProcessor logitsPostProcessor);
-    public native void setEncoderInputTokenIds(@Const @ByRef VecTokens encoderInputTokenIds);
-    public native void setClientId(@ByVal IdType clientId);
-    public native void setPriority(@ByVal PriorityType priority);
+    public native void setLogitsPostProcessorName(@StdString BytePointer logitsPostProcessorName);
+    public native void setEncoderInputTokenIds(@Const @StdVector @ByRef IntPointer encoderInputTokenIds);
+    public native void setClientId(@Cast("tensorrt_llm::executor::IdType") long clientId);
+    public native void setPriority(@Cast("tensorrt_llm::executor::PriorityType") float priority);
     public native void setReturnAllGeneratedTokens(@Cast("bool") boolean returnAllGeneratedTokens);
-    public native void setRequestType(@Const @ByRef RequestType requestType);
+    public native void setRequestType(RequestType requestType);
     public native void setContextPhaseParams(@ByVal ContextPhaseParams contextPhaseParams);
     public native void setEncoderInputFeatures(@ByVal Tensor encoderInputFeatures);
-    public native void setEncoderOutputLength(@ByVal SizeType32 encoderOutputLength);
+    public native void setEncoderOutputLength(@Cast("tensorrt_llm::executor::SizeType32") int encoderOutputLength);
     public native void setCrossAttentionMask(@ByVal Tensor crossAttentionMask);
     public native void setEagleConfig(@Optional EagleConfig eagleConfig);
     public native void setSkipCrossAttnBlocks(@ByVal Tensor skipCrossAttnBlocks);
     public native void setGuidedDecodingParams(@Const @ByRef GuidedDecodingParams guidedDecodingParams);
-    public native void setLanguageAdapterUid(@ByVal SizeType32 languageAdapterUid);
-    public native void setAllottedTimeMs(@ByVal MillisecondsType allottedTimeMs);
-    public native void setCacheSaltID(@ByVal CacheSaltIDType cacheSaltID);
-    public native void setDisaggRequestId(@ByVal IdType disaggRequestId);
+    public native void setLanguageAdapterUid(@Cast("tensorrt_llm::executor::SizeType32") int languageAdapterUid);
+    public native void setAllottedTimeMs(@Cast("tensorrt_llm::executor::MillisecondsType") long allottedTimeMs);
+    public native void setCacheSaltID(@Cast("tensorrt_llm::executor::CacheSaltIDType") long cacheSaltID);
+    public native void setDisaggRequestId(@Cast("tensorrt_llm::executor::IdType") long disaggRequestId);
 }

@@ -17,23 +17,23 @@ public class ExternalDraftTokensConfig extends Pointer {
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public ExternalDraftTokensConfig(Pointer p) { super(p); }
 
-    public ExternalDraftTokensConfig(@ByVal VecTokens tokens, @Optional Tensor logits/*=std::nullopt*/,
-            @Optional FloatType acceptanceThreshold/*=std::nullopt*/,
+    public ExternalDraftTokensConfig(@StdVector @ByVal IntPointer tokens, @Optional Tensor logits/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer acceptanceThreshold/*=std::nullopt*/,
             @Cast("bool*") @Optional BoolPointer fastLogits/*=std::nullopt*/) { super((Pointer)null); allocate(tokens, logits, acceptanceThreshold, fastLogits); }
-    private native void allocate(@ByVal VecTokens tokens, @Optional Tensor logits/*=std::nullopt*/,
-            @Optional FloatType acceptanceThreshold/*=std::nullopt*/,
+    private native void allocate(@StdVector @ByVal IntPointer tokens, @Optional Tensor logits/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer acceptanceThreshold/*=std::nullopt*/,
             @Cast("bool*") @Optional BoolPointer fastLogits/*=std::nullopt*/);
-    public ExternalDraftTokensConfig(@ByVal VecTokens tokens) { super((Pointer)null); allocate(tokens); }
-    private native void allocate(@ByVal VecTokens tokens);
-    public ExternalDraftTokensConfig(@ByVal VecTokens tokens, @Optional Tensor logits/*=std::nullopt*/,
-            @Optional FloatType acceptanceThreshold/*=std::nullopt*/,
+    public ExternalDraftTokensConfig(@StdVector @ByVal IntPointer tokens) { super((Pointer)null); allocate(tokens); }
+    private native void allocate(@StdVector @ByVal IntPointer tokens);
+    public ExternalDraftTokensConfig(@StdVector @ByVal IntPointer tokens, @Optional Tensor logits/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer acceptanceThreshold/*=std::nullopt*/,
             @Cast("bool*") @Optional boolean[] fastLogits/*=std::nullopt*/) { super((Pointer)null); allocate(tokens, logits, acceptanceThreshold, fastLogits); }
-    private native void allocate(@ByVal VecTokens tokens, @Optional Tensor logits/*=std::nullopt*/,
-            @Optional FloatType acceptanceThreshold/*=std::nullopt*/,
+    private native void allocate(@StdVector @ByVal IntPointer tokens, @Optional Tensor logits/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer acceptanceThreshold/*=std::nullopt*/,
             @Cast("bool*") @Optional boolean[] fastLogits/*=std::nullopt*/);
 
-    public native @ByVal VecTokens getTokens();
+    public native @StdVector @ByVal IntPointer getTokens();
     public native @Optional Tensor getLogits();
-    public native @Optional FloatType getAcceptanceThreshold();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getAcceptanceThreshold();
     public native @Cast("bool*") @Optional BoolPointer getFastLogits();
 }

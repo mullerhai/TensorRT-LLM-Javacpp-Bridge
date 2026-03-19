@@ -24,31 +24,12 @@ public class EagleConfig extends Pointer {
         return new EagleConfig((Pointer)this).offsetAddress(i);
     }
 
-    public EagleConfig(@Optional EagleChoices eagleChoices/*=std::nullopt*/, @Cast("bool") boolean greedySampling/*=true*/,
-            @Optional FloatPointer posteriorThreshold/*=std::nullopt*/, @Cast("bool") boolean useDynamicTree/*=false*/,
-            @Optional SizeType32 dynamicTreeMaxTopK/*=std::nullopt*/) { super((Pointer)null); allocate(eagleChoices, greedySampling, posteriorThreshold, useDynamicTree, dynamicTreeMaxTopK); }
-    private native void allocate(@Optional EagleChoices eagleChoices/*=std::nullopt*/, @Cast("bool") boolean greedySampling/*=true*/,
-            @Optional FloatPointer posteriorThreshold/*=std::nullopt*/, @Cast("bool") boolean useDynamicTree/*=false*/,
-            @Optional SizeType32 dynamicTreeMaxTopK/*=std::nullopt*/);
     public EagleConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
-    public EagleConfig(@Optional EagleChoices eagleChoices/*=std::nullopt*/, @Cast("bool") boolean greedySampling/*=true*/,
-            @Optional FloatBuffer posteriorThreshold/*=std::nullopt*/, @Cast("bool") boolean useDynamicTree/*=false*/,
-            @Optional SizeType32 dynamicTreeMaxTopK/*=std::nullopt*/) { super((Pointer)null); allocate(eagleChoices, greedySampling, posteriorThreshold, useDynamicTree, dynamicTreeMaxTopK); }
-    private native void allocate(@Optional EagleChoices eagleChoices/*=std::nullopt*/, @Cast("bool") boolean greedySampling/*=true*/,
-            @Optional FloatBuffer posteriorThreshold/*=std::nullopt*/, @Cast("bool") boolean useDynamicTree/*=false*/,
-            @Optional SizeType32 dynamicTreeMaxTopK/*=std::nullopt*/);
-    public EagleConfig(@Optional EagleChoices eagleChoices/*=std::nullopt*/, @Cast("bool") boolean greedySampling/*=true*/,
-            @Optional float[] posteriorThreshold/*=std::nullopt*/, @Cast("bool") boolean useDynamicTree/*=false*/,
-            @Optional SizeType32 dynamicTreeMaxTopK/*=std::nullopt*/) { super((Pointer)null); allocate(eagleChoices, greedySampling, posteriorThreshold, useDynamicTree, dynamicTreeMaxTopK); }
-    private native void allocate(@Optional EagleChoices eagleChoices/*=std::nullopt*/, @Cast("bool") boolean greedySampling/*=true*/,
-            @Optional float[] posteriorThreshold/*=std::nullopt*/, @Cast("bool") boolean useDynamicTree/*=false*/,
-            @Optional SizeType32 dynamicTreeMaxTopK/*=std::nullopt*/);
 
     public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef EagleConfig other);
-    public native @Optional EagleChoices getEagleChoices();
     public native @Optional FloatPointer getPosteriorThreshold();
     public native @Cast("bool") boolean isGreedySampling();
     public native @Cast("bool") boolean useDynamicTree();
-    public native @Optional SizeType32 getDynamicTreeMaxTopK();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getDynamicTreeMaxTopK();
 }

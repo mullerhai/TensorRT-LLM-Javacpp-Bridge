@@ -27,87 +27,87 @@ public class SamplingConfig extends Pointer {
 
     /** \brief Constructor for SamplingConfig
      *  See description of parameters below */
-    public SamplingConfig(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 beamWidth, @Optional SizeType32 topK/*=std::nullopt*/,
-            @Optional FloatType topP/*=std::nullopt*/, @Optional FloatType topPMin/*=std::nullopt*/,
-            @Optional TokenIdType topPResetIds/*=std::nullopt*/,
-            @Optional FloatType topPDecay/*=std::nullopt*/,
-            @Optional RandomSeedType seed/*=std::nullopt*/,
-            @Optional FloatType temperature/*=std::nullopt*/,
-            @Optional SizeType32 minTokens/*=std::nullopt*/,
-            @Optional FloatType beamSearchDiversityRate/*=std::nullopt*/,
-            @Optional FloatType repetitionPenalty/*=std::nullopt*/,
-            @Optional FloatType presencePenalty/*=std::nullopt*/,
-            @Optional FloatType frequencyPenalty/*=std::nullopt*/,
-            @Optional SizeType32 promptIgnoreLength/*=std::nullopt*/,
-            @Optional FloatType lengthPenalty/*=std::nullopt*/,
-            @Optional SizeType32 earlyStopping/*=std::nullopt*/,
-            @Optional SizeType32 noRepeatNgramSize/*=std::nullopt*/,
-            @Optional SizeType32 numReturnSequences/*=std::nullopt*/,
-            @Optional FloatType minP/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> beamWidthArray/*=std::nullopt*/) { super((Pointer)null); allocate(beamWidth, topK, topP, topPMin, topPResetIds, topPDecay, seed, temperature, minTokens, beamSearchDiversityRate, repetitionPenalty, presencePenalty, frequencyPenalty, promptIgnoreLength, lengthPenalty, earlyStopping, noRepeatNgramSize, numReturnSequences, minP, beamWidthArray); }
-    private native void allocate(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 beamWidth, @Optional SizeType32 topK/*=std::nullopt*/,
-            @Optional FloatType topP/*=std::nullopt*/, @Optional FloatType topPMin/*=std::nullopt*/,
-            @Optional TokenIdType topPResetIds/*=std::nullopt*/,
-            @Optional FloatType topPDecay/*=std::nullopt*/,
-            @Optional RandomSeedType seed/*=std::nullopt*/,
-            @Optional FloatType temperature/*=std::nullopt*/,
-            @Optional SizeType32 minTokens/*=std::nullopt*/,
-            @Optional FloatType beamSearchDiversityRate/*=std::nullopt*/,
-            @Optional FloatType repetitionPenalty/*=std::nullopt*/,
-            @Optional FloatType presencePenalty/*=std::nullopt*/,
-            @Optional FloatType frequencyPenalty/*=std::nullopt*/,
-            @Optional SizeType32 promptIgnoreLength/*=std::nullopt*/,
-            @Optional FloatType lengthPenalty/*=std::nullopt*/,
-            @Optional SizeType32 earlyStopping/*=std::nullopt*/,
-            @Optional SizeType32 noRepeatNgramSize/*=std::nullopt*/,
-            @Optional SizeType32 numReturnSequences/*=std::nullopt*/,
-            @Optional FloatType minP/*=std::nullopt*/,
-            @Optional std::vector<tensorrt_llm::executor::SizeType32> beamWidthArray/*=std::nullopt*/);
+    public SamplingConfig(@Cast("tensorrt_llm::executor::SizeType32") int beamWidth/*=1*/, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer topK/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer topP/*=std::nullopt*/, @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer topPMin/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::TokenIdType*") @Optional IntPointer topPResetIds/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer topPDecay/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::RandomSeedType*") @Optional LongPointer seed/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer temperature/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer minTokens/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer beamSearchDiversityRate/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer repetitionPenalty/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer presencePenalty/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer frequencyPenalty/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer promptIgnoreLength/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer lengthPenalty/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer earlyStopping/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer noRepeatNgramSize/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer numReturnSequences/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer minP/*=std::nullopt*/,
+            @StdVector @Optional IntPointer beamWidthArray/*=std::nullopt*/) { super((Pointer)null); allocate(beamWidth, topK, topP, topPMin, topPResetIds, topPDecay, seed, temperature, minTokens, beamSearchDiversityRate, repetitionPenalty, presencePenalty, frequencyPenalty, promptIgnoreLength, lengthPenalty, earlyStopping, noRepeatNgramSize, numReturnSequences, minP, beamWidthArray); }
+    private native void allocate(@Cast("tensorrt_llm::executor::SizeType32") int beamWidth/*=1*/, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer topK/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer topP/*=std::nullopt*/, @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer topPMin/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::TokenIdType*") @Optional IntPointer topPResetIds/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer topPDecay/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::RandomSeedType*") @Optional LongPointer seed/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer temperature/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer minTokens/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer beamSearchDiversityRate/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer repetitionPenalty/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer presencePenalty/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer frequencyPenalty/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer promptIgnoreLength/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer lengthPenalty/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer earlyStopping/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer noRepeatNgramSize/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer numReturnSequences/*=std::nullopt*/,
+            @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer minP/*=std::nullopt*/,
+            @StdVector @Optional IntPointer beamWidthArray/*=std::nullopt*/);
     public SamplingConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
     public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef SamplingConfig other);
 
-    public native @ByVal SizeType32 getBeamWidth();
-    public native @ByVal SizeType32 getNumReturnBeams();
-    public native @Optional SizeType32 getTopK();
-    public native @Optional FloatType getTopP();
-    public native @Optional FloatType getTopPMin();
-    public native @Optional SizeType32 getTopPResetIds();
-    public native @Optional FloatType getTopPDecay();
-    public native @Optional RandomSeedType getSeed();
-    public native @Optional FloatType getTemperature();
-    public native @Optional SizeType32 getMinTokens();
-    public native @Optional FloatType getBeamSearchDiversityRate();
-    public native @Optional FloatType getRepetitionPenalty();
-    public native @Optional FloatType getPresencePenalty();
-    public native @Optional FloatType getFrequencyPenalty();
-    public native @Optional SizeType32 getPromptIgnoreLength();
-    public native @Optional FloatType getLengthPenalty();
-    public native @Optional SizeType32 getEarlyStopping();
-    public native @Optional SizeType32 getNoRepeatNgramSize();
-    public native @Optional SizeType32 getNumReturnSequences();
-    public native @Optional FloatType getMinP();
-    public native @Optional std::vector<tensorrt_llm::executor::SizeType32> getBeamWidthArray();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getBeamWidth();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getNumReturnBeams();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getTopK();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getTopP();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getTopPMin();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getTopPResetIds();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getTopPDecay();
+    public native @Cast("tensorrt_llm::executor::RandomSeedType*") @Optional LongPointer getSeed();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getTemperature();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getMinTokens();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getBeamSearchDiversityRate();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getRepetitionPenalty();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getPresencePenalty();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getFrequencyPenalty();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getPromptIgnoreLength();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getLengthPenalty();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getEarlyStopping();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getNoRepeatNgramSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer getNumReturnSequences();
+    public native @Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer getMinP();
+    public native @StdVector @Optional IntPointer getBeamWidthArray();
 
-    public native void setBeamWidth(@ByVal SizeType32 beamWidth);
-    public native void setTopK(@Optional SizeType32 topK);
-    public native void setTopP(@Optional FloatType topP);
-    public native void setTopPMin(@Optional FloatType topPMin);
-    public native void setTopPResetIds(@Optional TokenIdType topPResetIds);
-    public native void setTopPDecay(@Optional FloatType topPDecay);
-    public native void setSeed(@Optional RandomSeedType seed);
-    public native void setTemperature(@Optional FloatType temperature);
-    public native void setMinTokens(@Optional SizeType32 minTokens);
-    public native void setBeamSearchDiversityRate(@Optional FloatType beamSearchDiversityRate);
-    public native void setRepetitionPenalty(@Optional FloatType repetitionPenalty);
-    public native void setPresencePenalty(@Optional FloatType presencePenalty);
-    public native void setFrequencyPenalty(@Optional FloatType frequencyPenalty);
-    public native void setPromptIgnoreLength(@Optional SizeType32 promptIgnoreLength);
-    public native void setLengthPenalty(@Optional FloatType lengthPenalty);
-    public native void setEarlyStopping(@Optional SizeType32 earlyStopping);
-    public native void setNoRepeatNgramSize(@Optional SizeType32 noRepeatNgramSize);
-    public native void setNumReturnSequences(@Optional SizeType32 numReturnSequences);
-    public native void setMinP(@Optional FloatType minP);
-    public native void setBeamWidthArray(@Optional std::vector<tensorrt_llm::executor::SizeType32> beamWidthArray);
+    public native void setBeamWidth(@Cast("tensorrt_llm::executor::SizeType32") int beamWidth);
+    public native void setTopK(@Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer topK);
+    public native void setTopP(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer topP);
+    public native void setTopPMin(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer topPMin);
+    public native void setTopPResetIds(@Cast("tensorrt_llm::executor::TokenIdType*") @Optional IntPointer topPResetIds);
+    public native void setTopPDecay(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer topPDecay);
+    public native void setSeed(@Cast("tensorrt_llm::executor::RandomSeedType*") @Optional LongPointer seed);
+    public native void setTemperature(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer temperature);
+    public native void setMinTokens(@Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer minTokens);
+    public native void setBeamSearchDiversityRate(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer beamSearchDiversityRate);
+    public native void setRepetitionPenalty(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer repetitionPenalty);
+    public native void setPresencePenalty(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer presencePenalty);
+    public native void setFrequencyPenalty(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer frequencyPenalty);
+    public native void setPromptIgnoreLength(@Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer promptIgnoreLength);
+    public native void setLengthPenalty(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer lengthPenalty);
+    public native void setEarlyStopping(@Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer earlyStopping);
+    public native void setNoRepeatNgramSize(@Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer noRepeatNgramSize);
+    public native void setNumReturnSequences(@Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer numReturnSequences);
+    public native void setMinP(@Cast("tensorrt_llm::executor::FloatType*") @Optional FloatPointer minP);
+    public native void setBeamWidthArray(@StdVector @Optional IntPointer beamWidthArray);
 }

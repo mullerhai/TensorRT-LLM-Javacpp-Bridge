@@ -16,11 +16,11 @@ public class RetentionPriorityAndDuration extends Pointer {
     public RetentionPriorityAndDuration(Pointer p) { super(p); }
 
 
-    public RetentionPriorityAndDuration(@Cast("tensorrt_llm::executor::RetentionPriority*") @Optional SizeType32 retentionPriority,
-            @Optional milliseconds durationMs) { super((Pointer)null); allocate(retentionPriority, durationMs); }
-    private native void allocate(@Cast("tensorrt_llm::executor::RetentionPriority*") @Optional SizeType32 retentionPriority,
-            @Optional milliseconds durationMs);
+    public RetentionPriorityAndDuration(@Cast("tensorrt_llm::executor::RetentionPriority*") @Optional IntPointer retentionPriority,
+            @Cast("std::chrono::milliseconds*") @Optional LongPointer durationMs) { super((Pointer)null); allocate(retentionPriority, durationMs); }
+    private native void allocate(@Cast("tensorrt_llm::executor::RetentionPriority*") @Optional IntPointer retentionPriority,
+            @Cast("std::chrono::milliseconds*") @Optional LongPointer durationMs);
 
-    public native @Cast("tensorrt_llm::executor::RetentionPriority*") @Optional SizeType32 retentionPriority(); public native RetentionPriorityAndDuration retentionPriority(SizeType32 setter);
-    public native @Optional milliseconds durationMs(); public native RetentionPriorityAndDuration durationMs(milliseconds setter);
+    public native @Cast("tensorrt_llm::executor::RetentionPriority*") @Optional IntPointer retentionPriority(); public native RetentionPriorityAndDuration retentionPriority(IntPointer setter);
+    public native @Cast("std::chrono::milliseconds*") @Optional LongPointer durationMs(); public native RetentionPriorityAndDuration durationMs(LongPointer setter);
 }

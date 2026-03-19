@@ -8,12 +8,10 @@ import org.bytedeco.javacpp.annotation.*;
 
 import static org.bytedeco.tensorrt_llm.global.TRTLLM.*;
 
-
-/** \brief Forward declaration as only used through pointer. */
-@Namespace("tensorrt_llm::runtime") @Opaque @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
-public class CudaMemPool extends Pointer {
+@Namespace("tensorrt_llm::executor::kv_cache") @Opaque @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
+public class SocketState extends Pointer {
     /** Empty constructor. Calls {@code super((Pointer)null)}. */
-    public CudaMemPool() { super((Pointer)null); }
+    public SocketState() { super((Pointer)null); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-    public CudaMemPool(Pointer p) { super(p); }
+    public SocketState(Pointer p) { super(p); }
 }

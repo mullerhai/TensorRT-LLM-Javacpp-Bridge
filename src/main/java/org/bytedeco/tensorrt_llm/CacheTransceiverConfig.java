@@ -32,31 +32,31 @@ public class CacheTransceiverConfig extends Pointer {
         NIXL = (byte)(3),
         MOONCAKE = (byte)(4);
     public CacheTransceiverConfig(@Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional BytePointer backendType/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer maxNumTokens/*=std::nullopt*/, @Optional IntPointer kvTransferTimeoutMs/*=std::nullopt*/,
+            @Cast("size_t*") @Optional LongPointer maxNumTokens/*=std::nullopt*/, @Optional IntPointer kvTransferTimeoutMs/*=std::nullopt*/,
             @Optional IntPointer kvTransferSenderFutureTimeoutMs/*=std::nullopt*/) { super((Pointer)null); allocate(backendType, maxNumTokens, kvTransferTimeoutMs, kvTransferSenderFutureTimeoutMs); }
     private native void allocate(@Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional BytePointer backendType/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer maxNumTokens/*=std::nullopt*/, @Optional IntPointer kvTransferTimeoutMs/*=std::nullopt*/,
+            @Cast("size_t*") @Optional LongPointer maxNumTokens/*=std::nullopt*/, @Optional IntPointer kvTransferTimeoutMs/*=std::nullopt*/,
             @Optional IntPointer kvTransferSenderFutureTimeoutMs/*=std::nullopt*/);
     public CacheTransceiverConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
     public CacheTransceiverConfig(@Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional ByteBuffer backendType/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer maxNumTokens/*=std::nullopt*/, @Optional IntBuffer kvTransferTimeoutMs/*=std::nullopt*/,
+            @Cast("size_t*") @Optional LongPointer maxNumTokens/*=std::nullopt*/, @Optional IntBuffer kvTransferTimeoutMs/*=std::nullopt*/,
             @Optional IntBuffer kvTransferSenderFutureTimeoutMs/*=std::nullopt*/) { super((Pointer)null); allocate(backendType, maxNumTokens, kvTransferTimeoutMs, kvTransferSenderFutureTimeoutMs); }
     private native void allocate(@Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional ByteBuffer backendType/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer maxNumTokens/*=std::nullopt*/, @Optional IntBuffer kvTransferTimeoutMs/*=std::nullopt*/,
+            @Cast("size_t*") @Optional LongPointer maxNumTokens/*=std::nullopt*/, @Optional IntBuffer kvTransferTimeoutMs/*=std::nullopt*/,
             @Optional IntBuffer kvTransferSenderFutureTimeoutMs/*=std::nullopt*/);
     public CacheTransceiverConfig(@Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional byte[] backendType/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer maxNumTokens/*=std::nullopt*/, @Optional int[] kvTransferTimeoutMs/*=std::nullopt*/,
+            @Cast("size_t*") @Optional LongPointer maxNumTokens/*=std::nullopt*/, @Optional int[] kvTransferTimeoutMs/*=std::nullopt*/,
             @Optional int[] kvTransferSenderFutureTimeoutMs/*=std::nullopt*/) { super((Pointer)null); allocate(backendType, maxNumTokens, kvTransferTimeoutMs, kvTransferSenderFutureTimeoutMs); }
     private native void allocate(@Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional byte[] backendType/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer maxNumTokens/*=std::nullopt*/, @Optional int[] kvTransferTimeoutMs/*=std::nullopt*/,
+            @Cast("size_t*") @Optional LongPointer maxNumTokens/*=std::nullopt*/, @Optional int[] kvTransferTimeoutMs/*=std::nullopt*/,
             @Optional int[] kvTransferSenderFutureTimeoutMs/*=std::nullopt*/);
 
     public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef CacheTransceiverConfig other);
     public native void setBackendType(@Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional BytePointer backendType);
     public native void setBackendType(@Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional ByteBuffer backendType);
     public native void setBackendType(@Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional byte[] backendType);
-    public native void setMaxTokensInBuffer(@Cast("size_t*") @Optional SizeTPointer maxTokensInBuffer);
+    public native void setMaxTokensInBuffer(@Cast("size_t*") @Optional LongPointer maxTokensInBuffer);
     public native void setKvTransferTimeoutMs(@Optional IntPointer kvTransferTimeoutMs);
     public native void setKvTransferTimeoutMs(@Optional IntBuffer kvTransferTimeoutMs);
     public native void setKvTransferTimeoutMs(@Optional int[] kvTransferTimeoutMs);
@@ -64,7 +64,7 @@ public class CacheTransceiverConfig extends Pointer {
     public native void setKvTransferSenderFutureTimeoutMs(@Optional IntBuffer kvTransferSenderFutureTimeoutMs);
     public native void setKvTransferSenderFutureTimeoutMs(@Optional int[] kvTransferSenderFutureTimeoutMs);
 
-    public native @Cast("size_t*") @Optional SizeTPointer getMaxTokensInBuffer();
+    public native @Cast("size_t*") @Optional LongPointer getMaxTokensInBuffer();
     public native @Cast("tensorrt_llm::executor::CacheTransceiverConfig::BackendType*") @Optional BytePointer getBackendType();
     public native @Optional IntPointer getKvTransferTimeoutMs();
     public native @Optional IntPointer getKvTransferSenderFutureTimeoutMs();

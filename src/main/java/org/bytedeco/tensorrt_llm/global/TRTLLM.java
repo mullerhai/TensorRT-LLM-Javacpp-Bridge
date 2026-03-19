@@ -40,17 +40,17 @@ public class TRTLLM extends tensorrt_llm.presets.TRTLLMFullConfig {
  * The default ABI version is _v1.
  */
 // #ifndef TRTLLM_ABI_NAMESPACE
-public static final int TRTLLM_ABI_NAMESPACE = _v1;
+// #define TRTLLM_ABI_NAMESPACE _v1
 // #endif
 
 // #ifndef TRTLLM_ABI_NAMESPACE_BEGIN
-public static native @MemberGetter int TRTLLM_ABI_NAMESPACE_BEGIN();
-public static final int TRTLLM_ABI_NAMESPACE_BEGIN = TRTLLM_ABI_NAMESPACE_BEGIN();
+// #define TRTLLM_ABI_NAMESPACE_BEGIN
+//     inline namespace TRTLLM_ABI_NAMESPACE
+//     {
 // #endif
 
 // #ifndef TRTLLM_ABI_NAMESPACE_END
-public static native @MemberGetter int TRTLLM_ABI_NAMESPACE_END();
-public static final int TRTLLM_ABI_NAMESPACE_END = TRTLLM_ABI_NAMESPACE_END();
+// #define TRTLLM_ABI_NAMESPACE_END }
 // #endif
 
 /**
@@ -59,8 +59,10 @@ public static final int TRTLLM_ABI_NAMESPACE_END = TRTLLM_ABI_NAMESPACE_END();
  * enclosing namespaces requested by TRTLLM_WRAPPED_NAMESPACE, etc.
  * This macro is defined by TensorRT-LLM and may not be overridden.
  */
-public static native @MemberGetter int TRTLLM_NAMESPACE_BEGIN();
-public static final int TRTLLM_NAMESPACE_BEGIN = TRTLLM_NAMESPACE_BEGIN();
+// #define TRTLLM_NAMESPACE_BEGIN
+//     namespace tensorrt_llm
+//     {
+//     TRTLLM_ABI_NAMESPACE_BEGIN
 
 /**
  * \def TRTLLM_NAMESPACE_END
@@ -68,8 +70,9 @@ public static final int TRTLLM_NAMESPACE_BEGIN = TRTLLM_NAMESPACE_BEGIN();
  * enclosing namespaces requested by TRTLLM_WRAPPED_NAMESPACE, etc.
  * This macro is defined by TensorRT-LLM and may not be overridden.
  */
-public static native @MemberGetter int TRTLLM_NAMESPACE_END();
-public static final int TRTLLM_NAMESPACE_END = TRTLLM_NAMESPACE_END();  /* end namespace tensorrt_llm */
+// #define TRTLLM_NAMESPACE_END
+//     TRTLLM_ABI_NAMESPACE_END
+//     }  /* end namespace tensorrt_llm */
 
 // #endif // TRTLLM_CONFIG_H
 
@@ -103,7 +106,43 @@ public static final int TRTLLM_NAMESPACE_END = TRTLLM_NAMESPACE_END();  /* end n
 // #include "tensorrt_llm/common/config.h"
 // #include "tensorrt_llm/common/stringUtils.h"
 
-public static native int common(); public static native void common(int setter);
+// #define TRTLLM_ABI_NAMESPACE_BEGIN
+// #define TRTLLM_ABI_NAMESPACE_END
+// #define TRTLLM_NAMESPACE_BEGIN
+// #define TRTLLM_NAMESPACE_END
+// #define _v1 1
+// Targeting ../Logger.java
+
+
+
+
+
+
+ // namespace common
+
+// #define TRTLLM_ABI_NAMESPACE_BEGIN
+// #define TRTLLM_ABI_NAMESPACE_END
+// #define TRTLLM_NAMESPACE_BEGIN
+// #define TRTLLM_NAMESPACE_END
+// #define _v1 1
+
+
+// #define TLLM_LOG(level, ...)
+//     do
+//     {
+//         auto* const logger = tensorrt_llm::common::Logger::getLogger();
+//         if (logger->isEnabled(level))
+//         {
+//             logger->log(level, __VA_ARGS__);
+//         }
+//     } while (0)
+
+// #define TLLM_LOG_TRACE(...) TLLM_LOG(tensorrt_llm::common::Logger::TRACE, __VA_ARGS__)
+// #define TLLM_LOG_DEBUG(...) TLLM_LOG(tensorrt_llm::common::Logger::DEBUG, __VA_ARGS__)
+// #define TLLM_LOG_INFO(...) TLLM_LOG(tensorrt_llm::common::Logger::INFO, __VA_ARGS__)
+// #define TLLM_LOG_WARNING(...) TLLM_LOG(tensorrt_llm::common::Logger::WARNING, __VA_ARGS__)
+// #define TLLM_LOG_ERROR(...) TLLM_LOG(tensorrt_llm::common::Logger::ERROR, __VA_ARGS__)
+// #define TLLM_LOG_EXCEPTION(ex, ...) tensorrt_llm::common::Logger::getLogger()->log(ex, ##__VA_ARGS__)
 
 
 // Parsed from tensorrt_llm/common/tllmException.h
@@ -152,10 +191,135 @@ public static native int common(); public static native void common(int setter);
 //     tensorrt_llm::common::RequestSpecificException(
 //         __FILE__, __LINE__, tensorrt_llm::common::fmtstr(__VA_ARGS__).c_str(), requestID, errorCode)
 
-    public static native @ByVal @Cast("std::string*") BytePointer demangle(@Cast("const char*") BytePointer name);
-    public static native @ByVal @Cast("std::string*") BytePointer demangle(String name);
-    public static native @ByRef std::array<void*,MAX_FRAMES> mCallstack(); public static native void mCallstack(std::array<void*,MAX_FRAMES> setter);
-    public static native int mNbFrames(); public static native void mNbFrames(int setter);
+// #define TRTLLM_ABI_NAMESPACE_BEGIN
+// #define TRTLLM_ABI_NAMESPACE_END
+// #define TRTLLM_NAMESPACE_BEGIN
+// #define TRTLLM_NAMESPACE_END
+// #define _v1 1
+
+
+/** \brief Enumeration of different error codes for request-specific exceptions */
+/** enum class common::RequestErrorCode */
+public static final int
+    // General errors (0-999)
+    kUNKNOWN_ERROR = 0,
+
+    // Network and communication errors (1000-1999)
+    kNETWORK_ERROR = 1000;
+
+/** \brief Constant for unknown request ID */
+@Namespace("common") @MemberGetter public static native @Cast("const uint64_t") long kUNKNOWN_REQUEST_ID();
+public static final long kUNKNOWN_REQUEST_ID = kUNKNOWN_REQUEST_ID();
+// Targeting ../TllmException.java
+
+
+
+@Namespace("common") public static native void throwRuntimeError(@Cast("const char*") BytePointer file, int line, @Cast("const char*") BytePointer info);
+@Namespace("common") public static native void throwRuntimeError(String file, int line, String info);
+
+@Namespace("common") public static native void throwRuntimeError(@Cast("const char*") BytePointer file, int line);
+@Namespace("common") public static native void throwRuntimeError(String file, int line, @StdString BytePointer info/*=""*/);
+@Namespace("common") public static native void throwRuntimeError(String file, int line);
+// Targeting ../RequestSpecificException.java
+
+
+
+ // namespace common
+
+// #define TRTLLM_ABI_NAMESPACE_BEGIN
+// #define TRTLLM_ABI_NAMESPACE_END
+// #define TRTLLM_NAMESPACE_BEGIN
+// #define TRTLLM_NAMESPACE_END
+// #define _v1 1
+
+
+
+// Parsed from tensorrt_llm/common/assert.h
+
+/*
+ * Copyright (c) 2022-2024, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// #pragma once
+
+// #include "tensorrt_llm/common/config.h"
+// #include "tensorrt_llm/common/tllmException.h"
+
+// #define TRTLLM_ABI_NAMESPACE_BEGIN
+// #define TRTLLM_ABI_NAMESPACE_END
+// #define TRTLLM_NAMESPACE_BEGIN
+// #define TRTLLM_NAMESPACE_END
+// #define _v1 1
+// Targeting ../DebugConfig.java
+
+
+
+// #define TRTLLM_ABI_NAMESPACE_BEGIN
+// #define TRTLLM_ABI_NAMESPACE_END
+// #define TRTLLM_NAMESPACE_BEGIN
+// #define TRTLLM_NAMESPACE_END
+// #define _v1 1
+
+
+// #if defined(_WIN32)
+// #define TLLM_LIKELY(x) (__assume((x) == 1), (x))
+// #define TLLM_UNLIKELY(x) (__assume((x) == 0), (x))
+// #else
+// #define TLLM_LIKELY(x) __builtin_expect((x), 1)
+// #define TLLM_UNLIKELY(x) __builtin_expect((x), 0)
+// #endif
+
+// #define TLLM_CHECK(val)
+//     do
+//     {
+//         TLLM_LIKELY(static_cast<bool>(val))
+//         ? ((void) 0) : tensorrt_llm::common::throwRuntimeError(__FILE__, __LINE__, #val);
+//     } while (0)
+
+// #define TLLM_CHECK_WITH_INFO(val, info, ...)
+//     do
+//     {
+//         TLLM_LIKELY(static_cast<bool>(val))
+//         ? ((void) 0)
+//         : tensorrt_llm::common::throwRuntimeError(
+//             __FILE__, __LINE__, tensorrt_llm::common::fmtstr(info, ##__VA_ARGS__).c_str());
+//     } while (0)
+
+// #define TLLM_CHECK_DEBUG(val)
+//     do
+//     {
+//         if (TLLM_UNLIKELY(tensorrt_llm::DebugConfig::isCheckDebugEnabled()))
+//         {
+//             TLLM_LIKELY(static_cast<bool>(val))
+//             ? ((void) 0) : tensorrt_llm::common::throwRuntimeError(__FILE__, __LINE__, #val);
+//         }
+//     } while (0)
+
+// #define TLLM_CHECK_DEBUG_WITH_INFO(val, info, ...)
+//     do
+//     {
+//         if (TLLM_UNLIKELY(tensorrt_llm::DebugConfig::isCheckDebugEnabled()))
+//         {
+//             TLLM_LIKELY(static_cast<bool>(val))
+//             ? ((void) 0)
+//             : tensorrt_llm::common::throwRuntimeError(
+//                 __FILE__, __LINE__, tensorrt_llm::common::fmtstr(info, ##__VA_ARGS__).c_str());
+//         }
+//     } while (0)
+
+
 // Parsed from tensorrt_llm/executor/executor.h
 
 /*
@@ -205,9 +369,6 @@ public static native int common(); public static native void common(int setter);
 /** \brief Version of TRT-LLM */
 @Namespace("tensorrt_llm::executor") public static native @NoException(true) @Cast("const char*") BytePointer version();
 // Targeting ../Model.java
-
-
-// Targeting ../Serialization.java
 
 
 // Targeting ../DataTransceiverState.java
@@ -283,9 +444,6 @@ public static native int common(); public static native void common(int setter);
 
 
 // Targeting ../ExtendedRuntimePerfKnobConfig.java
-
-
-// Targeting ../DebugConfig.java
 
 
 // Targeting ../OrchestratorConfig.java
@@ -375,39 +533,44 @@ public static native int common(); public static native void common(int setter);
 
 // #include <cuda_fp16.h>
 // #ifdef ENABLE_FP8
-// #include <cuda_fp8.h>
 // #endif
 // #ifdef ENABLE_BF16
-// #include <cuda_bf16.h>
-// Targeting ../CudaStream.java
-
-
-
-// Targeting ../Tensor.java
-
-
+// #endif
+ // namespace tensorrt_llm::runtime
 // Targeting ../MmKey.java
 
 
 
-/** enum class tensorrt_llm::executor::DataType */
-public static final int
-    kBOOL = 0,
-    kUINT8 = 1,
-    kINT8 = 2,
-    kINT32 = 3,
-    kINT64 = 4,
-    kBF16 = 5,
-    kFP8 = 6,
-    kFP16 = 7,
-    kFP32 = 8,
-    kUNKNOWN = 9;
+@Namespace("tensorrt_llm::executor") public enum DataType {
+    kBOOL(0),
+    kUINT8(1),
+    kINT8(2),
+    kINT32(3),
+    kINT64(4),
+    kBF16(5),
+    kFP8(6),
+    kFP16(7),
+    kFP32(8),
+    kUNKNOWN(9);
 
-/** enum class tensorrt_llm::executor::RequestType */
-public static final int
-    REQUEST_TYPE_CONTEXT_AND_GENERATION = 0,
-    REQUEST_TYPE_CONTEXT_ONLY = 1,
-    REQUEST_TYPE_GENERATION_ONLY = 2;
+    public final int value;
+    private DataType(int v) { this.value = v; }
+    private DataType(DataType e) { this.value = e.value; }
+    public DataType intern() { for (DataType e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
+
+@Namespace("tensorrt_llm::executor") public enum RequestType {
+    REQUEST_TYPE_CONTEXT_AND_GENERATION(0),
+    REQUEST_TYPE_CONTEXT_ONLY(1),
+    REQUEST_TYPE_GENERATION_ONLY(2);
+
+    public final int value;
+    private RequestType(int v) { this.value = v; }
+    private RequestType(RequestType e) { this.value = e.value; }
+    public RequestType intern() { for (RequestType e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
 
 /** \brief For converting a C++ data type to a {@code TrtLmmDataType}. */
 
@@ -417,72 +580,112 @@ public static final int
 // #ifdef ENABLE_FP8
 // #endif
 
-/** enum class tensorrt_llm::executor::MemoryType */
-public static final int
-    kCPU = 0,
-    kCPU_PINNED = 1,
-    kCPU_PINNEDPOOL = 2,
-    kGPU = 3,
-    kUVM = 4,
-    kUNKNOWN = 5;
+@Namespace("tensorrt_llm::executor") public enum MemoryType {
+    kCPU(0),
+    kCPU_PINNED(1),
+    kCPU_PINNEDPOOL(2),
+    kGPU(3),
+    kUVM(4),
+    kUNKNOWN(5);
 
-/** enum class tensorrt_llm::executor::ModelType */
-public static final int
-    kDECODER_ONLY = 0,
-    kENCODER_ONLY = 1,
-    kENCODER_DECODER = 2;
+    public final int value;
+    private MemoryType(int v) { this.value = v; }
+    private MemoryType(MemoryType e) { this.value = e.value; }
+    public MemoryType intern() { for (MemoryType e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
+
+@Namespace("tensorrt_llm::executor") public enum ModelType {
+    kDECODER_ONLY(0),
+    kENCODER_ONLY(1),
+    kENCODER_DECODER(2);
+
+    public final int value;
+    private ModelType(int v) { this.value = v; }
+    private ModelType(ModelType e) { this.value = e.value; }
+    public ModelType intern() { for (ModelType e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
 
 /** \brief The batching type */
-/** enum class tensorrt_llm::executor::BatchingType */
-public static final int
+@Namespace("tensorrt_llm::executor") public enum BatchingType {
     /** \brief STATIC refers to the traditional batching scheme with a batch of requests running in lockstep until the
      *  full generation for all of them is complete. Requests in a batch are all padded up to the maximum input and
      *  output sequence length of any member of the batch. */
-    kSTATIC = 0,
+    kSTATIC(0),
 
     /** \brief INFLIGHT refers to a scheme where newly arrived requests are dynamically incorporated into the batch
      *  under execution, and requests are returned as soon as the end condition is met without any padding. */
-    kINFLIGHT = 1;
+    kINFLIGHT(1);
+
+    public final int value;
+    private BatchingType(int v) { this.value = v; }
+    private BatchingType(BatchingType e) { this.value = e.value; }
+    public BatchingType intern() { for (BatchingType e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
 
 /** \brief The policy used to select the subset of available requests in each iteration of the executor generation loop */
-/** enum class tensorrt_llm::executor::CapacitySchedulerPolicy */
-public static final int
+@Namespace("tensorrt_llm::executor") public enum CapacitySchedulerPolicy {
     /** \brief MAX_UTILIZATION packs as many requests as the underlying TRT engine can support in any iteration of the
      *  InflightBatching generation loop. While this is expected to maximize GPU throughput, it might require that some
      *  requests be paused and restarted depending on peak KV cache memory availability. */
-    kMAX_UTILIZATION = 0,
+    kMAX_UTILIZATION(0),
 
     /** \brief GUARANTEED_NO_EVICT uses KV cache more conservatively guaranteeing that a request, once started, will run
      *  to completion without eviction. */
-    kGUARANTEED_NO_EVICT = 1,
+    kGUARANTEED_NO_EVICT(1),
 
     /** \brief kSTATIC_BATCH does not schedule new requests until all requests in current batch are completed.
      *  Similar to kGUARANTEED_NO_EVICT, requests will run to completion without eviction. */
-    kSTATIC_BATCH = 2;
+    kSTATIC_BATCH(2);
 
-@Namespace("tensorrt_llm::executor") public static native @Cast("std::ostream*") @ByRef @Name("operator <<") Pointer shiftLeft(@Cast("std::ostream*") @ByRef Pointer os, @Cast("tensorrt_llm::executor::CapacitySchedulerPolicy") int policy);
+    public final int value;
+    private CapacitySchedulerPolicy(int v) { this.value = v; }
+    private CapacitySchedulerPolicy(CapacitySchedulerPolicy e) { this.value = e.value; }
+    public CapacitySchedulerPolicy intern() { for (CapacitySchedulerPolicy e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
 
-/** enum class tensorrt_llm::executor::ContextChunkingPolicy */
-public static final int
+@Namespace("tensorrt_llm::executor") public enum ContextChunkingPolicy {
     /** \brief Sequential chunking, complete the unfinished context phase first. */
-    kFIRST_COME_FIRST_SERVED = 0,
+    kFIRST_COME_FIRST_SERVED(0),
 
     /** \brief Iterate through each context request in sequence and attempt to increase its chunk
      *  count until the constraint is exceeded. */
-    kEQUAL_PROGRESS = 1;
+    kEQUAL_PROGRESS(1);
 
-/** enum class tensorrt_llm::executor::CommunicationType */
-public static final int
-    kMPI = 0;
+    public final int value;
+    private ContextChunkingPolicy(int v) { this.value = v; }
+    private ContextChunkingPolicy(ContextChunkingPolicy e) { this.value = e.value; }
+    public ContextChunkingPolicy intern() { for (ContextChunkingPolicy e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
 
-/** enum class tensorrt_llm::executor::CommunicationMode */
-public static final int
-    kLEADER = 0, // With the leader mode, only the leader can enqueue requests. The requests will be
+@Namespace("tensorrt_llm::executor") public enum CommunicationType {
+    kMPI(0);
+
+    public final int value;
+    private CommunicationType(int v) { this.value = v; }
+    private CommunicationType(CommunicationType e) { this.value = e.value; }
+    public CommunicationType intern() { for (CommunicationType e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
+
+@Namespace("tensorrt_llm::executor") public enum CommunicationMode {
+    kLEADER(0), // With the leader mode, only the leader can enqueue requests. The requests will be
              // broadcasted to the workers. All participants can get response via awaitResponses. The leader is the
              // first participant in the provided participant IDS, or 0 if participant ID is not provided
-    kORCHESTRATOR = 1; // With the orchestrator mode, only the orchestrator can enqueue requests and await responses. The
+    kORCHESTRATOR(1);// With the orchestrator mode, only the orchestrator can enqueue requests and await responses. The
                    // requests will be broadcasted to the workers. The orchestrator will spawn new processes for the
                    // execution of the model
+
+    public final int value;
+    private CommunicationMode(int v) { this.value = v; }
+    private CommunicationMode(CommunicationMode e) { this.value = e.value; }
+    public CommunicationMode intern() { for (CommunicationMode e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
 // Targeting ../KvCacheStats.java
 
 
@@ -500,19 +703,25 @@ public static final int
 
 
 /** \brief Enum class that represents the state of a request */
-/** enum class tensorrt_llm::executor::RequestStage */
-public static final int
+@Namespace("tensorrt_llm::executor") public enum RequestStage {
     /** \brief Request that have been received but not yet included in the active requests (due to constraints such as
      *  maximum batch size for example). */
-    kQUEUED = 0,
+    kQUEUED(0),
     /** \brief Active request in encoder phase */
-    kENCODER_IN_PROGRESS = 1,
+    kENCODER_IN_PROGRESS(1),
     /** \brief Active request in context phase */
-    kCONTEXT_IN_PROGRESS = 2,
+    kCONTEXT_IN_PROGRESS(2),
     /** \brief Active request in generation phase */
-    kGENERATION_IN_PROGRESS = 3,
+    kGENERATION_IN_PROGRESS(3),
     /** \brief Active request for which generation has completed */
-    kGENERATION_COMPLETE = 4;
+    kGENERATION_COMPLETE(4);
+
+    public final int value;
+    private RequestStage(int v) { this.value = v; }
+    private RequestStage(RequestStage e) { this.value = e.value; }
+    public RequestStage intern() { for (RequestStage e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
 // Targeting ../DisServingRequestStats.java
 
 
@@ -530,36 +739,137 @@ public static final int
 
 
 /** \brief The reason why the model stopped generating tokens for a request. */
-/** enum class tensorrt_llm::executor::FinishReason */
-public static final int
+@Namespace("tensorrt_llm::executor") public enum FinishReason {
     /** \brief The request is not finished. */
-    kNOT_FINISHED = 0,
+    kNOT_FINISHED(0),
 
     /** \brief The request finished because the end id was generated. */
-    kEND_ID = 1,
+    kEND_ID(1),
 
     /** \brief The request finished because a stop word was generated. */
-    kSTOP_WORDS = 2,
+    kSTOP_WORDS(2),
 
     /** \brief The request finished because the maximum number of tokens was reached. */
-    kLENGTH = 3,
+    kLENGTH(3),
 
     /** \brief The request finished because it got timed out (via the mAllotedTime parameter) */
-    kTIMED_OUT = 4,
+    kTIMED_OUT(4),
 
     /** \brief The request was cancelled by calling cancelRequest. */
-    kCANCELLED = 5;
+    kCANCELLED(5);
+
+    public final int value;
+    private FinishReason(int v) { this.value = v; }
+    private FinishReason(FinishReason e) { this.value = e.value; }
+    public FinishReason intern() { for (FinishReason e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
 
 /** \brief Enum describing the transfer mode for KV cache. */
-/** enum class tensorrt_llm::executor::KvCacheTransferMode */
-public static final int
+@Namespace("tensorrt_llm::executor") public enum KvCacheTransferMode {
     /** Copy to/from CPU memory (original approach). */
-    DRAM = 0,
+    DRAM(0),
     /** Attempt GPUDirect Storage (cuFile). */
-    GDS = 1,
+    GDS(1),
     /** Force a POSIX read/write for debugging. */
-    POSIX_DEBUG_FALLBACK = 2;
-// Targeting ../DecodingMode.java
+    POSIX_DEBUG_FALLBACK(2);
+
+    public final int value;
+    private KvCacheTransferMode(int v) { this.value = v; }
+    private KvCacheTransferMode(KvCacheTransferMode e) { this.value = e.value; }
+    public KvCacheTransferMode intern() { for (KvCacheTransferMode e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
+
+/** \brief mode of the decoder */
+ // namespace tensorrt_llm::executor
+
+
+// Parsed from tensorrt_llm/executor/tensor.h
+
+/*
+ * Copyright (c) 2022-2024, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// #pragma once
+
+// #include "tensorrt_llm/executor/types.h"
+
+// #include "tensorrt_llm/common/arrayView.h"
+// #include "tensorrt_llm/common/assert.h"
+
+// #include <cstdint>
+// #include <initializer_list>
+// #include <limits>
+// #include <memory>
+// #include <type_traits>
+// #include <vector>
+ // namespace tensorrt_llm::runtime
+@Namespace("tensorrt_llm::executor::detail") public static native @SharedPtr ITensor toITensor(@Const @ByRef Tensor tensor);
+@Namespace("tensorrt_llm::executor::detail") public static native @ByVal Tensor ofITensor(@SharedPtr ITensor tensor);
+
+
+// Targeting ../Shape.java
+
+
+// Targeting ../Tensor.java
+
+
+
+ // namespace tensorrt_llm::executor
+
+
+// Parsed from tensorrt_llm/executor/serialization.h
+
+/*
+ * Copyright (c) 2022-2024, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// #pragma once
+
+// #include "tensorrt_llm/batch_manager/kvCacheManager.h"
+// #include "tensorrt_llm/executor/dataTransceiverState.h"
+// #include "tensorrt_llm/executor/executor.h"
+// #include "tensorrt_llm/executor/tensor.h"
+// #include "tensorrt_llm/executor/types.h"
+// #include <istream>
+// #include <ostream>
+// Targeting ../CommState.java
+
+
+// Targeting ../CacheState.java
+
+
+// Targeting ../SocketState.java
+
+
+
+// Targeting ../Serialization.java
+
 
 
  // namespace tensorrt_llm::executor
@@ -595,10 +905,8 @@ public static final int
 
 // #include <cstdint>
 // #ifdef ENABLE_FP8
-// #include <cuda_fp8.h>
 // #endif
 // #ifdef ENABLE_BF16
-// #include <cuda_bf16.h>
 // #endif
 // #include <cstddef>
 // #include <cuda_fp16.h>
@@ -674,8 +982,6 @@ public static final int
  *  @return A pointer to const T, possibly nullptr. */
 
 /** \brief Utility function to print a buffer. */
-@Namespace("tensorrt_llm::runtime") public static Pointer shiftLeft(Pointer output, IBuffer buffer) { return _shiftLeft(output, buffer.asIBuffer()); }
-private static native @Cast("std::ostream*") @ByRef @Name("operator <<") Pointer _shiftLeft(@Cast("std::ostream*") @ByRef Pointer output, @Const @ByRef IBuffer buffer);
 
  // namespace tensorrt_llm::runtime
 
@@ -725,10 +1031,8 @@ private static native @Cast("std::ostream*") @ByRef @Name("operator <<") Pointer
 
 
 /** \brief Utility function to print a shape. */
-@Namespace("tensorrt_llm::runtime") public static native @Cast("std::ostream*") @ByRef @Name("operator <<") Pointer shiftLeft(@Cast("std::ostream*") @ByRef Pointer output, @Cast("const tensorrt_llm::runtime::ITensor::Shape*") @ByRef Dims dims);
 
 /** \brief Utility function to print a tensor with its shape. */
-@Namespace("tensorrt_llm::runtime") public static native @Cast("std::ostream*") @ByRef @Name("operator <<") Pointer shiftLeft(@Cast("std::ostream*") @ByRef Pointer output, @Const @ByRef ITensor tensor);
 
 /** \brief Retrieves a T const typed pointer to the underlying data of the tensor pointed to by the tensorPtr, or
  *  nullptr if the tensorPtr is null.
@@ -795,9 +1099,8 @@ private static native @Cast("std::ostream*") @ByRef @Name("operator <<") Pointer
 // Targeting ../BufferManagerTest.java
 
 
-// Targeting ../CudaMemPool.java
 
-
+/** \brief Forward declaration as only used through pointer. */
 // Targeting ../BufferManager.java
 
 
@@ -966,11 +1269,93 @@ public static final int
 // Targeting ../ContextProgress.java
 
 
+
+ // namespace tensorrt_llm::batch_manager
+
+
+// Parsed from tensorrt_llm/batch_manager/kvCacheType.h
+
+/*
+ * Copyright (c) 2022-2024, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// #pragma once
+
+@Namespace("tensorrt_llm::batch_manager::kv_cache_manager") public enum CacheType {
+    kSELF(0),
+    kCROSS(1),
+    kSELFKONLY(2);
+
+    public final int value;
+    private CacheType(int v) { this.value = v; }
+    private CacheType(CacheType e) { this.value = e.value; }
+    public CacheType intern() { for (CacheType e : values()) if (e.value == value) return e; return this; }
+    @Override public String toString() { return intern().name(); }
+}
+
+ // namespace tensorrt_llm::batch_manager::kv_cache_manager
+
+
+// Parsed from tensorrt_llm/batch_manager/common.h
+
+/*
+ * Copyright (c) 2023-2026, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// #pragma once
+
+// #include "tensorrt_llm/runtime/common.h"
+// #include <cstdint>
+// #include <list>
+// #include <memory>
+// #include <unordered_set>
+// #include <utility>
+// #include <vector>
+// Targeting ../RequestWithId.java
+
+
+
 // Targeting ../LlmRequest.java
 
 
+// Targeting ../ScheduledRequests.java
+
+
+// Targeting ../BatchState.java
+
+
+// Targeting ../BatchStateHash.java
+
 
  // namespace tensorrt_llm::batch_manager
+
+
+
+ // namespace tensorrt_llm::batch_manager::kv_cache_manager
 
 
 }

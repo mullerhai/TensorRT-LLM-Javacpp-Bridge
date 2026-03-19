@@ -16,22 +16,15 @@ public class KVCacheUpdatedData extends Pointer {
     public KVCacheUpdatedData(Pointer p) { super(p); }
 
 
-    public KVCacheUpdatedData(@ByVal IdType blockHash) { super((Pointer)null); allocate(blockHash); }
-    private native void allocate(@ByVal IdType blockHash);
+    public KVCacheUpdatedData(@Cast("tensorrt_llm::executor::IdType") long blockHash) { super((Pointer)null); allocate(blockHash); }
+    private native void allocate(@Cast("tensorrt_llm::executor::IdType") long blockHash);
 
-    public KVCacheUpdatedData(@ByVal IdType blockHash, @Optional tensorrt_llm::executor::KVCacheEventDiff<tensorrt_llm::executor::SizeType32> cacheLevel,
-            @Optional tensorrt_llm::executor::KVCacheEventDiff<tensorrt_llm::executor::SizeType32> priority) { super((Pointer)null); allocate(blockHash, cacheLevel, priority); }
-    private native void allocate(@ByVal IdType blockHash, @Optional tensorrt_llm::executor::KVCacheEventDiff<tensorrt_llm::executor::SizeType32> cacheLevel,
-            @Optional tensorrt_llm::executor::KVCacheEventDiff<tensorrt_llm::executor::SizeType32> priority);
+    public native @ByRef KVCacheUpdatedData cacheLevelUpdated(@Cast("tensorrt_llm::executor::SizeType32") int oldValue, @Cast("tensorrt_llm::executor::SizeType32") int newValue);
 
-    public native @ByRef KVCacheUpdatedData cacheLevelUpdated(@ByVal SizeType32 oldValue, @ByVal SizeType32 newValue);
-
-    public native @ByRef KVCacheUpdatedData priorityUpdated(@ByVal SizeType32 oldValue, @ByVal SizeType32 newValue);
+    public native @ByRef KVCacheUpdatedData priorityUpdated(@Cast("tensorrt_llm::executor::SizeType32") int oldValue, @Cast("tensorrt_llm::executor::SizeType32") int newValue);
 
     /** \brief The hash of the updated block */
-    public native @ByRef IdType blockHash(); public native KVCacheUpdatedData blockHash(IdType setter);
+    public native @Cast("tensorrt_llm::executor::IdType") long blockHash(); public native KVCacheUpdatedData blockHash(long setter);
     /** \brief The updated value of the cacheLevel field */
-    public native @Optional tensorrt_llm::executor::KVCacheEventDiff<tensorrt_llm::executor::SizeType32> cacheLevel(); public native KVCacheUpdatedData cacheLevel(tensorrt_llm::executor::KVCacheEventDiff<tensorrt_llm::executor::SizeType32> setter);
     /** \brief The updated value of the priority field */
-    public native @Optional tensorrt_llm::executor::KVCacheEventDiff<tensorrt_llm::executor::SizeType32> priority(); public native KVCacheUpdatedData priority(tensorrt_llm::executor::KVCacheEventDiff<tensorrt_llm::executor::SizeType32> setter);
 }

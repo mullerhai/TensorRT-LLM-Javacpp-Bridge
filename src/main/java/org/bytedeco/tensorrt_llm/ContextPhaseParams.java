@@ -16,52 +16,52 @@ public class ContextPhaseParams extends Pointer {
     public ContextPhaseParams(Pointer p) { super(p); }
 
 
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Optional VecTokens draftTokens,
-            @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, draftTokens, ctxDpRank, disaggInfoEndpoint); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Optional VecTokens draftTokens,
-            @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Optional VecTokens draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, draftTokens); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Optional VecTokens draftTokens);
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, Pointer state, @Optional VecTokens draftTokens,
-            @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, state, draftTokens, ctxDpRank, disaggInfoEndpoint); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, Pointer state, @Optional VecTokens draftTokens,
-            @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, Pointer state, @Optional VecTokens draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, state, draftTokens); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, Pointer state, @Optional VecTokens draftTokens);
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector BytePointer serializedState,
-            @Optional VecTokens draftTokens, @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens, ctxDpRank, disaggInfoEndpoint); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector BytePointer serializedState,
-            @Optional VecTokens draftTokens, @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector BytePointer serializedState,
-            @Optional VecTokens draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector BytePointer serializedState,
-            @Optional VecTokens draftTokens);
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector ByteBuffer serializedState,
-            @Optional VecTokens draftTokens, @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens, ctxDpRank, disaggInfoEndpoint); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector ByteBuffer serializedState,
-            @Optional VecTokens draftTokens, @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector ByteBuffer serializedState,
-            @Optional VecTokens draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector ByteBuffer serializedState,
-            @Optional VecTokens draftTokens);
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector byte[] serializedState,
-            @Optional VecTokens draftTokens, @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens, ctxDpRank, disaggInfoEndpoint); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector byte[] serializedState,
-            @Optional VecTokens draftTokens, @Optional SizeType32 ctxDpRank/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
-    public ContextPhaseParams(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector byte[] serializedState,
-            @Optional VecTokens draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens); }
-    private native void allocate(@ByVal VecTokens firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector byte[] serializedState,
-            @Optional VecTokens draftTokens);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @StdVector @Optional IntPointer draftTokens,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, draftTokens, ctxDpRank, disaggInfoEndpoint); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @StdVector @Optional IntPointer draftTokens,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @StdVector @Optional IntPointer draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, draftTokens); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @StdVector @Optional IntPointer draftTokens);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, Pointer state, @StdVector @Optional IntPointer draftTokens,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, state, draftTokens, ctxDpRank, disaggInfoEndpoint); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, Pointer state, @StdVector @Optional IntPointer draftTokens,
+            @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, Pointer state, @StdVector @Optional IntPointer draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, state, draftTokens); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, Pointer state, @StdVector @Optional IntPointer draftTokens);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector BytePointer serializedState,
+            @StdVector @Optional IntPointer draftTokens, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens, ctxDpRank, disaggInfoEndpoint); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector BytePointer serializedState,
+            @StdVector @Optional IntPointer draftTokens, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector BytePointer serializedState,
+            @StdVector @Optional IntPointer draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector BytePointer serializedState,
+            @StdVector @Optional IntPointer draftTokens);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector ByteBuffer serializedState,
+            @StdVector @Optional IntPointer draftTokens, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens, ctxDpRank, disaggInfoEndpoint); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector ByteBuffer serializedState,
+            @StdVector @Optional IntPointer draftTokens, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector ByteBuffer serializedState,
+            @StdVector @Optional IntPointer draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector ByteBuffer serializedState,
+            @StdVector @Optional IntPointer draftTokens);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector byte[] serializedState,
+            @StdVector @Optional IntPointer draftTokens, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens, ctxDpRank, disaggInfoEndpoint); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector byte[] serializedState,
+            @StdVector @Optional IntPointer draftTokens, @Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank/*=std::nullopt*/,
+            @StdString @Optional BytePointer disaggInfoEndpoint/*=std::nullopt*/);
+    public ContextPhaseParams(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector byte[] serializedState,
+            @StdVector @Optional IntPointer draftTokens) { super((Pointer)null); allocate(firstGenTokens, reqId, serializedState, draftTokens); }
+    private native void allocate(@StdVector @ByVal IntPointer firstGenTokens, @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId, @Cast("char*") @StdVector byte[] serializedState,
+            @StdVector @Optional IntPointer draftTokens);
 
     public ContextPhaseParams(@Const @ByRef ContextPhaseParams arg0) { super((Pointer)null); allocate(arg0); }
     private native void allocate(@Const @ByRef ContextPhaseParams arg0);
@@ -69,10 +69,10 @@ public class ContextPhaseParams extends Pointer {
 
     public native @Cast("bool") @Name("operator ==") @NoException(true) boolean equals(@Const @ByRef ContextPhaseParams arg0);
 
-    public native @Const @ByRef @NoException(true) VecTokens getFirstGenTokens();
-    public native @NoException(true) void setFirstGenTokens(@Const @ByRef VecTokens firstGenTokens);
-    public native @Optional @NoException(true) VecTokens getDraftTokens();
-    public native @NoException(true) void setDraftTokens(@Optional VecTokens draftTokens);
+    public native @Const @StdVector @ByRef @NoException(true) IntPointer getFirstGenTokens();
+    public native @NoException(true) void setFirstGenTokens(@Const @StdVector @ByRef IntPointer firstGenTokens);
+    public native @StdVector @Optional @NoException(true) IntPointer getDraftTokens();
+    public native @NoException(true) void setDraftTokens(@StdVector @Optional IntPointer draftTokens);
     
     public native @Cast("tensorrt_llm::executor::ContextPhaseParams::RequestIdType") @NoException(true) long getReqId();
     public native @NoException(true) void setReqId(@Cast("const tensorrt_llm::executor::ContextPhaseParams::RequestIdType") long reqId);
@@ -80,8 +80,8 @@ public class ContextPhaseParams extends Pointer {
     public native @NoException(true) Pointer releaseState();
     public native @Cast("char*") @StdVector @NoException(true) BytePointer getSerializedState();
 
-    public native @Optional @NoException(true) SizeType32 getCtxDpRank();
-    public native @NoException(true) void setCtxDpRank(@Optional SizeType32 ctxDpRank);
-    public native @Cast("std::string*") @Optional @NoException(true) BytePointer getDisaggInfoEndpoint();
-    public native @NoException(true) void setDisaggInfoEndpoint(@Cast("std::string*") @Optional BytePointer disaggInfoEndpoint);
+    public native @Cast("tensorrt_llm::executor::SizeType32*") @Optional @NoException(true) IntPointer getCtxDpRank();
+    public native @NoException(true) void setCtxDpRank(@Cast("tensorrt_llm::executor::SizeType32*") @Optional IntPointer ctxDpRank);
+    public native @StdString @Optional @NoException(true) BytePointer getDisaggInfoEndpoint();
+    public native @NoException(true) void setDisaggInfoEndpoint(@StdString @Optional BytePointer disaggInfoEndpoint);
 }

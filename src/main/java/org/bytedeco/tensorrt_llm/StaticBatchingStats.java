@@ -29,13 +29,13 @@ public class StaticBatchingStats extends Pointer {
     }
 
     /** \brief Number of scheduled requests */
-    public native @ByRef SizeType32 numScheduledRequests(); public native StaticBatchingStats numScheduledRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numScheduledRequests(); public native StaticBatchingStats numScheduledRequests(int setter);
     /** \brief Number of requests in context stage */
-    public native @ByRef SizeType32 numContextRequests(); public native StaticBatchingStats numContextRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numContextRequests(); public native StaticBatchingStats numContextRequests(int setter);
     /** \brief Total number of context tokens in the iteration */
-    public native @ByRef SizeType32 numCtxTokens(); public native StaticBatchingStats numCtxTokens(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numCtxTokens(); public native StaticBatchingStats numCtxTokens(int setter);
     /** \brief Total number of tokens to generate in the iteration */
-    public native @ByRef SizeType32 numGenTokens(); public native StaticBatchingStats numGenTokens(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numGenTokens(); public native StaticBatchingStats numGenTokens(int setter);
     /** \brief Total number of unused generation token slots */
-    public native @ByRef SizeType32 emptyGenSlots(); public native StaticBatchingStats emptyGenSlots(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int emptyGenSlots(); public native StaticBatchingStats emptyGenSlots(int setter);
 }

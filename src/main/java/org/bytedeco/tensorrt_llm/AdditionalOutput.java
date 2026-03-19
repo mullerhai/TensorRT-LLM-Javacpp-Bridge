@@ -15,13 +15,13 @@ public class AdditionalOutput extends Pointer {
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public AdditionalOutput(Pointer p) { super(p); }
 
-    public AdditionalOutput(@ByVal @Cast("std::string*") BytePointer name, @ByVal Tensor output) { super((Pointer)null); allocate(name, output); }
-    private native void allocate(@ByVal @Cast("std::string*") BytePointer name, @ByVal Tensor output);
+    public AdditionalOutput(@StdString BytePointer name, @ByVal Tensor output) { super((Pointer)null); allocate(name, output); }
+    private native void allocate(@StdString BytePointer name, @ByVal Tensor output);
 
     public AdditionalOutput(@Const @ByRef AdditionalOutput other) { super((Pointer)null); allocate(other); }
     private native void allocate(@Const @ByRef AdditionalOutput other);
     public native @ByRef @Name("operator =") AdditionalOutput put(@Const @ByRef AdditionalOutput other);
 
-    public native @ByRef @Cast("std::string*") BytePointer name(); public native AdditionalOutput name(BytePointer setter);
+    public native @StdString BytePointer name(); public native AdditionalOutput name(BytePointer setter);
     public native @ByRef Tensor output(); public native AdditionalOutput output(Tensor setter);
 }

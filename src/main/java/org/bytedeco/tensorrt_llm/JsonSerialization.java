@@ -29,11 +29,11 @@ public class JsonSerialization extends Pointer {
     }
 
     /** \brief Utility function to convert an iterationStats struct to a json serialized string */
-    public static native @ByVal @Cast("std::string*") BytePointer toJsonStr(@Const @ByRef IterationStats iterationStats);
+    public static native @StdString BytePointer toJsonStr(@Const @ByRef IterationStats iterationStats);
 
     /** \brief Utility function to convert a requestStatsPerIteration struct to a json serialized string */
-    public static native @ByVal @Cast("std::string*") BytePointer toJsonStr(@Const @ByRef RequestStatsPerIteration requestStatsPerIter);
+    public static native @StdString BytePointer toJsonStr(@Const @ByRef RequestStatsPerIteration requestStatsPerIter);
 
     /** \brief Utility function to convert a requestStats struct to a json serialized string */
-    public static native @ByVal @Cast("std::string*") BytePointer toJsonStr(@Const @ByRef RequestStats requestStats);
+    public static native @StdString BytePointer toJsonStr(@Const @ByRef RequestStats requestStats);
 }

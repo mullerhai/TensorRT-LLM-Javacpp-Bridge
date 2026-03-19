@@ -17,15 +17,9 @@ public class PromptTuningConfig extends Pointer {
     public PromptTuningConfig(Pointer p) { super(p); }
 
     public PromptTuningConfig(
-            @ByVal Tensor embeddingTable, @Optional VecTokenExtraIds inputTokenExtraIds/*=std::nullopt*/) { super((Pointer)null); allocate(embeddingTable, inputTokenExtraIds); }
-    private native void allocate(
-            @ByVal Tensor embeddingTable, @Optional VecTokenExtraIds inputTokenExtraIds/*=std::nullopt*/);
-    public PromptTuningConfig(
             @ByVal Tensor embeddingTable) { super((Pointer)null); allocate(embeddingTable); }
     private native void allocate(
             @ByVal Tensor embeddingTable);
 
     public native @ByVal Tensor getEmbeddingTable();
-
-    public native @Optional VecTokenExtraIds getInputTokenExtraIds();
 }

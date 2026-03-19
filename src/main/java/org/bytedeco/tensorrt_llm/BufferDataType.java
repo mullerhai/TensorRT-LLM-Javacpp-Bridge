@@ -10,26 +10,24 @@ import static org.bytedeco.tensorrt_llm.global.TRTLLM.*;
 
 
 /** \brief A wrapper around {@code nvinfer1::DataType} that provides a support for pointer types. */
-@Namespace("tensorrt_llm::runtime") @NoOffset @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
+@Namespace("tensorrt_llm::runtime") @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
 public class BufferDataType extends Pointer {
     static { Loader.load(); }
+    /** Default native constructor. */
+    public BufferDataType() { super((Pointer)null); allocate(); }
+    /** Native array allocator. Access with {@link Pointer#position(long)}. */
+    public BufferDataType(long size) { super((Pointer)null); allocateArray(size); }
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public BufferDataType(Pointer p) { super(p); }
+    private native void allocate();
+    private native void allocateArray(long size);
+    @Override public BufferDataType position(long position) {
+        return (BufferDataType)super.position(position);
+    }
+    @Override public BufferDataType getPointer(long i) {
+        return new BufferDataType((Pointer)this).offsetAddress(i);
+    }
 
-    public BufferDataType(
-            @ByVal DataType dataType, @Cast("bool") boolean _unsigned/*=false*/, @Cast("bool") boolean pointer/*=false*/) { super((Pointer)null); allocate(dataType, _unsigned, pointer); }
-    private native void allocate(
-            @ByVal DataType dataType, @Cast("bool") boolean _unsigned/*=false*/, @Cast("bool") boolean pointer/*=false*/);
-    public BufferDataType(
-            @ByVal DataType dataType) { super((Pointer)null); allocate(dataType); }
-    private native void allocate(
-            @ByVal DataType dataType);
-
-    @MemberGetter public static native @Const @ByRef auto kTrtPointerType();
-
-    public native @ByVal @Name("operator nvinfer1::DataType") @NoException(true) DataType asDataType();
-
-    public native @Const @ByVal @NoException(true) DataType getDataType();
 
     public native @Cast("const bool") @NoException(true) boolean isPointer();
 

@@ -9,14 +9,17 @@ import org.bytedeco.javacpp.annotation.*;
 import static org.bytedeco.tensorrt_llm.global.TRTLLM.*;
 
 
-/** \brief Configuration class for debugging output */
-@Namespace("tensorrt_llm::executor") @NoOffset @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
+
+@Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
 public class DebugConfig extends Pointer {
     static { Loader.load(); }
-    /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
-    public DebugConfig(Pointer p) { super(p); }
+    /** Default native constructor. */
+    public DebugConfig() { super((Pointer)null); allocate(); }
     /** Native array allocator. Access with {@link Pointer#position(long)}. */
     public DebugConfig(long size) { super((Pointer)null); allocateArray(size); }
+    /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
+    public DebugConfig(Pointer p) { super(p); }
+    private native void allocate();
     private native void allocateArray(long size);
     @Override public DebugConfig position(long position) {
         return (DebugConfig)super.position(position);
@@ -25,22 +28,5 @@ public class DebugConfig extends Pointer {
         return new DebugConfig((Pointer)this).offsetAddress(i);
     }
 
-    public DebugConfig(@Cast("bool") boolean debugInputTensors/*=false*/, @Cast("bool") boolean debugOutputTensors/*=false*/,
-            @Cast("tensorrt_llm::executor::DebugConfig::StringVec") BytePointer debugTensorNames/*={}*/, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 debugTensorsMaxIterations) { super((Pointer)null); allocate(debugInputTensors, debugOutputTensors, debugTensorNames, debugTensorsMaxIterations); }
-    private native void allocate(@Cast("bool") boolean debugInputTensors/*=false*/, @Cast("bool") boolean debugOutputTensors/*=false*/,
-            @Cast("tensorrt_llm::executor::DebugConfig::StringVec") BytePointer debugTensorNames/*={}*/, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 debugTensorsMaxIterations);
-    public DebugConfig() { super((Pointer)null); allocate(); }
-    private native void allocate();
-
-    public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef DebugConfig other);
-
-    public native @Cast("bool") boolean getDebugInputTensors();
-    public native @Cast("bool") boolean getDebugOutputTensors();
-    public native @Cast("const tensorrt_llm::executor::DebugConfig::StringVec") BytePointer getDebugTensorNames();
-    public native @ByVal SizeType32 getDebugTensorsMaxIterations();
-
-    public native void setDebugInputTensors(@Cast("bool") boolean debugInputTensors);
-    public native void setDebugOutputTensors(@Cast("bool") boolean debugOutputTensors);
-    public native void setDebugTensorNames(@Cast("const tensorrt_llm::executor::DebugConfig::StringVec") BytePointer debugTensorNames);
-    public native void setDebugTensorsMaxIterations(@ByVal SizeType32 debugTensorsMaxIterations);
+    public static native @Cast("bool") boolean isCheckDebugEnabled();
 }

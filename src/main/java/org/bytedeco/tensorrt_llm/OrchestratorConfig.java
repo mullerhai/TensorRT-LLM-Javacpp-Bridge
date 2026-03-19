@@ -9,6 +9,8 @@ import org.bytedeco.javacpp.annotation.*;
 import static org.bytedeco.tensorrt_llm.global.TRTLLM.*;
 
 
+/** \brief Configuration class for debugging output */
+
 @Namespace("tensorrt_llm::executor") @NoOffset @Properties(inherit = tensorrt_llm.presets.TRTLLMFullConfig.class)
 public class OrchestratorConfig extends Pointer {
     static { Loader.load(); }
@@ -24,20 +26,20 @@ public class OrchestratorConfig extends Pointer {
         return new OrchestratorConfig((Pointer)this).offsetAddress(i);
     }
 
-    public OrchestratorConfig(@Cast("bool") boolean isOrchestrator/*=true*/, @ByVal(nullValue = "std::string(\"\")") @Cast("std::string*") BytePointer workerExecutablePath,
+    public OrchestratorConfig(@Cast("bool") boolean isOrchestrator/*=true*/, @StdString BytePointer workerExecutablePath/*=""*/,
             @SharedPtr MpiComm orchLeaderComm/*=nullptr*/, @Cast("bool") boolean spawnProcesses/*=true*/) { super((Pointer)null); allocate(isOrchestrator, workerExecutablePath, orchLeaderComm, spawnProcesses); }
-    private native void allocate(@Cast("bool") boolean isOrchestrator/*=true*/, @ByVal(nullValue = "std::string(\"\")") @Cast("std::string*") BytePointer workerExecutablePath,
+    private native void allocate(@Cast("bool") boolean isOrchestrator/*=true*/, @StdString BytePointer workerExecutablePath/*=""*/,
             @SharedPtr MpiComm orchLeaderComm/*=nullptr*/, @Cast("bool") boolean spawnProcesses/*=true*/);
     public OrchestratorConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
     public native @Cast("bool") boolean getIsOrchestrator();
-    public native @ByVal @Cast("std::string*") BytePointer getWorkerExecutablePath();
+    public native @StdString BytePointer getWorkerExecutablePath();
     public native @SharedPtr MpiComm getOrchLeaderComm();
     public native @Cast("bool") boolean getSpawnProcesses();
 
     public native void setIsOrchestrator(@Cast("bool") boolean isOrchestrator);
-    public native void setWorkerExecutablePath(@Cast("const std::string*") @ByRef BytePointer workerExecutablePath);
+    public native void setWorkerExecutablePath(@StdString BytePointer workerExecutablePath);
     public native void setOrchLeaderComm(@SharedPtr MpiComm orchLeaderComm);
     public native void setSpawnProcesses(@Cast("bool") boolean spawnProcesses);
 }

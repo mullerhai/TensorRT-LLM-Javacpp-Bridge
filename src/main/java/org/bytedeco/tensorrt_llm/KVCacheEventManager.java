@@ -24,6 +24,4 @@ public class KVCacheEventManager extends Pointer {
     /** \brief Get the latest KV Cache events.
      *  @param timeout The maximum time to wait for new events. If nullopt, will only return when new events are
      *  available, or when the executor instance has shutdown. */
-    public native @ByVal std::deque<tensorrt_llm::executor::KVCacheEvent> getLatestEvents(@Optional milliseconds timeout/*=std::nullopt*/);
-    public native @ByVal std::deque<tensorrt_llm::executor::KVCacheEvent> getLatestEvents();
 }

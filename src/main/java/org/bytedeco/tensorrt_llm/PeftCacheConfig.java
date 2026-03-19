@@ -25,74 +25,78 @@ public class PeftCacheConfig extends Pointer {
         return new PeftCacheConfig((Pointer)this).offsetAddress(i);
     }
 
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultOptimalAdapterSize();
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultMaxAdapterSize();
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultMaxPagesPerBlockHost();
-    @MemberGetter public static native @Const @ByRef SizeType32 kDefaultMaxPagesPerBlockDevice();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultOptimalAdapterSize();
+    public static final int kDefaultOptimalAdapterSize = kDefaultOptimalAdapterSize();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultMaxAdapterSize();
+    public static final int kDefaultMaxAdapterSize = kDefaultMaxAdapterSize();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultMaxPagesPerBlockHost();
+    public static final int kDefaultMaxPagesPerBlockHost = kDefaultMaxPagesPerBlockHost();
+    @MemberGetter public static native @Cast("const tensorrt_llm::executor::SizeType32") int kDefaultMaxPagesPerBlockDevice();
+    public static final int kDefaultMaxPagesPerBlockDevice = kDefaultMaxPagesPerBlockDevice();
 
-    public PeftCacheConfig(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numHostModuleLayer, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numDeviceModuleLayer,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize)") SizeType32 optimalAdapterSize, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize)") SizeType32 maxAdapterSize,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numPutWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numEnsureWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numCopyStreams,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost)") SizeType32 maxPagesPerBlockHost,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice)") SizeType32 maxPagesPerBlockDevice,
+    public PeftCacheConfig(@Cast("tensorrt_llm::executor::SizeType32") int numHostModuleLayer/*=0*/, @Cast("tensorrt_llm::executor::SizeType32") int numDeviceModuleLayer/*=0*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int optimalAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize*/, @Cast("tensorrt_llm::executor::SizeType32") int maxAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int numPutWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numEnsureWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numCopyStreams/*=1*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockHost/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockDevice/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice*/,
             @Optional FloatPointer deviceCachePercent/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer hostCacheSize/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer loraPrefetchDir/*=std::nullopt*/) { super((Pointer)null); allocate(numHostModuleLayer, numDeviceModuleLayer, optimalAdapterSize, maxAdapterSize, numPutWorkers, numEnsureWorkers, numCopyStreams, maxPagesPerBlockHost, maxPagesPerBlockDevice, deviceCachePercent, hostCacheSize, loraPrefetchDir); }
-    private native void allocate(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numHostModuleLayer, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numDeviceModuleLayer,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize)") SizeType32 optimalAdapterSize, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize)") SizeType32 maxAdapterSize,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numPutWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numEnsureWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numCopyStreams,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost)") SizeType32 maxPagesPerBlockHost,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice)") SizeType32 maxPagesPerBlockDevice,
+            @Cast("size_t*") @Optional LongPointer hostCacheSize/*=std::nullopt*/,
+            @StdString @Optional BytePointer loraPrefetchDir/*=std::nullopt*/) { super((Pointer)null); allocate(numHostModuleLayer, numDeviceModuleLayer, optimalAdapterSize, maxAdapterSize, numPutWorkers, numEnsureWorkers, numCopyStreams, maxPagesPerBlockHost, maxPagesPerBlockDevice, deviceCachePercent, hostCacheSize, loraPrefetchDir); }
+    private native void allocate(@Cast("tensorrt_llm::executor::SizeType32") int numHostModuleLayer/*=0*/, @Cast("tensorrt_llm::executor::SizeType32") int numDeviceModuleLayer/*=0*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int optimalAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize*/, @Cast("tensorrt_llm::executor::SizeType32") int maxAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int numPutWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numEnsureWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numCopyStreams/*=1*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockHost/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockDevice/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice*/,
             @Optional FloatPointer deviceCachePercent/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer hostCacheSize/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer loraPrefetchDir/*=std::nullopt*/);
+            @Cast("size_t*") @Optional LongPointer hostCacheSize/*=std::nullopt*/,
+            @StdString @Optional BytePointer loraPrefetchDir/*=std::nullopt*/);
     public PeftCacheConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
-    public PeftCacheConfig(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numHostModuleLayer, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numDeviceModuleLayer,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize)") SizeType32 optimalAdapterSize, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize)") SizeType32 maxAdapterSize,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numPutWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numEnsureWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numCopyStreams,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost)") SizeType32 maxPagesPerBlockHost,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice)") SizeType32 maxPagesPerBlockDevice,
+    public PeftCacheConfig(@Cast("tensorrt_llm::executor::SizeType32") int numHostModuleLayer/*=0*/, @Cast("tensorrt_llm::executor::SizeType32") int numDeviceModuleLayer/*=0*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int optimalAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize*/, @Cast("tensorrt_llm::executor::SizeType32") int maxAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int numPutWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numEnsureWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numCopyStreams/*=1*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockHost/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockDevice/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice*/,
             @Optional FloatBuffer deviceCachePercent/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer hostCacheSize/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer loraPrefetchDir/*=std::nullopt*/) { super((Pointer)null); allocate(numHostModuleLayer, numDeviceModuleLayer, optimalAdapterSize, maxAdapterSize, numPutWorkers, numEnsureWorkers, numCopyStreams, maxPagesPerBlockHost, maxPagesPerBlockDevice, deviceCachePercent, hostCacheSize, loraPrefetchDir); }
-    private native void allocate(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numHostModuleLayer, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numDeviceModuleLayer,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize)") SizeType32 optimalAdapterSize, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize)") SizeType32 maxAdapterSize,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numPutWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numEnsureWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numCopyStreams,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost)") SizeType32 maxPagesPerBlockHost,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice)") SizeType32 maxPagesPerBlockDevice,
+            @Cast("size_t*") @Optional LongPointer hostCacheSize/*=std::nullopt*/,
+            @StdString @Optional BytePointer loraPrefetchDir/*=std::nullopt*/) { super((Pointer)null); allocate(numHostModuleLayer, numDeviceModuleLayer, optimalAdapterSize, maxAdapterSize, numPutWorkers, numEnsureWorkers, numCopyStreams, maxPagesPerBlockHost, maxPagesPerBlockDevice, deviceCachePercent, hostCacheSize, loraPrefetchDir); }
+    private native void allocate(@Cast("tensorrt_llm::executor::SizeType32") int numHostModuleLayer/*=0*/, @Cast("tensorrt_llm::executor::SizeType32") int numDeviceModuleLayer/*=0*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int optimalAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize*/, @Cast("tensorrt_llm::executor::SizeType32") int maxAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int numPutWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numEnsureWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numCopyStreams/*=1*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockHost/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockDevice/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice*/,
             @Optional FloatBuffer deviceCachePercent/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer hostCacheSize/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer loraPrefetchDir/*=std::nullopt*/);
-    public PeftCacheConfig(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numHostModuleLayer, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numDeviceModuleLayer,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize)") SizeType32 optimalAdapterSize, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize)") SizeType32 maxAdapterSize,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numPutWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numEnsureWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numCopyStreams,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost)") SizeType32 maxPagesPerBlockHost,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice)") SizeType32 maxPagesPerBlockDevice,
+            @Cast("size_t*") @Optional LongPointer hostCacheSize/*=std::nullopt*/,
+            @StdString @Optional BytePointer loraPrefetchDir/*=std::nullopt*/);
+    public PeftCacheConfig(@Cast("tensorrt_llm::executor::SizeType32") int numHostModuleLayer/*=0*/, @Cast("tensorrt_llm::executor::SizeType32") int numDeviceModuleLayer/*=0*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int optimalAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize*/, @Cast("tensorrt_llm::executor::SizeType32") int maxAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int numPutWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numEnsureWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numCopyStreams/*=1*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockHost/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockDevice/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice*/,
             @Optional float[] deviceCachePercent/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer hostCacheSize/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer loraPrefetchDir/*=std::nullopt*/) { super((Pointer)null); allocate(numHostModuleLayer, numDeviceModuleLayer, optimalAdapterSize, maxAdapterSize, numPutWorkers, numEnsureWorkers, numCopyStreams, maxPagesPerBlockHost, maxPagesPerBlockDevice, deviceCachePercent, hostCacheSize, loraPrefetchDir); }
-    private native void allocate(@ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numHostModuleLayer, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(0)") SizeType32 numDeviceModuleLayer,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize)") SizeType32 optimalAdapterSize, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize)") SizeType32 maxAdapterSize,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numPutWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numEnsureWorkers, @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(1)") SizeType32 numCopyStreams,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost)") SizeType32 maxPagesPerBlockHost,
-            @ByVal(nullValue = "tensorrt_llm::executor::SizeType32(tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice)") SizeType32 maxPagesPerBlockDevice,
+            @Cast("size_t*") @Optional LongPointer hostCacheSize/*=std::nullopt*/,
+            @StdString @Optional BytePointer loraPrefetchDir/*=std::nullopt*/) { super((Pointer)null); allocate(numHostModuleLayer, numDeviceModuleLayer, optimalAdapterSize, maxAdapterSize, numPutWorkers, numEnsureWorkers, numCopyStreams, maxPagesPerBlockHost, maxPagesPerBlockDevice, deviceCachePercent, hostCacheSize, loraPrefetchDir); }
+    private native void allocate(@Cast("tensorrt_llm::executor::SizeType32") int numHostModuleLayer/*=0*/, @Cast("tensorrt_llm::executor::SizeType32") int numDeviceModuleLayer/*=0*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int optimalAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultOptimalAdapterSize*/, @Cast("tensorrt_llm::executor::SizeType32") int maxAdapterSize/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxAdapterSize*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int numPutWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numEnsureWorkers/*=1*/, @Cast("tensorrt_llm::executor::SizeType32") int numCopyStreams/*=1*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockHost/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockHost*/,
+            @Cast("tensorrt_llm::executor::SizeType32") int maxPagesPerBlockDevice/*=tensorrt_llm::executor::PeftCacheConfig::kDefaultMaxPagesPerBlockDevice*/,
             @Optional float[] deviceCachePercent/*=std::nullopt*/,
-            @Cast("size_t*") @Optional SizeTPointer hostCacheSize/*=std::nullopt*/,
-            @Cast("std::string*") @Optional BytePointer loraPrefetchDir/*=std::nullopt*/);
+            @Cast("size_t*") @Optional LongPointer hostCacheSize/*=std::nullopt*/,
+            @StdString @Optional BytePointer loraPrefetchDir/*=std::nullopt*/);
 
     public native @Cast("bool") @Name("operator ==") boolean equals(@Const @ByRef PeftCacheConfig other);
 
-    public native @ByVal SizeType32 getNumHostModuleLayer();
-    public native @ByVal SizeType32 getNumDeviceModuleLayer();
-    public native @ByVal SizeType32 getOptimalAdapterSize();
-    public native @ByVal SizeType32 getMaxAdapterSize();
-    public native @ByVal SizeType32 getNumPutWorkers();
-    public native @ByVal SizeType32 getNumEnsureWorkers();
-    public native @ByVal SizeType32 getNumCopyStreams();
-    public native @ByVal SizeType32 getMaxPagesPerBlockHost();
-    public native @ByVal SizeType32 getMaxPagesPerBlockDevice();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getNumHostModuleLayer();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getNumDeviceModuleLayer();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getOptimalAdapterSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getMaxAdapterSize();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getNumPutWorkers();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getNumEnsureWorkers();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getNumCopyStreams();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getMaxPagesPerBlockHost();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getMaxPagesPerBlockDevice();
     public native @Optional FloatPointer getDeviceCachePercent();
-    public native @Cast("size_t*") @Optional SizeTPointer getHostCacheSize();
-    public native @Cast("std::string*") @Optional BytePointer getLoraPrefetchDir();
+    public native @Cast("size_t*") @Optional LongPointer getHostCacheSize();
+    public native @StdString @Optional BytePointer getLoraPrefetchDir();
 }

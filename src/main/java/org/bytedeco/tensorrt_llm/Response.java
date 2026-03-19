@@ -16,30 +16,30 @@ public class Response extends Pointer {
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public Response(Pointer p) { super(p); }
 
-    public Response(@ByVal IdType requestId, @ByVal @Cast("std::string*") BytePointer errorMsg, @Optional IdType clientId/*=std::nullopt*/) { super((Pointer)null); allocate(requestId, errorMsg, clientId); }
-    private native void allocate(@ByVal IdType requestId, @ByVal @Cast("std::string*") BytePointer errorMsg, @Optional IdType clientId/*=std::nullopt*/);
-    public Response(@ByVal IdType requestId, @ByVal @Cast("std::string*") BytePointer errorMsg) { super((Pointer)null); allocate(requestId, errorMsg); }
-    private native void allocate(@ByVal IdType requestId, @ByVal @Cast("std::string*") BytePointer errorMsg);
-    public Response(@ByVal IdType requestId, @ByVal Result Result, @Optional IdType clientId/*=std::nullopt*/) { super((Pointer)null); allocate(requestId, Result, clientId); }
-    private native void allocate(@ByVal IdType requestId, @ByVal Result Result, @Optional IdType clientId/*=std::nullopt*/);
-    public Response(@ByVal IdType requestId, @ByVal Result Result) { super((Pointer)null); allocate(requestId, Result); }
-    private native void allocate(@ByVal IdType requestId, @ByVal Result Result);
+    public Response(@Cast("tensorrt_llm::executor::IdType") long requestId, @StdString BytePointer errorMsg, @Cast("tensorrt_llm::executor::IdType*") @Optional LongPointer clientId/*=std::nullopt*/) { super((Pointer)null); allocate(requestId, errorMsg, clientId); }
+    private native void allocate(@Cast("tensorrt_llm::executor::IdType") long requestId, @StdString BytePointer errorMsg, @Cast("tensorrt_llm::executor::IdType*") @Optional LongPointer clientId/*=std::nullopt*/);
+    public Response(@Cast("tensorrt_llm::executor::IdType") long requestId, @StdString BytePointer errorMsg) { super((Pointer)null); allocate(requestId, errorMsg); }
+    private native void allocate(@Cast("tensorrt_llm::executor::IdType") long requestId, @StdString BytePointer errorMsg);
+    public Response(@Cast("tensorrt_llm::executor::IdType") long requestId, @ByVal Result Result, @Cast("tensorrt_llm::executor::IdType*") @Optional LongPointer clientId/*=std::nullopt*/) { super((Pointer)null); allocate(requestId, Result, clientId); }
+    private native void allocate(@Cast("tensorrt_llm::executor::IdType") long requestId, @ByVal Result Result, @Cast("tensorrt_llm::executor::IdType*") @Optional LongPointer clientId/*=std::nullopt*/);
+    public Response(@Cast("tensorrt_llm::executor::IdType") long requestId, @ByVal Result Result) { super((Pointer)null); allocate(requestId, Result); }
+    private native void allocate(@Cast("tensorrt_llm::executor::IdType") long requestId, @ByVal Result Result);
     public Response(@Const @ByRef Response other) { super((Pointer)null); allocate(other); }
     private native void allocate(@Const @ByRef Response other);
     public native @ByRef @Name("operator =") Response put(@Const @ByRef Response other);
 
     /** \brief Get the id of the request for which this response was generated */
-    public native @ByVal IdType getRequestId();
+    public native @Cast("tensorrt_llm::executor::IdType") long getRequestId();
 
     /** \brief Get the client id of the request for which this response was generated */
-    public native @Optional IdType getClientId();
+    public native @Cast("tensorrt_llm::executor::IdType*") @Optional LongPointer getClientId();
 
     /** \brief Indicates if this response has an error or not */
     public native @Cast("bool") boolean hasError();
 
     /** \brief Get the error msg for this response
      *  Will throw an exception if hasError is false */
-    public native @Cast("const std::string*") @ByRef BytePointer getErrorMsg();
+    public native @StdString BytePointer getErrorMsg();
 
     /** \brief Get the result for this response
      *  Will throw an exception if hasResult is true */

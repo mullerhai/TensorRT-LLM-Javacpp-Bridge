@@ -16,19 +16,12 @@ public class MultimodalInput extends Pointer {
     /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     public MultimodalInput(Pointer p) { super(p); }
 
-    public MultimodalInput(@StdVector std::vector<tensorrt_llm::executor::SizeType32> multimodalHashes,
-            @StdVector SizeType32 multimodalPositions, @StdVector SizeType32 multimodalLengths,
-            @Optional std::vector<std::optional<std::string> > multimodalUuids/*=std::nullopt*/) { super((Pointer)null); allocate(multimodalHashes, multimodalPositions, multimodalLengths, multimodalUuids); }
-    private native void allocate(@StdVector std::vector<tensorrt_llm::executor::SizeType32> multimodalHashes,
-            @StdVector SizeType32 multimodalPositions, @StdVector SizeType32 multimodalLengths,
-            @Optional std::vector<std::optional<std::string> > multimodalUuids/*=std::nullopt*/);
-    public MultimodalInput(@StdVector std::vector<tensorrt_llm::executor::SizeType32> multimodalHashes,
-            @StdVector SizeType32 multimodalPositions, @StdVector SizeType32 multimodalLengths) { super((Pointer)null); allocate(multimodalHashes, multimodalPositions, multimodalLengths); }
-    private native void allocate(@StdVector std::vector<tensorrt_llm::executor::SizeType32> multimodalHashes,
-            @StdVector SizeType32 multimodalPositions, @StdVector SizeType32 multimodalLengths);
+    public MultimodalInput(@StdVector IntPointer multimodalHashes,
+            @StdVector @ByVal IntPointer multimodalPositions, @StdVector @ByVal IntPointer multimodalLengths) { super((Pointer)null); allocate(multimodalHashes, multimodalPositions, multimodalLengths); }
+    private native void allocate(@StdVector IntPointer multimodalHashes,
+            @StdVector @ByVal IntPointer multimodalPositions, @StdVector @ByVal IntPointer multimodalLengths);
 
-    public native @StdVector std::vector<tensorrt_llm::executor::SizeType32> getMultimodalHashes();
-    public native @StdVector SizeType32 getMultimodalPositions();
-    public native @StdVector SizeType32 getMultimodalLengths();
-    public native @Optional std::vector<std::optional<std::string> > getMultimodalUuids();
+    public native @StdVector IntPointer getMultimodalHashes();
+    public native @StdVector @ByVal IntPointer getMultimodalPositions();
+    public native @StdVector @ByVal IntPointer getMultimodalLengths();
 }

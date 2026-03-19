@@ -29,7 +29,7 @@ public class IterationStats extends Pointer {
     }
 
     /** \brief Ending time of this iteration */
-    public native @ByRef @Cast("std::string*") BytePointer timestamp(); public native IterationStats timestamp(BytePointer setter);
+    public native @StdString BytePointer timestamp(); public native IterationStats timestamp(BytePointer setter);
     /** \brief Iteration id */
     public native @Cast("tensorrt_llm::executor::IterationType") long iter(); public native IterationStats iter(long setter);
     /** \brief Iteration latency (ms) */
@@ -37,27 +37,27 @@ public class IterationStats extends Pointer {
     /** \brief The total time spent in queue by the requests that became active in this iteration (ms) */
     public native double newActiveRequestsQueueLatencyMS(); public native IterationStats newActiveRequestsQueueLatencyMS(double setter);
     /** \brief Number of new fetched active requests */
-    public native @ByRef SizeType32 numNewActiveRequests(); public native IterationStats numNewActiveRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numNewActiveRequests(); public native IterationStats numNewActiveRequests(int setter);
     /** \brief Number of active requests */
-    public native @ByRef SizeType32 numActiveRequests(); public native IterationStats numActiveRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numActiveRequests(); public native IterationStats numActiveRequests(int setter);
     /** \brief Number of queued requests */
-    public native @ByRef SizeType32 numQueuedRequests(); public native IterationStats numQueuedRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numQueuedRequests(); public native IterationStats numQueuedRequests(int setter);
     /** \brief  Number of requests that were completed in this iteration */
-    public native @ByRef SizeType32 numCompletedRequests(); public native IterationStats numCompletedRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numCompletedRequests(); public native IterationStats numCompletedRequests(int setter);
     /** \brief Number of max active requests */
-    public native @ByRef SizeType32 maxNumActiveRequests(); public native IterationStats maxNumActiveRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int maxNumActiveRequests(); public native IterationStats maxNumActiveRequests(int setter);
     /** \brief Static max batch size passed to the executor */
-    public native @ByRef SizeType32 maxBatchSizeStatic(); public native IterationStats maxBatchSizeStatic(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int maxBatchSizeStatic(); public native IterationStats maxBatchSizeStatic(int setter);
     /** \brief Batch size produced by dynamic tuner based on input stats */
-    public native @ByRef SizeType32 maxBatchSizeTunerRecommended(); public native IterationStats maxBatchSizeTunerRecommended(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int maxBatchSizeTunerRecommended(); public native IterationStats maxBatchSizeTunerRecommended(int setter);
     /** \brife The min of maxBatchSizeStatic and maxBatchSizeRuntimeUpperbound */
-    public native @ByRef SizeType32 maxBatchSizeRuntime(); public native IterationStats maxBatchSizeRuntime(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int maxBatchSizeRuntime(); public native IterationStats maxBatchSizeRuntime(int setter);
     /** \brife Static max num tokens passed to the executor */
-    public native @ByRef SizeType32 maxNumTokensStatic(); public native IterationStats maxNumTokensStatic(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int maxNumTokensStatic(); public native IterationStats maxNumTokensStatic(int setter);
     /** \brife Max num tokens produced by dynamic tuner based on input stats */
-    public native @ByRef SizeType32 maxNumTokensTunerRecommended(); public native IterationStats maxNumTokensTunerRecommended(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int maxNumTokensTunerRecommended(); public native IterationStats maxNumTokensTunerRecommended(int setter);
     /** \brife The runtime max num tokens */
-    public native @ByRef SizeType32 maxNumTokensRuntime(); public native IterationStats maxNumTokensRuntime(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int maxNumTokensRuntime(); public native IterationStats maxNumTokensRuntime(int setter);
     /** \brief GPU memory usage in bytes */
     public native @Cast("size_t") long gpuMemUsage(); public native IterationStats gpuMemUsage(long setter);
     /** \brief CPU memory usage in bytes */

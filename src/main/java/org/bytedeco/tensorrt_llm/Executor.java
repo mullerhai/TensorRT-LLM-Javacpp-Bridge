@@ -20,30 +20,19 @@ public class Executor extends Pointer {
      *  @param modelPath Path to the folder that defines the model to run
      *  @param modelType The type of model
      *  @param executorConfig The configuration for the executor */
-    public Executor(@Const @ByRef path modelPath, @ByVal ModelType modelType, @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(modelPath, modelType, executorConfig); }
-    private native void allocate(@Const @ByRef path modelPath, @ByVal ModelType modelType, @Const @ByRef ExecutorConfig executorConfig);
+    public Executor(@Const @ByRef BytePointer modelPath, ModelType modelType, @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(modelPath, modelType, executorConfig); }
+    private native void allocate(@Const @ByRef BytePointer modelPath, ModelType modelType, @Const @ByRef ExecutorConfig executorConfig);
 
-    public Executor(@Const @ByRef path encoderModelPath, @Const @ByRef path decoderModelPath,
-            @ByVal ModelType modelType, @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(encoderModelPath, decoderModelPath, modelType, executorConfig); }
-    private native void allocate(@Const @ByRef path encoderModelPath, @Const @ByRef path decoderModelPath,
-            @ByVal ModelType modelType, @Const @ByRef ExecutorConfig executorConfig);
+    public Executor(@Const @ByRef BytePointer encoderModelPath, @Const @ByRef BytePointer decoderModelPath,
+            ModelType modelType, @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(encoderModelPath, decoderModelPath, modelType, executorConfig); }
+    private native void allocate(@Const @ByRef BytePointer encoderModelPath, @Const @ByRef BytePointer decoderModelPath,
+            ModelType modelType, @Const @ByRef ExecutorConfig executorConfig);
 
-    public Executor(@Const @ByRef BufferView engineBuffer, @Cast("const std::string*") @ByRef BytePointer jsonConfigStr, @ByVal ModelType modelType,
-            @Const @ByRef ExecutorConfig executorConfig,
-            @Optional std::map<std::string,Tensor> managedWeights/*=std::nullopt*/) { super((Pointer)null); allocate(engineBuffer, jsonConfigStr, modelType, executorConfig, managedWeights); }
-    private native void allocate(@Const @ByRef BufferView engineBuffer, @Cast("const std::string*") @ByRef BytePointer jsonConfigStr, @ByVal ModelType modelType,
-            @Const @ByRef ExecutorConfig executorConfig,
-            @Optional std::map<std::string,Tensor> managedWeights/*=std::nullopt*/);
-    public Executor(@Const @ByRef BufferView engineBuffer, @Cast("const std::string*") @ByRef BytePointer jsonConfigStr, @ByVal ModelType modelType,
-            @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(engineBuffer, jsonConfigStr, modelType, executorConfig); }
-    private native void allocate(@Const @ByRef BufferView engineBuffer, @Cast("const std::string*") @ByRef BytePointer jsonConfigStr, @ByVal ModelType modelType,
-            @Const @ByRef ExecutorConfig executorConfig);
-
-    public Executor(@Const @ByRef BufferView encoderEngineBuffer, @Cast("const std::string*") @ByRef BytePointer encoderJsonConfigStr,
-            @Const @ByRef BufferView decoderEngineBuffer, @Cast("const std::string*") @ByRef BytePointer decoderJsonConfigStr, @ByVal ModelType modelType,
+    public Executor(@Const @ByRef BytePointer encoderEngineBuffer, @StdString BytePointer encoderJsonConfigStr,
+            @Const @ByRef BytePointer decoderEngineBuffer, @StdString BytePointer decoderJsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(encoderEngineBuffer, encoderJsonConfigStr, decoderEngineBuffer, decoderJsonConfigStr, modelType, executorConfig); }
-    private native void allocate(@Const @ByRef BufferView encoderEngineBuffer, @Cast("const std::string*") @ByRef BytePointer encoderJsonConfigStr,
-            @Const @ByRef BufferView decoderEngineBuffer, @Cast("const std::string*") @ByRef BytePointer decoderJsonConfigStr, @ByVal ModelType modelType,
+    private native void allocate(@Const @ByRef BytePointer encoderEngineBuffer, @StdString BytePointer encoderJsonConfigStr,
+            @Const @ByRef BytePointer decoderEngineBuffer, @StdString BytePointer decoderJsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig);
 
     public Executor(@SharedPtr Model model, @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(model, executorConfig); }
@@ -62,12 +51,12 @@ public class Executor extends Pointer {
     /** \brief Enqueue a new request
      *  @param request The LLM request which contains input tokens and request parameters
      *  @return A unique id that identifies the request */
-    public native @ByVal IdType enqueueRequest(@Const @ByRef Request request);
+    public native @Cast("tensorrt_llm::executor::IdType") long enqueueRequest(@Const @ByRef Request request);
 
     /** \brief Enqueue a batch of request */
     
     ///
-    public native @StdVector IdType enqueueRequests(@StdVector Request requests);
+    public native @Cast("tensorrt_llm::executor::IdType*") @StdVector LongPointer enqueueRequests(@StdVector Request requests);
 
     /** \brief Await for ready responses
      * 
@@ -75,20 +64,13 @@ public class Executor extends Pointer {
      *         have been enqueued, this method will provide any ready responses without order guarantees.
      *  @param timeout The maximum time to wait for new responses
      *  @return A vector of responses */
-    public native @StdVector Response awaitResponses(
-            @Optional milliseconds timeout/*=std::nullopt*/);
-    public native @StdVector Response awaitResponses();
+    
 
     /** \brief Await for ready responses
      *  @param id A request id
      *  @param timeout The maximum time to wait for new responses
      *  @return A vector of responses */
     
-    ///
-    public native @StdVector Response awaitResponses(
-            @Const @ByRef IdType requestId, @Optional milliseconds timeout/*=std::nullopt*/);
-    public native @StdVector Response awaitResponses(
-            @Const @ByRef IdType requestId);
 
     /** \brief Await for multiple ready responses
      * 
@@ -102,16 +84,17 @@ public class Executor extends Pointer {
      *  @param requestIds Ids requested
      *  @param timeout The maximum time to wait for new responses
      *  @return A vector of vector of responses */
+    
 
     /** \brief Get the number of ready responses
      *  @param requestId An optional request id
      *  @return The number of ready responses */
-    public native @ByVal SizeType32 getNumResponsesReady(@Optional IdType requestId/*=std::nullopt*/);
-    public native @ByVal SizeType32 getNumResponsesReady();
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getNumResponsesReady(@Cast("tensorrt_llm::executor::IdType*") @Optional LongPointer requestId/*=std::nullopt*/);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int getNumResponsesReady();
 
     /** \brief Cancel the request with provided request id
      *  @param id The request id for which to cancel the response */
-    public native void cancelRequest(@ByVal IdType requestId);
+    public native void cancelRequest(@Cast("tensorrt_llm::executor::IdType") long requestId);
 
     /** \brief   Signals the server to shutdown.
      *  \details This call is blocking. Only returns when all requests have terminated or timeout has been reached */
@@ -120,17 +103,14 @@ public class Executor extends Pointer {
     /** \brief  Returns the per-iterations statistics computed since last call to getLatestIterationStats.
      *          Contains at most iterStatsMaxIterations iterations.
      *  @return Iteration stats */
-    public native @ByVal std::deque<IterationStats> getLatestIterationStats();
 
     /** \brief  Returns the request stats of each iteration computed since last call to getLatestRequestStats.
      *          Contains at most requestStatsMaxIterations iterations.
      *  @return Request stats grouped by iterations */
-    public native @ByVal std::deque<RequestStatsPerIteration> getLatestRequestStats();
 
     /** \brief  Returns the debug tensors of each iteration computed since last call to getLatestDebugTensors.
      *          Contains at most debugTensorsMaxIterations iterations.
      *  @return Request debug tensors grouped by iterations */
-    public native @ByVal std::deque<DebugTensorsPerIteration> getLatestDebugTensors();
 
     /** \brief  Indicates if the current process is allowed to enqueueRequests */
     public native @Cast("bool") boolean canEnqueueRequests();
@@ -138,5 +118,5 @@ public class Executor extends Pointer {
     /** \brief  Indicates if the current process participates in this executor instance */
     public native @Cast("bool") boolean isParticipant();
 
-    public native @Optional std::shared_ptr<tensorrt_llm::executor::KVCacheEventManager> getKVCacheEventManager();
+    
 }

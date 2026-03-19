@@ -29,17 +29,17 @@ public class InflightBatchingStats extends Pointer {
     }
 
     /** \brief Number of scheduled requests */
-    public native @ByRef SizeType32 numScheduledRequests(); public native InflightBatchingStats numScheduledRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numScheduledRequests(); public native InflightBatchingStats numScheduledRequests(int setter);
     /** \brief Number of requests in context stage */
-    public native @ByRef SizeType32 numContextRequests(); public native InflightBatchingStats numContextRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numContextRequests(); public native InflightBatchingStats numContextRequests(int setter);
     /** \brief Number of requests in generation stage */
-    public native @ByRef SizeType32 numGenRequests(); public native InflightBatchingStats numGenRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numGenRequests(); public native InflightBatchingStats numGenRequests(int setter);
     /** \brief Number of paused requests */
-    public native @ByRef SizeType32 numPausedRequests(); public native InflightBatchingStats numPausedRequests(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numPausedRequests(); public native InflightBatchingStats numPausedRequests(int setter);
     /** \brief Total number of context tokens in the iteration */
-    public native @ByRef SizeType32 numCtxTokens(); public native InflightBatchingStats numCtxTokens(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int numCtxTokens(); public native InflightBatchingStats numCtxTokens(int setter);
     /** \brief Index of mirco batch */
-    public native @ByRef SizeType32 microBatchId(); public native InflightBatchingStats microBatchId(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int microBatchId(); public native InflightBatchingStats microBatchId(int setter);
     /** \brief Average number of tokens decoded per request per iteration */
     public native float avgNumDecodedTokensPerIter(); public native InflightBatchingStats avgNumDecodedTokensPerIter(float setter);
 }

@@ -17,27 +17,27 @@ public class KVCacheStoredBlockData extends Pointer {
     public KVCacheStoredBlockData(Pointer p) { super(p); }
 
 
-    public KVCacheStoredBlockData(@ByVal IdType blockHash, @ByVal VecUniqueTokens tokens,
-            @Optional LoraTaskIdType loraId, @ByVal SizeType32 cacheLevel, @ByVal SizeType32 priority,
+    public KVCacheStoredBlockData(@Cast("tensorrt_llm::executor::IdType") long blockHash, @ByVal Pointer tokens,
+            @Cast("tensorrt_llm::runtime::LoraTaskIdType*") @Optional LongPointer loraId, @Cast("tensorrt_llm::executor::SizeType32") int cacheLevel, @Cast("tensorrt_llm::executor::SizeType32") int priority,
             @StdVector MmKey mmKeys/*={}*/) { super((Pointer)null); allocate(blockHash, tokens, loraId, cacheLevel, priority, mmKeys); }
-    private native void allocate(@ByVal IdType blockHash, @ByVal VecUniqueTokens tokens,
-            @Optional LoraTaskIdType loraId, @ByVal SizeType32 cacheLevel, @ByVal SizeType32 priority,
+    private native void allocate(@Cast("tensorrt_llm::executor::IdType") long blockHash, @ByVal Pointer tokens,
+            @Cast("tensorrt_llm::runtime::LoraTaskIdType*") @Optional LongPointer loraId, @Cast("tensorrt_llm::executor::SizeType32") int cacheLevel, @Cast("tensorrt_llm::executor::SizeType32") int priority,
             @StdVector MmKey mmKeys/*={}*/);
-    public KVCacheStoredBlockData(@ByVal IdType blockHash, @ByVal VecUniqueTokens tokens,
-            @Optional LoraTaskIdType loraId, @ByVal SizeType32 cacheLevel, @ByVal SizeType32 priority) { super((Pointer)null); allocate(blockHash, tokens, loraId, cacheLevel, priority); }
-    private native void allocate(@ByVal IdType blockHash, @ByVal VecUniqueTokens tokens,
-            @Optional LoraTaskIdType loraId, @ByVal SizeType32 cacheLevel, @ByVal SizeType32 priority);
+    public KVCacheStoredBlockData(@Cast("tensorrt_llm::executor::IdType") long blockHash, @ByVal Pointer tokens,
+            @Cast("tensorrt_llm::runtime::LoraTaskIdType*") @Optional LongPointer loraId, @Cast("tensorrt_llm::executor::SizeType32") int cacheLevel, @Cast("tensorrt_llm::executor::SizeType32") int priority) { super((Pointer)null); allocate(blockHash, tokens, loraId, cacheLevel, priority); }
+    private native void allocate(@Cast("tensorrt_llm::executor::IdType") long blockHash, @ByVal Pointer tokens,
+            @Cast("tensorrt_llm::runtime::LoraTaskIdType*") @Optional LongPointer loraId, @Cast("tensorrt_llm::executor::SizeType32") int cacheLevel, @Cast("tensorrt_llm::executor::SizeType32") int priority);
 
     /** \brief The hash of the block */
-    public native @ByRef IdType blockHash(); public native KVCacheStoredBlockData blockHash(IdType setter);
+    public native @Cast("tensorrt_llm::executor::IdType") long blockHash(); public native KVCacheStoredBlockData blockHash(long setter);
     /** \brief The unique tokens of the block */
-    public native @ByRef VecUniqueTokens tokens(); public native KVCacheStoredBlockData tokens(VecUniqueTokens setter);
+    public native @ByRef Pointer tokens(); public native KVCacheStoredBlockData tokens(Pointer setter);
     /** \brief The Lora task id of the block */
-    public native @Optional LoraTaskIdType loraId(); public native KVCacheStoredBlockData loraId(LoraTaskIdType setter);
+    public native @Cast("tensorrt_llm::runtime::LoraTaskIdType*") @Optional LongPointer loraId(); public native KVCacheStoredBlockData loraId(LongPointer setter);
     /** \brief The cache level of the block */
-    public native @ByRef SizeType32 cacheLevel(); public native KVCacheStoredBlockData cacheLevel(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int cacheLevel(); public native KVCacheStoredBlockData cacheLevel(int setter);
     /** \brief The priority of the block */
-    public native @ByRef SizeType32 priority(); public native KVCacheStoredBlockData priority(SizeType32 setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int priority(); public native KVCacheStoredBlockData priority(int setter);
     /** \brief The multimodal keys of the block */
     public native @StdVector MmKey mmKeys(); public native KVCacheStoredBlockData mmKeys(MmKey setter);
 }

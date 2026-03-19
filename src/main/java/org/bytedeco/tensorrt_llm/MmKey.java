@@ -26,17 +26,11 @@ public class MmKey extends Pointer {
         return new MmKey((Pointer)this).offsetAddress(i);
     }
 
-    public native @ByRef std::array<uint8_t,32> hash(); public native MmKey hash(std::array<uint8_t,32> setter);
-    public native @ByRef SizeType32 startOffset(); public native MmKey startOffset(SizeType32 setter);
-    public native @Cast("std::string*") @Optional BytePointer uuid(); public native MmKey uuid(BytePointer setter);
+    public native @Cast("tensorrt_llm::executor::SizeType32") int startOffset(); public native MmKey startOffset(int setter);
+    public native @StdString @Optional BytePointer uuid(); public native MmKey uuid(BytePointer setter);
 
     public MmKey() { super((Pointer)null); allocate(); }
     private native void allocate();
-
-    public MmKey(@ByVal std::array<uint8_t,32> hash, @ByVal SizeType32 startOffset, @Cast("std::string*") @Optional BytePointer uuid/*=std::nullopt*/) { super((Pointer)null); allocate(hash, startOffset, uuid); }
-    private native void allocate(@ByVal std::array<uint8_t,32> hash, @ByVal SizeType32 startOffset, @Cast("std::string*") @Optional BytePointer uuid/*=std::nullopt*/);
-    public MmKey(@ByVal std::array<uint8_t,32> hash, @ByVal SizeType32 startOffset) { super((Pointer)null); allocate(hash, startOffset); }
-    private native void allocate(@ByVal std::array<uint8_t,32> hash, @ByVal SizeType32 startOffset);
 
     public native @Cast("bool") @Name("operator ==") @NoException(true) boolean equals(@Const @ByRef MmKey other);
 }

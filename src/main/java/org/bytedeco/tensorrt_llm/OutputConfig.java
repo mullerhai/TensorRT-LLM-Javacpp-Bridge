@@ -25,14 +25,6 @@ public class OutputConfig extends Pointer {
         return new OutputConfig((Pointer)this).offsetAddress(i);
     }
 
-    public OutputConfig(@Cast("bool") boolean returnLogProbs/*=false*/, @Cast("bool") boolean returnContextLogits/*=false*/,
-            @Cast("bool") boolean returnGenerationLogits/*=false*/, @Cast("bool") boolean excludeInputFromOutput/*=false*/, @Cast("bool") boolean returnEncoderOutput/*=false*/,
-            @Cast("bool") boolean returnPerfMetrics/*=false*/,
-            @Optional std::vector<tensorrt_llm::executor::AdditionalModelOutput> additionalModelOutputs/*=std::nullopt*/) { super((Pointer)null); allocate(returnLogProbs, returnContextLogits, returnGenerationLogits, excludeInputFromOutput, returnEncoderOutput, returnPerfMetrics, additionalModelOutputs); }
-    private native void allocate(@Cast("bool") boolean returnLogProbs/*=false*/, @Cast("bool") boolean returnContextLogits/*=false*/,
-            @Cast("bool") boolean returnGenerationLogits/*=false*/, @Cast("bool") boolean excludeInputFromOutput/*=false*/, @Cast("bool") boolean returnEncoderOutput/*=false*/,
-            @Cast("bool") boolean returnPerfMetrics/*=false*/,
-            @Optional std::vector<tensorrt_llm::executor::AdditionalModelOutput> additionalModelOutputs/*=std::nullopt*/);
     public OutputConfig() { super((Pointer)null); allocate(); }
     private native void allocate();
 
@@ -51,5 +43,4 @@ public class OutputConfig extends Pointer {
     public native @Cast("bool") boolean returnPerfMetrics(); public native OutputConfig returnPerfMetrics(boolean setter);
 
     /** \brief The additional outputs to gather from the model. */
-    public native @Optional std::vector<tensorrt_llm::executor::AdditionalModelOutput> additionalModelOutputs(); public native OutputConfig additionalModelOutputs(std::vector<tensorrt_llm::executor::AdditionalModelOutput> setter);
 }
