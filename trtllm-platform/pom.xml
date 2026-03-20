@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.bytedeco</groupId>
+        <artifactId>tensorrt-llm-parent</artifactId>
+        <version>0.17.0-1.5.13</version>
+        <relativePath>../parent-pom.xml</relativePath>
+    </parent>
+
+    <artifactId>tensorrt-llm-platform</artifactId>
+    <packaging>jar</packaging>
+
+    <name>TensorRT-LLM JavaCPP Platform</name>
+    <description>
+        Platform aggregator for TensorRT-LLM JavaCPP bindings.
+        Depends on the pure-Java API jar and all supported platform native jars.
+
+        Usage:
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.bytedeco&lt;/groupId&gt;
+            &lt;artifactId&gt;tensorrt-llm-platform&lt;/artifactId&gt;
+            &lt;version&gt;0.17.0-1.5.13&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        This single dependency will pull in the Java API + native libraries
+        for all supported platforms (linux-x86_64, linux-arm64).
+    </description>
+
+    <dependencies>
+        <!-- 核心 Java 绑定 -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>tensorrt-llm</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- JavaCPP 基础 -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacpp</artifactId>
+        </dependency>
+
+        <!-- ============================== -->
+        <!-- 各平台 native 库                -->
+        <!-- ============================== -->
+
+        <!-- Linux x86_64 (主要支持平台) -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>tensorrt-llm</artifactId>
+            <version>${project.version}</version>
+            <classifier>linux-x86_64</classifier>
+        </dependency>
+
+        <!-- Linux ARM64 (如 Grace Hopper) -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>tensorrt-llm</artifactId>
+            <version>${project.version}</version>
+            <classifier>linux-arm64</classifier>
+        </dependency>
+
+        <!-- macOS ARM64 (仅 stub, TRT-LLM 不原生支持 macOS) -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>tensorrt-llm</artifactId>
+            <version>${project.version}</version>
+            <classifier>macosx-arm64</classifier>
+        </dependency>
+    </dependencies>
+</project>
+

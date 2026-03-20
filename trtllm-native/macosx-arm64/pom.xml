@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.bytedeco</groupId>
+        <artifactId>tensorrt-llm-parent</artifactId>
+        <version>0.17.0-1.5.13</version>
+        <relativePath>../../parent-pom.xml</relativePath>
+    </parent>
+
+    <artifactId>tensorrt-llm</artifactId>
+    <packaging>jar</packaging>
+
+    <name>TensorRT-LLM Native — macOS ARM64 (Stub)</name>
+    <description>
+        Stub native library package for TensorRT-LLM on macOS ARM64.
+
+        NOTE: TensorRT-LLM does NOT natively support macOS.
+        This module is provided as a stub so that:
+        1. The Java API can be compiled and tested on macOS
+        2. IDE integration works on macOS development machines
+        3. Unit tests with mocked native calls can run on macOS
+
+        For actual inference, deploy to Linux with NVIDIA GPU.
+    </description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <classifier>macosx-arm64</classifier>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+

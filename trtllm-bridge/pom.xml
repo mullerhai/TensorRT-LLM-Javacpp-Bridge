@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.bytedeco</groupId>
+    <artifactId>tensorrt-llm</artifactId>
+    <version>0.17.0-1.5.13</version>
+    <packaging>jar</packaging>
+
+    <name>TensorRT-LLM JavaCPP Bindings</name>
+    <description>
+        JavaCPP bindings for NVIDIA TensorRT-LLM.
+        Pure Java API classes — no native libraries included.
+        Use tensorrt-llm-platform for native libraries.
+    </description>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javacpp.version>1.5.13</javacpp.version>
+        <trtllm.include.path>/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include</trtllm.include.path>
+        <javacpp.parser.skip>false</javacpp.parser.skip>
+        <javacpp.compiler.skip>true</javacpp.compiler.skip>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacpp</artifactId>
+            <version>${javacpp.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.bytedeco</groupId>
+                <artifactId>javacpp</artifactId>
+                <version>${javacpp.version}</version>
+                <configuration>
+                    <skip>${javacpp.parser.skip}</skip>
+                    <classOrPackageNames>
+                        <classOrPackageName>tensorrt_llm.presets.TRTLLMFullConfig</classOrPackageName>
+                    </classOrPackageNames>
+                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                    <includePaths>
+                        <includePath>${trtllm.include.path}</includePath>
+                    </includePaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+

@@ -1,0 +1,9 @@
+FROM --platform=linux/amd64 debian:bookworm-slim
+RUN echo 'Acquire::Retries "5";' > /etc/apt/apt.conf.d/80-retries && \
+    echo 'Acquire::http::Pipeline-Depth "0";' >> /etc/apt/apt.conf.d/80-retries && \
+    echo 'Acquire::http::No-Cache=True;' >> /etc/apt/apt.conf.d/80-retries && \
+    echo 'Acquire::BrokenProxy=true;' >> /etc/apt/apt.conf.d/80-retries && \
+    apt-get update && apt-get install -y -o Dpkg::Options::="--force-confold" g++ && \
+    rm -rf /var/lib/apt/lists/*
+WORKDIR /workspace
+

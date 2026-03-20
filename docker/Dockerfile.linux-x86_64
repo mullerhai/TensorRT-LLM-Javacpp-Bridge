@@ -1,0 +1,7 @@
+FROM maven:3.9-eclipse-temurin-21
+
+# 安装 C++ 编译器
+RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+

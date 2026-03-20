@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.bytedeco</groupId>
+    <artifactId>tensorrt-llm-parent</artifactId>
+    <version>0.17.0-1.5.13</version>
+    <packaging>pom</packaging>
+
+    <name>TensorRT-LLM JavaCPP Parent</name>
+    <description>JavaCPP bindings for NVIDIA TensorRT-LLM — Parent POM</description>
+    <url>https://github.com/NVIDIA/TensorRT-LLM</url>
+
+    <modules>
+        <!-- 核心 Java 绑定 (纯 Java, 不含 native 库) -->
+        <module>trtllm-bridge</module>
+        <!-- 平台聚合 JAR (依赖所有平台的 native 库) -->
+        <module>trtllm-platform</module>
+        <!-- 各平台 native 库 -->
+        <module>trtllm-native/linux-x86_64</module>
+        <module>trtllm-native/linux-arm64</module>
+        <module>trtllm-native/macosx-arm64</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javacpp.version>1.5.13</javacpp.version>
+        <!-- TensorRT-LLM 版本, 对应 0.17.x -->
+        <trtllm.version>0.17.0</trtllm.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.bytedeco</groupId>
+                <artifactId>javacpp</artifactId>
+                <version>${javacpp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bytedeco</groupId>
+                <artifactId>tensorrt-llm</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
+
