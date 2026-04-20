@@ -90,7 +90,7 @@
 ### 2. 在 Java 代码中导入
 
 ```java
-import org.bytedeco.tensorrt_llm.global.TRTLLM;
+
 
 public class Example {
     public static void main(String[] args) {

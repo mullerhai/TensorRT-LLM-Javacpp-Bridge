@@ -50,25 +50,22 @@
         <!-- Linux x86_64 (主要支持平台) -->
         <dependency>
             <groupId>org.bytedeco</groupId>
-            <artifactId>tensorrt-llm</artifactId>
+            <artifactId>tensorrt-llm-native-linux-x86_64</artifactId>
             <version>${project.version}</version>
-            <classifier>linux-x86_64</classifier>
         </dependency>
 
         <!-- Linux ARM64 (如 Grace Hopper) -->
         <dependency>
             <groupId>org.bytedeco</groupId>
-            <artifactId>tensorrt-llm</artifactId>
+            <artifactId>tensorrt-llm-native-linux-arm64</artifactId>
             <version>${project.version}</version>
-            <classifier>linux-arm64</classifier>
         </dependency>
 
         <!-- macOS ARM64 (仅 stub, TRT-LLM 不原生支持 macOS) -->
         <dependency>
             <groupId>org.bytedeco</groupId>
-            <artifactId>tensorrt-llm</artifactId>
+            <artifactId>tensorrt-llm-native-macosx-arm64</artifactId>
             <version>${project.version}</version>
-            <classifier>macosx-arm64</classifier>
         </dependency>
     </dependencies>
 </project>

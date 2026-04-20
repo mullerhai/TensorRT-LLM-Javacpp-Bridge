@@ -45,10 +45,10 @@ public class TensorRTLLMConfig implements InfoMapper {
         // --- 2. 泛型与智能指针全量补丁 ---
         // TRT-LLM 几乎所有的类都包装在 shared_ptr 中。如果不映射，方法会消失。
         // 我们告诉 Parser 遇到 shared_ptr<T> 统一当做 T 的指针处理
-        infoMap.put(new Info("std::shared_ptr").skip());
-        infoMap.put(new Info("std::unique_ptr").skip());
-        infoMap.put(new Info("std::optional").skip());
-        infoMap.put(new Info("std::variant").skip());
+        infoMap.put(new Info("std::shared_ptr").pointerTypes("Pointer"));
+        infoMap.put(new Info("std::unique_ptr").pointerTypes("Pointer"));
+        infoMap.put(new Info("std::optional").pointerTypes("Pointer"));
+        infoMap.put(new Info("std::variant").pointerTypes("Pointer"));
 
         // --- 3. 命名空间全量展开 ---
         // 确保这些命名空间下的所有类都能被 Parser 看到
@@ -65,7 +65,7 @@ public class TensorRTLLMConfig implements InfoMapper {
         infoMap.put(new Info("std::string").pointerTypes("BytePointer").cast());
 
         // --- 5. 外部依赖屏蔽 (解决 Mac 找不到库的问题) ---
-        infoMap.put(new Info("nvinfer1").skip());
+        infoMap.put(new Info("nvinfer1").pointerTypes("Pointer"));
         infoMap.put(new Info("cudaStream_t", "cudaEvent_t", "cudaDeviceProp").cppTypes("void*"));
         infoMap.put(new Info("ncclComm_t").cppTypes("void*")); // 屏蔽分布式通信依赖
     }
@@ -115,8 +115,8 @@ public class TensorRTLLMConfig implements InfoMapper {
 //        // 注意：JavaCPP 默认不处理 shared_ptr，如果不映射，返回它的函数会消失
 //        // 我们通过告诉它 cppTypes 是指针来“绕过”模板解析
 //        infoMap.put(new Info("std::shared_ptr<tensorrt_llm::executor::Executor>").cppTypes("void*"));
-//        infoMap.put(new Info("std::unique_ptr").skip());
-//        infoMap.put(new Info("std::optional").skip());
+//        infoMap.put(new Info("std::unique_ptr").pointerTypes("Pointer"));
+//        infoMap.put(new Info("std::optional").pointerTypes("Pointer"));
 //
 //        // --- 4. 容器与基础类型映射 ---
 //        infoMap.put(new Info("std::vector<int64_t>").pointerTypes("LongPointer"));
@@ -129,7 +129,7 @@ public class TensorRTLLMConfig implements InfoMapper {
 //        infoMap.put(new Info("tensorrt_llm::runtime::ITensor"));
 //
 //        // --- 6. 屏蔽掉 Mac 找不到的外部库符号 ---
-//        infoMap.put(new Info("nvinfer1").skip());
+//        infoMap.put(new Info("nvinfer1").pointerTypes("Pointer"));
 //        infoMap.put(new Info("cudaStream_t").cppTypes("void*"));
 //    }
 //}
@@ -170,7 +170,7 @@ public class TensorRTLLMConfig implements InfoMapper {
 //
 //        // --- 2. 处理 std::optional (这是转译中最容易漏掉的) ---
 //        // Java 不支持 std::optional，通常需要映射为对象指针或直接 skip 掉包装层
-//        infoMap.put(new Info("std::optional").skip());
+//        infoMap.put(new Info("std::optional").pointerTypes("Pointer"));
 //
 //        // --- 3. 基础类型与容器映射 ---
 //        infoMap.put(new Info("std::vector<int64_t>").pointerTypes("LongPointer"));
@@ -182,7 +182,7 @@ public class TensorRTLLMConfig implements InfoMapper {
 //        infoMap.put(new Info("tensorrt_llm::runtime::ITensor").concepts("class"));
 //
 //        // --- 5. 屏蔽掉过于底层或依赖外部 CUDA 库的符号 ---
-//        infoMap.put(new Info("nvinfer1::ILogger").skip());
+//        infoMap.put(new Info("nvinfer1::ILogger").pointerTypes("Pointer"));
 //        infoMap.put(new Info("cudaStream_t").valueTypes("Pointer")); // 将 CUDA 流映射为通用指针
 //    }
 //}
@@ -260,7 +260,7 @@ public class TensorRTLLMConfig implements InfoMapper {
 //        // 3. 类型映射：将复杂的 std 类型或内部指针简化
 //        // 参考 llama 示例中对 llama_context_t 的处理
 //        infoMap.put(new Info("std::vector<int64_t>").pointerTypes("LongPointer"));
-//        infoMap.put(new Info("std::shared_ptr").skip());
+//        infoMap.put(new Info("std::shared_ptr").pointerTypes("Pointer"));
 //
 //        // 4. 如果某些类型 Parser 认不出来，强制指定为指针类型
 //        // 参考示例：infoMap.put(new Info("llama_context_t").cppTypes("llama_context*"));
@@ -297,8 +297,8 @@ public class TensorRTLLMConfig implements InfoMapper {
 //        infoMap.put(new Info("std::vector<int64_t>").pointerTypes("LongPointer"));
 //
 //        // 3. 针对 Mac 环境屏蔽掉找不到的 TensorRT 基础类型
-//        infoMap.put(new Info("nvinfer1").skip());
-//        infoMap.put(new Info("std::optional").skip());
+//        infoMap.put(new Info("nvinfer1").pointerTypes("Pointer"));
+//        infoMap.put(new Info("std::optional").pointerTypes("Pointer"));
 //    }
 //}
 
@@ -322,8 +322,8 @@ public class TensorRTLLMConfig implements InfoMapper {
 //    @Override
 //    public void map(InfoMap infoMap) {
 //        // JavaCPP 默认可能不认识这些宏，先 skip 掉防止报错
-//        infoMap.put(new Info("__device__").skip());
-//        infoMap.put(new Info("__host__").skip());
+//        infoMap.put(new Info("__device__").pointerTypes("Pointer"));
+//        infoMap.put(new Info("__host__").pointerTypes("Pointer"));
 //    }
 //}
 //

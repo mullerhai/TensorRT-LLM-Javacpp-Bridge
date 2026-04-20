@@ -36,6 +36,32 @@
             <artifactId>javacpp-platform</artifactId>
             <version>${javacpp.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>cuda</artifactId>
+            <version>13.1-9.19-1.5.13</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Test frameworks: JUnit 5 (Jupiter) for new tests, JUnit 4 for legacy -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -47,13 +73,27 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+
+            <plugin>
                 <groupId>org.bytedeco</groupId>
                 <artifactId>javacpp</artifactId>
                 <version>${javacpp.version}</version>
                 <configuration>
                     <skip>${javacpp.parser.skip}</skip>
                     <classOrPackageNames>
-                        <classOrPackageName>tensorrt_llm.presets.TRTLLMFullConfig</classOrPackageName>
+                        <classOrPackageName>tensorrt_llm.presets.CommonConfig</classOrPackageName>
+                        <classOrPackageName>tensorrt_llm.presets.RuntimeConfig</classOrPackageName>
+                        <classOrPackageName>tensorrt_llm.presets.BatchmanagerConfig</classOrPackageName>
+                        <classOrPackageName>tensorrt_llm.presets.LayersConfig</classOrPackageName>
+                        <classOrPackageName>tensorrt_llm.presets.ExecutorConfig</classOrPackageName>
+                        <classOrPackageName>tensorrt_llm.presets.KernelsConfig</classOrPackageName>
+                        <classOrPackageName>tensorrt_llm.presets.PluginsConfig</classOrPackageName>
+                        <classOrPackageName>tensorrt_llm.presets.ThopConfig</classOrPackageName>
+                        <classOrPackageName>tensorrt_llm.presets.CutlassextensionsConfig</classOrPackageName>
                     </classOrPackageNames>
                     <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
                     <includePaths>
@@ -64,164 +104,40 @@
                     </linkPaths>
                 </configuration>
             </plugin>
-
-<!--            <plugin>-->
-<!--                <groupId>org.bytedeco</groupId>-->
-<!--                <artifactId>javacpp</artifactId>-->
-<!--                <version>1.5.13</version>-->
-<!--                <configuration>-->
-<!--                    <classOrPackageNames>-->
-<!--                        <classOrPackageName>tensorrt_llm.presets.TRTLLMFullConfig</classOrPackageName>-->
-<!--                    </classOrPackageNames>-->
-<!--                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>javacpp.parser</id>-->
-<!--                        <phase>generate-sources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>parse</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-
-<!--            <plugin>-->
-<!--                <groupId>org.bytedeco</groupId>-->
-<!--                <artifactId>javacpp</artifactId>-->
-<!--                <version>1.5.13</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>javacpp.parser</id>-->
-<!--                        <phase>generate-sources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>parse</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <classOrPackageNames>-->
-<!--                                <classOrPackageName>tensorrt_llm.presets.**</classOrPackageName>-->
-<!--                            </classOrPackageNames>-->
-<!--                            <includePaths>-->
-<!--                                <includePath>/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include</includePath>-->
-<!--                            </includePaths>-->
-<!--                            <outputDirectory>${project.build.sourceDirectory}</outputDirectory>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--            <plugin>-->
-<!--                <groupId>org.bytedeco</groupId>-->
-<!--                <artifactId>javacpp</artifactId>-->
-<!--                <version>1.5.13</version> <executions>-->
-<!--                <execution>-->
-<!--                    <id>javacpp.parser</id>-->
-<!--                    <phase>generate-sources</phase>-->
-<!--                    <goals>-->
-<!--                        <goal>parse</goal>-->
-<!--                    </goals>-->
-<!--                    <configuration>-->
-<!--                        <classOrPackageNames>-->
-<!--                            <classOrPackageName>tensorrt_llm.presets.TensorRTLLMConfig</classOrPackageName>-->
-<!--                        </classOrPackageNames>-->
-<!--                        <outputDirectory>${project.build.sourceDirectory}</outputDirectory>-->
-<!--                    </configuration>-->
-<!--                </execution>-->
-<!--            </executions>-->
-<!--            </plugin>-->
-
-<!--            <plugin>-->
-<!--                <groupId>org.bytedeco</groupId>-->
-<!--                <artifactId>javacpp</artifactId>-->
-<!--                <version>${javacpp.version}</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>javacpp.parser</id>-->
-<!--                        <phase>generate-sources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>parse</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <skip>${javacpp.parser.skip}</skip>-->
-<!--                            <outputDirectory>${project.build.sourceDirectory}</outputDirectory>-->
-<!--                            <classOrPackageName>tensorrt_llm.presets.**</classOrPackageName>-->
-<!--                            <includePaths>-->
-<!--                                <includePath>/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include</includePath>-->
-<!--                            </includePaths>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>linux-x86_64</id>
+            <properties>
+                <platform>linux-x86_64</platform>
+            </properties>
+            <build>
+                <finalName>${project.artifactId}-${project.version}-${platform}</finalName>
+            </build>
+        </profile>
+
+        <profile>
+            <id>linux-arm64</id>
+            <properties>
+                <platform>linux-arm64</platform>
+            </properties>
+            <build>
+                <finalName>${project.artifactId}-${project.version}-${platform}</finalName>
+            </build>
+        </profile>
+
+        <profile>
+            <id>macosx-arm64</id>
+            <properties>
+                <platform>macosx-arm64</platform>
+            </properties>
+            <build>
+                <finalName>${project.artifactId}-${project.version}-${platform}</finalName>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
 
-
-        <!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<project xmlns="http://maven.apache.org/POM/4.0.0"-->
-<!--         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<!--         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">-->
-<!--    <modelVersion>4.0.0</modelVersion>-->
-
-<!--    <groupId>org.apache.flink.connector.lance</groupId>-->
-<!--    <artifactId>TRTLLM-Java-Bridge</artifactId>-->
-<!--    <version>1.0-SNAPSHOT</version>-->
-
-<!--    <properties>-->
-<!--        <maven.compiler.source>17</maven.compiler.source>-->
-<!--        <maven.compiler.target>17</maven.compiler.target>-->
-<!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-<!--    </properties>-->
-<!--    <dependencies>-->
-<!--        <dependency>-->
-<!--            <groupId>org.bytedeco</groupId>-->
-<!--            <artifactId>javacpp</artifactId>-->
-<!--            <version>1.5.13</version>-->
-<!--        </dependency>-->
-<!--    </dependencies>-->
-
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.bytedeco</groupId>-->
-<!--                <artifactId>javacpp</artifactId>-->
-<!--                <version>1.5.10</version>-->
-<!--                <configuration>-->
-<!--                    <classOrPackageNames>-->
-<!--                        <classOrPackageName>tensorrt_llm.presets.TensorRTLLMConfig</classOrPackageName>-->
-<!--                    </classOrPackageNames>-->
-<!--                    <includePaths>-->
-<!--                        <includePath>/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include</includePath>-->
-<!--                    </includePaths>-->
-<!--                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>javacpp-parser</id>-->
-<!--                        <phase>generate-sources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>parse</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
-<!--&lt;!&ndash;    <build>&ndash;&gt;-->
-<!--&lt;!&ndash;        <plugins>&ndash;&gt;-->
-<!--&lt;!&ndash;            <plugin>&ndash;&gt;-->
-<!--&lt;!&ndash;                <groupId>org.bytedeco</groupId>&ndash;&gt;-->
-<!--&lt;!&ndash;                <artifactId>javacpp</artifactId>&ndash;&gt;-->
-<!--&lt;!&ndash;                <version>1.5.13</version>&ndash;&gt;-->
-<!--&lt;!&ndash;                <configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <classPaths>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <classPath>${project.build.outputDirectory}</classPath>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </classPaths>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <includePaths>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <includePath>/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/include</includePath>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </includePaths>&ndash;&gt;-->
-<!--&lt;!&ndash;                </configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;            </plugin>&ndash;&gt;-->
-<!--&lt;!&ndash;        </plugins>&ndash;&gt;-->
-<!--&lt;!&ndash;    </build>&ndash;&gt;-->
-
-<!--</project>-->

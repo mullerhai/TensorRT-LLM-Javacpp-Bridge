@@ -68,7 +68,7 @@ classpath += "target/trtllm-bridge-1.0.0.jar"
 ### 2. 使用 Java 绑定
 
 ```java
-import org.bytedeco.tensorrt_llm.global.TRTLLM;
+
 
 public class Example {
     public static void main(String[] args) {

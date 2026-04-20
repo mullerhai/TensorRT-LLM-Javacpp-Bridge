@@ -23,9 +23,44 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "tensorrt_llm/runtime/bufferManager.h",
                         "tensorrt_llm/runtime/samplingConfig.h",
                         "tensorrt_llm/runtime/worldConfig.h",
-                        "tensorrt_llm/batch_manager/llmRequest.h",
+                        // batch_manager: full source-driven header set
+                        "tensorrt_llm/batch_manager/common.h",
                         "tensorrt_llm/batch_manager/kvCacheType.h",
-                        "tensorrt_llm/batch_manager/common.h"
+                        "tensorrt_llm/batch_manager/llmRequest.h",
+                        "tensorrt_llm/batch_manager/allocateKvCache.h",
+                        "tensorrt_llm/batch_manager/assignReqSeqSlots.h",
+                        "tensorrt_llm/batch_manager/blockKey.h",
+                        "tensorrt_llm/batch_manager/cacheTransceiver.h",
+                        "tensorrt_llm/batch_manager/capacityScheduler.h",
+                        "tensorrt_llm/batch_manager/contextProgress.h",
+                        "tensorrt_llm/batch_manager/createNewDecoderRequests.h",
+                        "tensorrt_llm/batch_manager/decoderBuffers.h",
+                        "tensorrt_llm/batch_manager/evictionPolicy.h",
+                        "tensorrt_llm/batch_manager/guidedDecoder.h",
+                        "tensorrt_llm/batch_manager/handleContextLogits.h",
+                        "tensorrt_llm/batch_manager/handleGenerationLogits.h",
+                        "tensorrt_llm/batch_manager/kvCacheConnector.h",
+                        "tensorrt_llm/batch_manager/kvCacheEventManager.h",
+                        "tensorrt_llm/batch_manager/kvCacheManager.h",
+                        "tensorrt_llm/batch_manager/kvCacheTransferManager.h",
+                        "tensorrt_llm/batch_manager/kvCacheUtils.h",
+                        "tensorrt_llm/batch_manager/logitsPostProcessor.h",
+                        "tensorrt_llm/batch_manager/makeDecodingBatchInputOutput.h",
+                        "tensorrt_llm/batch_manager/medusaBuffers.h",
+                        "tensorrt_llm/batch_manager/microBatchScheduler.h",
+                        "tensorrt_llm/batch_manager/pauseRequests.h",
+                        "tensorrt_llm/batch_manager/peftCacheManager.h",
+                        "tensorrt_llm/batch_manager/peftCacheManagerConfig.h",
+                        "tensorrt_llm/batch_manager/promptTuningBuffers.h",
+                        "tensorrt_llm/batch_manager/radixBlockTree.h",
+                        "tensorrt_llm/batch_manager/rnnCacheFormatter.h",
+                        "tensorrt_llm/batch_manager/rnnStateManager.h",
+                        "tensorrt_llm/batch_manager/runtimeBuffers.h",
+                        "tensorrt_llm/batch_manager/sequenceSlotManager.h",
+                        "tensorrt_llm/batch_manager/stringSetTrie.h",
+                        "tensorrt_llm/batch_manager/templatedTrie.h",
+                        "tensorrt_llm/batch_manager/transformerBuffers.h",
+                        "tensorrt_llm/batch_manager/updateDecoderBuffers.h"
                 }
         ),
         target = "org.bytedeco.tensorrt_llm",
@@ -72,7 +107,7 @@ public class TRTLLMFullConfig implements InfoMapper {
         infoMap.put(new Info("tensorrt_llm::executor::TokenIdType", "tensorrt_llm::runtime::TokenIdType",
                 "TokenIdType")
                 .cast().valueTypes("int").pointerTypes("IntPointer"));
-        infoMap.put(new Info("tensorrt_llm::executor::RetentionPriority", "RetentionPriority")
+        infoMap.put(new Info("tensorrt_llm::executor::int", "int")
                 .cast().valueTypes("int").pointerTypes("IntPointer"));
 
         // int64_t 类型
@@ -82,7 +117,7 @@ public class TRTLLMFullConfig implements InfoMapper {
 
         // uint64_t 类型
         infoMap.put(new Info("tensorrt_llm::executor::IdType", "IdType",
-                "tensorrt_llm::executor::RequestIdType", "RequestIdType")
+                "tensorrt_llm::executor::long", "long")
                 .cast().valueTypes("long").pointerTypes("LongPointer"));
         infoMap.put(new Info("tensorrt_llm::executor::IterationType", "IterationType",
                 "tensorrt_llm::executor::RandomSeedType", "RandomSeedType",
@@ -125,9 +160,9 @@ public class TRTLLMFullConfig implements InfoMapper {
 
         // std::shared_ptr/unique_ptr/optional 泛型跳过
         infoMap.put(new Info("std::shared_ptr", "std::unique_ptr", "std::weak_ptr").annotations("@SharedPtr"));
-        infoMap.put(new Info("std::optional").skip());
-        infoMap.put(new Info("std::nullopt").skip());
-        infoMap.put(new Info("std::variant").skip());
+        infoMap.put(new Info("std::optional").pointerTypes("Pointer"));
+        infoMap.put(new Info("std::nullopt").pointerTypes("Pointer"));
+        infoMap.put(new Info("std::variant").pointerTypes("Pointer"));
 
         // ======================================================
         // 6. STL 容器映射
@@ -150,7 +185,7 @@ public class TRTLLMFullConfig implements InfoMapper {
                 "std::vector<std::pair", "std::list", "std::deque",
                 "tensorrt_llm::executor::BeamTokens", "BeamTokens",
                 "tensorrt_llm::executor::VecTokenExtraIds", "VecTokenExtraIds",
-                "tensorrt_llm::executor::VecUniqueTokens", "VecUniqueTokens",
+                "tensorrt_llm::executor::Pointer", "Pointer",
                 "tensorrt_llm::executor::MedusaChoices", "MedusaChoices",
                 "tensorrt_llm::executor::EagleChoices", "EagleChoices")
                 .skip());
@@ -187,7 +222,7 @@ public class TRTLLMFullConfig implements InfoMapper {
         // ======================================================
         // 7. 枚举冲突处理 - 重命名冲突的枚举常量
         // ======================================================
-        // DataType 和 MemoryType 都有 kUNKNOWN
+        // int 和 MemoryType 都有 kUNKNOWN
         infoMap.put(new Info("tensorrt_llm::executor::DataType").enumerate());
         infoMap.put(new Info("tensorrt_llm::executor::MemoryType").enumerate());
         // 其他可能冲突的枚举
@@ -208,7 +243,7 @@ public class TRTLLMFullConfig implements InfoMapper {
         // ======================================================
         // DecodingMode 的 static auto constexpr 工厂方法无法正确生成
         // 跳过整个类，后续可以手写 Java wrapper
-        infoMap.put(new Info("tensorrt_llm::executor::DecodingMode").skip());
+        infoMap.put(new Info("tensorrt_llm::executor::DecodingMode").pointerTypes("Pointer"));
 
         // ======================================================
         // 9. Shape 基类问题 - 跳过基类但保留 Shape 本身
@@ -253,9 +288,9 @@ public class TRTLLMFullConfig implements InfoMapper {
                 "tensorrt_llm::common::getDTypeSizeInBits",
                 "tensorrt_llm::common::getDtypeString")
                 .skip());
-        infoMap.put(new Info("tensorrt_llm::layers::DefaultDecodingParams").skip());
-        infoMap.put(new Info("tensorrt_llm::runtime::CudaEvent").skip());
-        infoMap.put(new Info("tensorrt_llm::kernels").skip());
+        infoMap.put(new Info("tensorrt_llm::layers::DefaultDecodingParams").pointerTypes("Pointer"));
+        infoMap.put(new Info("tensorrt_llm::runtime::CudaEvent").pointerTypes("Pointer"));
+        infoMap.put(new Info("tensorrt_llm::kernels").pointerTypes("Pointer"));
 
         // 模板特化跳过
         infoMap.put(new Info("TypeTraits", "DataTypeTraits", "TRTDataType",
@@ -284,7 +319,7 @@ public class TRTLLMFullConfig implements InfoMapper {
                 .cast().pointerTypes("Pointer"));
 
         // 跳过 BufferManager 测试类
-        infoMap.put(new Info("tensorrt_llm::runtime::BufferManager::IBufferManagedTest").skip());
+        infoMap.put(new Info("tensorrt_llm::runtime::BufferManager::IBufferManagedTest").pointerTypes("Pointer"));
 
         // DimType64 和复杂类型表达式
         infoMap.put(new Info("tensorrt_llm::runtime::ITensor::DimType64",
@@ -294,7 +329,7 @@ public class TRTLLMFullConfig implements InfoMapper {
                 .cast().valueTypes("long").pointerTypes("LongPointer"));
 
         // vector<Response> 用于 Executor.awaitResponses
-        infoMap.put(new Info("std::vector<tensorrt_llm::executor::Response>").skip());
+        infoMap.put(new Info("std::vector<tensorrt_llm::executor::Response>").pointerTypes("Pointer"));
 
         // 更多复杂 vector 类型
         infoMap.put(new Info("std::vector<tensorrt_llm::executor::VecLogProbs>",
@@ -317,7 +352,7 @@ public class TRTLLMFullConfig implements InfoMapper {
         // 15. 缺失类型的映射
         // ======================================================
         // C++ auto 返回值
-        infoMap.put(new Info("auto").skip());
+        infoMap.put(new Info("auto").pointerTypes("Pointer"));
         // size_type
         infoMap.put(new Info("size_type", "std::size_t", "size_t",
                 "tensorrt_llm::executor::Shape::size_type")
@@ -326,7 +361,7 @@ public class TRTLLMFullConfig implements InfoMapper {
         infoMap.put(new Info("std::runtime_error").pointerTypes("Pointer").base("Pointer"));
         // RuntimeDefaults
         infoMap.put(new Info("tensorrt_llm::runtime::RuntimeDefaults", "RuntimeDefaults").skip());
-        // BlockKey / AgentState / UniqueToken / VecUniqueTokens - 映射为 Pointer 而不是 skip
+        // BlockKey / AgentState / UniqueToken / Pointer - 映射为 Pointer 而不是 skip
         infoMap.put(new Info("tensorrt_llm::batch_manager::kv_cache_manager::BlockKey", "BlockKey")
                 .pointerTypes("Pointer"));
         infoMap.put(new Info("tensorrt_llm::executor::AgentState", "AgentState")

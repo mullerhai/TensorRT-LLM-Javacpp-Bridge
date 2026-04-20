@@ -11,9 +11,11 @@
         <relativePath>../../parent-pom.xml</relativePath>
     </parent>
 
-    <artifactId>tensorrt-llm</artifactId>
+    <artifactId>tensorrt-llm-native-linux-x86_64</artifactId>
     <packaging>jar</packaging>
-    <!-- classifier 在 install 时通过 maven-jar-plugin 指定 -->
+    <!-- Bytedeco convention: ship the .so files as the main artifact of a
+         distinct module per platform; downstream consumers pull in
+         ``tensorrt-llm-platform`` which aggregates all native variants. -->
 
     <name>TensorRT-LLM Native — Linux x86_64</name>
     <description>
@@ -39,7 +41,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>3.4.1</version>
                 <configuration>
                     <classifier>linux-x86_64</classifier>
                 </configuration>

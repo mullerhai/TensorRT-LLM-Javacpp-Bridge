@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.trtllm</groupId>
+  <artifactId>trtllm-javacpp</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>trtllm-javacpp</name>
+  <description>JavaCPP bindings generator module for TensorRT-LLM native sources.</description>
+
+  <properties>
+    <javacpp.version>1.5.8</javacpp.version>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <!-- Adjust this to point to your local C++ headers root -->
+    <trtllm.headers>/Users/mullerzhang/Documents/code/TensorRT-LLM/cpp/tensorrt_llm</trtllm.headers>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>javacpp</artifactId>
+      <version>${javacpp.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Java compiler plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
+
+      <!-- JavaCPP plugin invocation (invoked via mvn org.bytedeco:javacpp:build or configured here) -->
+      <plugin>
+        <groupId>org.bytedeco</groupId>
+        <artifactId>javacpp</artifactId>
+        <version>${javacpp.version}</version>
+        <executions>
+          <execution>
+            <id>generate-bindings</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+            <configuration>
+              <!-- include dir should point to your C++ headers root -->
+              <includes>${trtllm.headers}</includes>
+              <!-- output directories -->
+              <outputDirectory>${project.build.directory}/generated-sources/javacpp</outputDirectory>
+              <verbose>true</verbose>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
