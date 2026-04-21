@@ -5,6 +5,7 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.global.Executor;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -66,7 +67,7 @@ public class GenerationRequest extends Pointer {
 
     public native @Optional Pointer getDecodeDurationMs();
 
-    public native KvCacheTransferMode getTransferMode();
+    public native Executor.KvCacheTransferMode getTransferMode();
 
     public native @StdString BytePointer getDirectory();
 

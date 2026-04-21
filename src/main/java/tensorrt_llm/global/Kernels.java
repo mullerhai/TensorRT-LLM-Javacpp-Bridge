@@ -8,6 +8,7 @@ import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
 
+@SuppressWarnings({"unused", "rawtypes", "PrivateConstructorForEnum", "RedundantModifier"})
 public class Kernels extends tensorrt_llm.presets.KernelsConfig {
     static { Loader.load(); }
 
@@ -58,7 +59,7 @@ public class Kernels extends tensorrt_llm.presets.KernelsConfig {
 
 /** \brief Initialize batchSize curand states with given seed per request.
  * 
- *  @param state output buffer [maxBatchSize] of curand states to be initialized
+ *  @param states output buffer [maxBatchSize] of curand states to be initialized
  *  @param batchSlots input buffer[batchSize], optional. Indices of rows of data in memory pool
  *  @param batchSize number of states to initialize
  *  @param randomSeeds input buffer [maxBatchSize] with seeds
@@ -70,15 +71,15 @@ public class Kernels extends tensorrt_llm.presets.KernelsConfig {
 @Namespace("tensorrt_llm::kernels") public static native void invokeCurandBatchInitialize(Pointer states, @Const int[] batchSlots, long batchSize,
     @Const LongPointer randomSeeds, Pointer stream);
 
-/** \brief Applies mask, applies temperature, adds bias to logits and computes softmax values.
+/* \brief Applies mask, applies temperature, adds bias to logits and computes softmax values.
  *  Sets -MAX_FLT value for tokens in range [vocabSize; vocabSizePadded) to prevent them from being chosen.
  *  If request finished the generation, sets MAX_FLT to endId token and -MAX_FLT to all other tokens forcing to choose
  *  endId token. Otherwise, adds bias per token if bias pointer is not nullptr.
  *  Computes entropy if outputEntropy is not nullptr.
  *  @param stream stream */
 
-/** \brief Distributes values located in src to dst according to the indieces from batchSlots
- * 
+/* \brief Distributes values located in src to dst according to the indieces from batchSlots
+ *
  *  @param src input buffer [batchSize], optional.
  *  @param scalar value used if src is nullptr.
  *  @param dst output buffer [maxBatchSize].
@@ -314,13 +315,13 @@ public static final int
  *  @param stream stream */
 
 //!
-@Namespace("tensorrt_llm::kernels") public static native void invokeStopWordsCriterion(@Cast("const tensorrt_llm::runtime::TokenIdType**") PointerPointer outputIds, @Cast("const tensorrt_llm::runtime::SizeType32**") PointerPointer parentIds,
-    @Cast("const tensorrt_llm::runtime::TokenIdType*const*") PointerPointer stopWords, FinishedState finished, IntPointer sequenceLengths);
+@Namespace("tensorrt_llm::kernels") public static native void invokeStopWordsCriterion(@Cast("const tensorrt_llm::runtime::TokenIdType**") PointerPointer<?> outputIds, @Cast("const tensorrt_llm::runtime::SizeType32**") PointerPointer<?> parentIds,
+    @Cast("const tensorrt_llm::runtime::TokenIdType*const*") PointerPointer<?> stopWords, FinishedState finished, IntPointer sequenceLengths,
     @Const IntPointer batchSlots, @Const IntPointer stopWordsLen, IntPointer numNewTokens,
     int maxStopWordsLen, int batchSize, int beamWidth,
     int maxSeqLen, Pointer stream);
 @Namespace("tensorrt_llm::kernels") public static native void invokeStopWordsCriterion(@Const @ByPtrPtr IntPointer outputIds, @Const @ByPtrPtr IntPointer parentIds,
-    @Const @ByPtrPtr IntPointer stopWords, FinishedState finished, IntPointer sequenceLengths);
+    @Const @ByPtrPtr IntPointer stopWords, FinishedState finished, IntPointer sequenceLengths,
     @Const IntPointer batchSlots, @Const IntPointer stopWordsLen, IntPointer numNewTokens,
     int maxStopWordsLen, int batchSize, int beamWidth,
     int maxSeqLen, Pointer stream);
@@ -343,7 +344,7 @@ public static final int
 
 //!
 @Namespace("tensorrt_llm::kernels") public static native void invokeLengthCriterion(FinishedState finished, IntPointer finishedSum,
-    @Const IntPointer sequenceLimitLength, IntPointer sequenceLengths);
+    @Const IntPointer sequenceLimitLength, IntPointer sequenceLengths,
     IntPointer numNewTokens, @Const IntPointer batchSlots, int batchSize,
     int beamWidth, Pointer stream);
 
@@ -364,13 +365,13 @@ public static final int
  *  @param beamWidth beam width. beamWidth > 1 is not supported for now.
  *  @param maxTokensPerStep maximum number of tokens decoded per step
  *  @param stream stream */
-@Namespace("tensorrt_llm::kernels") public static native void invokeExplicitEOSCriterion(@Cast("const tensorrt_llm::runtime::TokenIdType**") PointerPointer outputIds, @Const IntPointer endIds,
+@Namespace("tensorrt_llm::kernels") public static native void invokeExplicitEOSCriterion(@Cast("const tensorrt_llm::runtime::TokenIdType**") PointerPointer<?> outputIds, @Const IntPointer endIds,
     FinishedState finished, IntPointer sequenceLengths, IntPointer numNewTokens,
-    @Const IntPointer batchSlots, int batchSize, int beamWidth);
+    @Const IntPointer batchSlots, int batchSize, int beamWidth,
     int maxTokensPerStep, Pointer stream);
 @Namespace("tensorrt_llm::kernels") public static native void invokeExplicitEOSCriterion(@Const @ByPtrPtr IntPointer outputIds, @Const IntPointer endIds,
     FinishedState finished, IntPointer sequenceLengths, IntPointer numNewTokens,
-    @Const IntPointer batchSlots, int batchSize, int beamWidth);
+    @Const IntPointer batchSlots, int batchSize, int beamWidth,
     int maxTokensPerStep, Pointer stream);
  // namespace kernels
 
@@ -425,7 +426,8 @@ Do gatherTree on beam search to get final result.
  * 
  *  @param finalOutputIds The output tensor to be initialized.
  *  @param endIds The tensor containing the end IDs.
- *  @param batchBeam batchSize*beamWidth. inferred from finalOutputIds.shape[0] * finalOutputIds.shape[1]
+ *  @param batch batchSize (finalOutputIds.shape[0])
+ *  @param beam beamWidth (finalOutputIds.shape[1])
  *  @param maxSeqLen The maximum sequence length, inferred from the finalOutputIds.shape[3]
  *  @param stream The CUDA stream on which to perform the operation. */
 
@@ -445,7 +447,7 @@ Do gatherTree on beam search to get final result.
 
 //!
 @Namespace("tensorrt_llm::kernels") public static native void invokeCopyBeamHypotheses(@Const @ByRef BeamHypotheses src,
-    @Const @ByRef BeamHypotheses dst, @ByRef Pointer srcCumLogProbs);
+    @Const @ByRef BeamHypotheses dst, @ByRef Pointer srcCumLogProbs,
     @ByRef Pointer dstCumLogProbs, @Const @ByRef Pointer stream, int numSMs);
 
 /** \brief Copies last numNewTokens (or 1 if numNewTokens == nullptr) tokens from outputIdsPtr
@@ -467,27 +469,27 @@ Do gatherTree on beam search to get final result.
  *  @param maxSeqLen maximum sequence length
  *  @param maxTokensPerStep maximum tokens per step
  *  @param stream stream */
-@Namespace("tensorrt_llm::kernels") public static native void invokeCopyNextStepIds(IntPointer nextStepIds, @Cast("const tensorrt_llm::runtime::TokenIdType*const*") PointerPointer outputIdsPtr,
-    @Const IntPointer sequenceLengths, @Const IntPointer numNewTokens);
+@Namespace("tensorrt_llm::kernels") public static native void invokeCopyNextStepIds(IntPointer nextStepIds, @Cast("const tensorrt_llm::runtime::TokenIdType*const*") PointerPointer<?> outputIdsPtr,
+    @Const IntPointer sequenceLengths, @Const IntPointer numNewTokens,
     @Const IntPointer batchSlots, int batchSize, int maxBatchSize,
     int beamWidth, int maxSeqLen, int maxTokensPerStep,
     Pointer stream);
 @Namespace("tensorrt_llm::kernels") public static native void invokeCopyNextStepIds(IntPointer nextStepIds, @Const @ByPtrPtr IntPointer outputIdsPtr,
-    @Const IntPointer sequenceLengths, @Const IntPointer numNewTokens);
+    @Const IntPointer sequenceLengths, @Const IntPointer numNewTokens,
     @Const IntPointer batchSlots, int batchSize, int maxBatchSize,
     int beamWidth, int maxSeqLen, int maxTokensPerStep,
     Pointer stream);
 
 @Namespace("tensorrt_llm::kernels") public static native void invokeTransposeLogProbs(FloatPointer output_log_probs, FloatPointer output_log_probs_tiled,
-    @Const IntPointer sequence_lengths, @Const IntPointer batchSlots, int batch_size);
+    @Const IntPointer sequence_lengths, @Const IntPointer batchSlots, int batch_size,
     int max_batch_size, int beam_width, int max_seq_len,
     Pointer stream);
 @Namespace("tensorrt_llm::kernels") public static native void invokeTransposeLogProbs(FloatBuffer output_log_probs, FloatBuffer output_log_probs_tiled,
-    @Const IntPointer sequence_lengths, @Const IntPointer batchSlots, int batch_size);
+    @Const IntPointer sequence_lengths, @Const IntPointer batchSlots, int batch_size,
     int max_batch_size, int beam_width, int max_seq_len,
     Pointer stream);
 @Namespace("tensorrt_llm::kernels") public static native void invokeTransposeLogProbs(float[] output_log_probs, float[] output_log_probs_tiled,
-    @Const IntPointer sequence_lengths, @Const IntPointer batchSlots, int batch_size);
+    @Const IntPointer sequence_lengths, @Const IntPointer batchSlots, int batch_size,
     int max_batch_size, int beam_width, int max_seq_len,
     Pointer stream);
 
@@ -586,7 +588,7 @@ public static final int TOP_K_MAX = TOP_K_MAX();
 
 @Namespace("tensorrt_llm::kernels") public static native @StdVector LongPointer getTopKInitWorkspaceSizes(int batchSize);
 
-/** \brief Returns workspace size in bytes needed for sampling TopK computation
+/* \brief Returns workspace size in bytes needed for sampling TopK computation
  *  @param batchSize batch size
  *  @param maxTokensPerStep maximum number of tokens per computed per step
  *  @param maxTopK maximum among all topKs K for topK sampling
@@ -615,12 +617,6 @@ public static final int TOP_K_MAX = TOP_K_MAX();
 @Namespace("tensorrt_llm::kernels") public static native boolean regularizeTopKTopP(@ByRef IntPointer topK, @ByRef FloatBuffer topP);
 @Namespace("tensorrt_llm::kernels") public static native boolean regularizeTopKTopP(@ByRef IntPointer topK, @ByRef float[] topP);
 
-@Namespace("tensorrt_llm::kernels") public static native void setupTopKTopPRuntimeArgOne(int batchIndex,
-    // [CPP-FIX] @ByVal tensorrt_llm::kernels::ScatterDecodingParamEntry<tensorrt_llm::runtime::SizeType32> topK, @ByVal tensorrt_llm::kernels::ScatterDecodingParamEntry<float> topP,
-    // [CPP-FIX] @Const IntPointer batchSlots, BoolPointer skipDecodeTopK, BoolPointer skipDecodeTopP, FloatPointer initialTopPBuf);
-@Namespace("tensorrt_llm::kernels") public static native void setupTopKTopPRuntimeArgOne(int batchIndex);
-    // [CPP-FIX] @ByVal tensorrt_llm::kernels::ScatterDecodingParamEntry<tensorrt_llm::runtime::SizeType32> topK, @ByVal tensorrt_llm::kernels::ScatterDecodingParamEntry<float> topP,
-    // [CPP-FIX] @Const IntPointer batchSlots, BoolPointer skipDecodeTopK, BoolPointer skipDecodeTopP, FloatBuffer initialTopPBuf);
 @Namespace("tensorrt_llm::kernels") public static native void setupTopKTopPRuntimeArgOne(int batchIndex);
     // [CPP-FIX] @ByVal tensorrt_llm::kernels::ScatterDecodingParamEntry<tensorrt_llm::runtime::SizeType32> topK, @ByVal tensorrt_llm::kernels::ScatterDecodingParamEntry<float> topP,
     // [CPP-FIX] @Const IntPointer batchSlots, BoolPointer skipDecodeTopK, BoolPointer skipDecodeTopP, float[] initialTopPBuf);
@@ -658,7 +654,7 @@ public static final int TOP_K_MAX = TOP_K_MAX();
 
 
 
-/** \brief Returns workspace size in bytes needed for sampling TopP computation
+/* \brief Returns workspace size in bytes needed for sampling TopP computation
  *  @param batchSize batch size
  *  @param vocabSizePadded size of padded vocab */
 
@@ -667,7 +663,7 @@ public static final int TOP_K_MAX = TOP_K_MAX();
 @Namespace("tensorrt_llm::kernels") public static native @StdVector LongPointer getTopPInitWorkspaceSizes(int batchSize);
 
 // clang-format off
-/** \brief Given probs, performs Top P sampling. Fills sampled tokens to outputIds.
+/* \brief Given probs, performs Top P sampling. Fills sampled tokens to outputIds.
  *  Updates sequenceLength, finished state, cumLogProbs inplace.
  *  Sampling per request can be controlled using skipDecode and topPs parameters. */
 // clang-format on
@@ -677,33 +673,33 @@ public static final int TOP_K_MAX = TOP_K_MAX();
  *           runtimeTopP = max(runtimeTopP * topPDecay, topPMin)
  *         If generating the topPResetIds, then reset the runtimeTopP.
  * 
- *  @param runtimeTopP
- *  @param runtimeInitialTopP
- *  @param outputIds
- *  @param topPDecay
- *  @param topPMin
- *  @param topPResetIds
- *  @param sequenceLengths
+ *  @param runtimeTopP runtime top-p value
+ *  @param runtimeInitialTopP initial top-p value
+ *  @param outputIds generated token ids
+ *  @param topPDecay decay factor for top-p
+ *  @param topPMin minimum top-p value
+ *  @param topPResetIds token ids that trigger top-p reset
+ *  @param sequenceLengths current sequence lengths
  *  @param batchSlots input buffer[batchSize], optional. Indices of rows of data in memory pool
- *  @param localBatchSize */
-@Namespace("tensorrt_llm::kernels") public static native void invokeComputeToppDecay(FloatPointer runtimeTopP, @Const FloatPointer runtimeInitialTopP, @Cast("const tensorrt_llm::runtime::TokenIdType**") PointerPointer outputIds,
-    @Const FloatPointer topPDecay, @Const FloatPointer topPMin, @Const IntPointer topPResetIds);
+ *  @param localBatchSize local batch size */
+@Namespace("tensorrt_llm::kernels") public static native void invokeComputeToppDecay(FloatPointer runtimeTopP, @Const FloatPointer runtimeInitialTopP, @Cast("const tensorrt_llm::runtime::TokenIdType**") PointerPointer<?> outputIds,
+    @Const FloatPointer topPDecay, @Const FloatPointer topPMin, @Const IntPointer topPResetIds,
     @Const IntPointer sequenceLengths, @Const IntPointer batchSlots,
     int localBatchSize, Pointer stream);
 @Namespace("tensorrt_llm::kernels") public static native void invokeComputeToppDecay(FloatPointer runtimeTopP, @Const FloatPointer runtimeInitialTopP, @Const @ByPtrPtr IntPointer outputIds,
-    @Const FloatPointer topPDecay, @Const FloatPointer topPMin, @Const IntPointer topPResetIds);
+    @Const FloatPointer topPDecay, @Const FloatPointer topPMin, @Const IntPointer topPResetIds,
     @Const IntPointer sequenceLengths, @Const IntPointer batchSlots,
     int localBatchSize, Pointer stream);
 @Namespace("tensorrt_llm::kernels") public static native void invokeComputeToppDecay(FloatBuffer runtimeTopP, @Const FloatBuffer runtimeInitialTopP, @Const @ByPtrPtr IntPointer outputIds,
-    @Const FloatBuffer topPDecay, @Const FloatBuffer topPMin, @Const IntPointer topPResetIds);
+    @Const FloatBuffer topPDecay, @Const FloatBuffer topPMin, @Const IntPointer topPResetIds,
     @Const IntPointer sequenceLengths, @Const IntPointer batchSlots,
     int localBatchSize, Pointer stream);
 @Namespace("tensorrt_llm::kernels") public static native void invokeComputeToppDecay(float[] runtimeTopP, @Const float[] runtimeInitialTopP, @Const @ByPtrPtr IntPointer outputIds,
-    @Const float[] topPDecay, @Const float[] topPMin, @Const IntPointer topPResetIds);
+    @Const float[] topPDecay, @Const float[] topPMin, @Const IntPointer topPResetIds,
     @Const IntPointer sequenceLengths, @Const IntPointer batchSlots,
     int localBatchSize, Pointer stream);
 
-/** \brief Given probs, performs top P sampling.
+/* \brief Given probs, performs top P sampling.
  *  Note different from invokeTopPSampling() and invokeBatchTopPSampling() there two functions invokeAirTopPSampling
  *  and invokeBatchAirTopPSampling is non-deterministic.
  *  Fills sampled tokens to outputIds. Computes sequenceLength, finished state, cumLogProbs inplace.
@@ -711,7 +707,7 @@ public static final int TOP_K_MAX = TOP_K_MAX();
  *  Function sets workspaceSize  and exits early if workspace is nullptr.
  *  When isDeterministic==true, the result is reproducible. */
 
-/** \brief  Calculate the number of blocks based on the number of multiprocessors, batchSize and vocabSize.
+/* \brief  Calculate the number of blocks based on the number of multiprocessors, batchSize and vocabSize.
  *  \tparam T the data type of value
  *  @param batchSize
  *  @param len the number of candidates for each case
@@ -719,7 +715,7 @@ public static final int TOP_K_MAX = TOP_K_MAX();
  *  @param isDeterministic bool, optional. Default value is false.
  *  When isDeterministic==true, the result is reproducible. */
 
-/** \brief Returns workspace size in bytes needed for sampling Air TopP computation
+/* \brief Returns workspace size in bytes needed for sampling Air TopP computation
  *  @param batchSize batch size
  *  @param vocabSizePadded size of padded vocab
  *  @param isDeterministic bool, optional. Default value is false.
@@ -1150,15 +1146,15 @@ public static final int ALIGN_256 = ALIGN_256();
 
 @Namespace("tensorrt_llm::kernels::moe_prepare") public static native void computeCountAndIndice(IntPointer experts, IntPointer sendCounts, IntPointer recvCounts, IntPointer sendIndiceWorkspace,
     IntPointer backwardIndiceWorkspace, IntPointer recvIndiceWorkspace, IntPointer expertStatics, IntPointer gatheredExpertStatics,
-    @ByVal MoeCommWorkspace workspace, int tokenCount, int maxTokenCountPerRank, int topK, int slotCount, int expertCount);
+    @ByVal MoeCommWorkspace workspace, int tokenCount, int maxTokenCountPerRank, int topK, int slotCount, int expertCount,
     int rankId, int rankCount, Pointer stream);
 @Namespace("tensorrt_llm::kernels::moe_prepare") public static native void computeCountAndIndice(IntBuffer experts, IntBuffer sendCounts, IntBuffer recvCounts, IntBuffer sendIndiceWorkspace,
     IntBuffer backwardIndiceWorkspace, IntBuffer recvIndiceWorkspace, IntBuffer expertStatics, IntBuffer gatheredExpertStatics,
-    @ByVal MoeCommWorkspace workspace, int tokenCount, int maxTokenCountPerRank, int topK, int slotCount, int expertCount);
+    @ByVal MoeCommWorkspace workspace, int tokenCount, int maxTokenCountPerRank, int topK, int slotCount, int expertCount,
     int rankId, int rankCount, Pointer stream);
 @Namespace("tensorrt_llm::kernels::moe_prepare") public static native void computeCountAndIndice(int[] experts, int[] sendCounts, int[] recvCounts, int[] sendIndiceWorkspace,
     int[] backwardIndiceWorkspace, int[] recvIndiceWorkspace, int[] expertStatics, int[] gatheredExpertStatics,
-    @ByVal MoeCommWorkspace workspace, int tokenCount, int maxTokenCountPerRank, int topK, int slotCount, int expertCount);
+    @ByVal MoeCommWorkspace workspace, int tokenCount, int maxTokenCountPerRank, int topK, int slotCount, int expertCount,
     int rankId, int rankCount, Pointer stream);
 
 @Namespace("tensorrt_llm::kernels::moe_prepare") public static native void computeCumsum(IntPointer sendCountsCumsum, IntPointer recvCountsCumsum, int rankId, int rankCount, Pointer stream);
@@ -1369,42 +1365,31 @@ public static final long kMaxVPartStage1 = kMaxVPartStage1();
 @Namespace("tensorrt_llm::kernels") public static native void invokeUpdateCacheIndirection(int[] tgtCI, @Const int[] srcCI, @ByRef BeamHypotheses bh,
     int maxAttentionWindow, int sinkTokenLength, Pointer stream);
 
-@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(FloatPointer __restrict/*pStage1LogProbs*/, @Const FloatPointer __restrict/*cumLogProbs*/,
-    @Const FinishedState finished, @Const IntPointer endIds, @Const FloatPointer diversityRates);
+@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(FloatPointer pStage1LogProbs, @Const FloatPointer cumLogProbs,
+    @Const FinishedState finished, @Const IntPointer endIds, @Const FloatPointer diversityRates,
     @Const IntPointer batchSlots, long nBS, long nBMIn, long nBMOut, long nBM);
-@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(,
-    @Const FinishedState finished, @Const IntPointer endIds, @Const FloatPointer diversityRates);
+@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(FloatBuffer pStage1LogProbs, @Const FloatBuffer cumLogProbs,
+    @Const FinishedState finished, @Const IntBuffer endIds, @Const FloatBuffer diversityRates,
     @Const IntPointer batchSlots, long nBS, long nBMIn, long nBMOut, long nBM);
-@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(FloatBuffer __restrict/*pStage1LogProbs*/, @Const FloatBuffer __restrict/*cumLogProbs*/,
-    @Const FinishedState finished, @Const IntBuffer endIds, @Const FloatBuffer diversityRates);
-    @Const IntPointer batchSlots, long nBS, long nBMIn, long nBMOut, long nBM);
-@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(,
-    @Const FinishedState finished, @Const IntBuffer endIds, @Const FloatBuffer diversityRates);
-    @Const IntPointer batchSlots, long nBS, long nBMIn, long nBMOut, long nBM);
-@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(float[] __restrict/*pStage1LogProbs*/, @Const float[] __restrict/*cumLogProbs*/,
-    @Const FinishedState finished, @Const int[] endIds, @Const float[] diversityRates);
-    @Const IntPointer batchSlots, long nBS, long nBMIn, long nBMOut, long nBM);
-@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(,
-    @Const FinishedState finished, @Const int[] endIds, @Const float[] diversityRates);
+@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(float[] pStage1LogProbs, @Const float[] cumLogProbs,
+    @Const FinishedState finished, @Const int[] endIds, @Const float[] diversityRates,
     @Const IntPointer batchSlots, long nBS, long nBMIn, long nBMOut, long nBM);
 
-@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(half __restrict/*pStage1LogProbs*/, @Const FloatPointer __restrict/*cumLogProbs*/,
-    @Const FinishedState finished, @Const IntPointer endIds, @Const FloatPointer diversityRates);
+@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(ShortPointer pStage1LogProbs, @Const FloatPointer cumLogProbs,
+    @Const FinishedState finished, @Const IntPointer endIds, @Const FloatPointer diversityRates,
     @Const IntPointer batchSlots, long nBS, long nBMIn, long nBMOut, long nBM);
-@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(half __restrict/*pStage1LogProbs*/, @Const FloatBuffer __restrict/*cumLogProbs*/,
-    @Const FinishedState finished, @Const IntBuffer endIds, @Const FloatBuffer diversityRates);
+@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(ShortPointer pStage1LogProbs, @Const FloatBuffer cumLogProbs,
+    @Const FinishedState finished, @Const IntBuffer endIds, @Const FloatBuffer diversityRates,
     @Const IntPointer batchSlots, long nBS, long nBMIn, long nBMOut, long nBM);
-@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(half __restrict/*pStage1LogProbs*/, @Const float[] __restrict/*cumLogProbs*/,
-    @Const FinishedState finished, @Const int[] endIds, @Const float[] diversityRates);
+@Namespace("tensorrt_llm::kernels") public static native void addCumLogProbs(ShortPointer pStage1LogProbs, @Const float[] cumLogProbs,
+    @Const FinishedState finished, @Const int[] endIds, @Const float[] diversityRates,
     @Const IntPointer batchSlots, long nBS, long nBMIn, long nBMOut, long nBM);
 
-@Namespace("tensorrt_llm::kernels") public static native void gatherId(@Const IntPointer __restrict/*pStage1Id*/, IntPointer __restrict/*pStage2Id*/, long nBS,
+@Namespace("tensorrt_llm::kernels") public static native void gatherId(@Const IntPointer pStage1Id, IntPointer pStage2Id, long nBS,
     long nBMIn, long nBMOut, long nV);
-@Namespace("tensorrt_llm::kernels") public static native void gatherId(, long nBS,
+@Namespace("tensorrt_llm::kernels") public static native void gatherId(@Const IntBuffer pStage1Id, IntBuffer pStage2Id, long nBS,
     long nBMIn, long nBMOut, long nV);
-@Namespace("tensorrt_llm::kernels") public static native void gatherId(@Const IntBuffer __restrict/*pStage1Id*/, IntBuffer __restrict/*pStage2Id*/, long nBS,
-    long nBMIn, long nBMOut, long nV);
-@Namespace("tensorrt_llm::kernels") public static native void gatherId(@Const int[] __restrict/*pStage1Id*/, int[] __restrict/*pStage2Id*/, long nBS,
+@Namespace("tensorrt_llm::kernels") public static native void gatherId(@Const int[] pStage1Id, int[] pStage2Id, long nBS,
     long nBMIn, long nBMOut, long nV);
 
 @Namespace("tensorrt_llm::kernels") public static native void printLogProbs(@Const FloatPointer x, int nBS, int nBMIn, int nBM, int nV);

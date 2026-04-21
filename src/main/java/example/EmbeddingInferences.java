@@ -54,7 +54,7 @@ public class EmbeddingInferences {
         // 2. 加载引擎
         // ============================================
         Executor executor = new Executor(
-                new BytePointer(engineDir), kDECODER_ONLY.value, executorConfig
+                new BytePointer(engineDir), kDECODER_ONLY, executorConfig
         );
         System.out.println("✅ Embedding 引擎加载成功");
 
@@ -107,7 +107,7 @@ public class EmbeddingInferences {
 
                 LongPointer reqIdPtr = new LongPointer(1);
                 reqIdPtr.put(0, requestIds[i]);
-                if (executor.getNumResponsesReady(reqIdPtr) > 0) {
+                if (executor.getNumResponsesReady() > 0) {
                     // TODO: 从 response 中获取 encoder output 作为 embedding
                     // Response response = executor.awaitResponses(requestIds[i]).get(0);
                     // Tensor encoderOutput = response.getResult().encoderOutput();

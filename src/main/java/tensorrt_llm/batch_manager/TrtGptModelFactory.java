@@ -41,10 +41,10 @@ public class TrtGptModelFactory extends Pointer {
             @Const @ByRef ExecutorConfig executorConfig, boolean isLeaderInOrchMode);
 
     public static native @SharedPtr TrtGptModel create(@Const @ByRef path trtEnginePath, @Cast("tensorrt_llm::batch_manager::TrtGptModelType") int modelType,
-            @Const @ByRef GptJsonConfig jsonConfig, @Const @ByRef WorldConfig worldConfig);
-            @Const @ByRef ExecutorConfig executorConfig, boolean isLeaderInOrchMode);
+            @Const @ByRef GptJsonConfig jsonConfig, @Const @ByRef WorldConfig worldConfig,
+    @Const @ByRef ExecutorConfig executorConfig, boolean isLeaderInOrchMode);
 
     public static native @SharedPtr TrtGptModel create(@Const @ByRef RawEngine rawEngine,
-            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig, @Cast("tensorrt_llm::batch_manager::TrtGptModelType") int modelType);
-            @Const @ByRef ExecutorConfig executorConfig, boolean isLeaderInOrchMode);
+            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig, @Cast("tensorrt_llm::batch_manager::TrtGptModelType") int modelType,
+    @Const @ByRef ExecutorConfig executorConfig, boolean isLeaderInOrchMode);
 }

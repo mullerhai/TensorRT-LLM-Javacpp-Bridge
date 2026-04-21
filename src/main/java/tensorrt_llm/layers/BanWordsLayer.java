@@ -5,6 +5,9 @@ package tensorrt_llm.layers;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.plugins.SharedConstPtr;
+import tensorrt_llm.runtime.BufferManager;
+import tensorrt_llm.runtime.DecodingLayerWorkspace;
 
 import static tensorrt_llm.global.Layers.*;
 
@@ -26,11 +29,11 @@ public class BanWordsLayer extends BaseLayer {
             @SharedPtr BufferManager bufferManager);
 
     public native void setup(int batchSize, int beamWidth, @ByVal @Cast("tensorrt_llm::layers::TensorConstPtr*") SharedConstPtr batchSlots,
-            @SharedPtr BaseSetupParams baseSetupParams);
+            @SharedPtr BaseSetupParams baseSetupParams,
             @SharedPtr DecodingLayerWorkspace workspace);
 
     /** \brief Modifies 'outputs->logits' in-place with -INF for banned words */
     public native void forwardAsync(@SharedPtr BaseDecodingOutputs outputs,
-            @SharedPtr BaseDecodingInputs inputs);
+            @SharedPtr BaseDecodingInputs inputs,
             @SharedPtr DecodingLayerWorkspace workspace);
 }

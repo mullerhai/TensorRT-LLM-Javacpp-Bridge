@@ -46,7 +46,7 @@ final class OfflineInferenceExamples {
         executorConfig.setMaxBeamWidth(1);
 
         try (Executor executor = new Executor(
-                new BytePointer(engineDir), kDECODER_ONLY.value, executorConfig)) {
+                new BytePointer(engineDir), kDECODER_ONLY, executorConfig)) {
             Request request = RequestBuilder.builder(inputTokenIds, maxNewTokens)
                     .streaming(false)
                     .endId(EOS_TOKEN_ID)
@@ -89,7 +89,7 @@ final class OfflineInferenceExamples {
         executorConfig.setMaxBeamWidth(1);
 
         try (Executor executor = new Executor(
-                new BytePointer(engineDir), kDECODER_ONLY.value, executorConfig)) {
+                new BytePointer(engineDir), kDECODER_ONLY, executorConfig)) {
             List<Long> requestIds = new ArrayList<>();
             for (String prompt : prompts) {
                 int[] inputTokenIds = mockTokenize(prompt);
@@ -117,7 +117,7 @@ final class OfflineInferenceExamples {
     private static void waitUntilReady(Executor executor, long requestId) {
         LongPointer ptr = new LongPointer(1);
         ptr.put(0, requestId);
-        while (executor.getNumResponsesReady(ptr) == 0) {
+        while (executor.getNumResponsesReady() == 0) {
             try {
                 Thread.sleep(20);
             } catch (InterruptedException e) {

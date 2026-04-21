@@ -22,7 +22,7 @@ public class LoraConfig extends Pointer {
     // // [CPP-FIX] broken signature removed:
     // // private native void allocate(
     // // // [CPP-FIX] long taskId, @Optional Tensor weights/*=std::nullopt*/, @Optional Tensor config/*=std::nullopt*/);
-    public LoraConfig();
+    public LoraConfig(
             long taskId) { super((Pointer)null); allocate(taskId); }
     private native void allocate(
             long taskId);

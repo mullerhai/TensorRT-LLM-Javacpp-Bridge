@@ -34,7 +34,7 @@ public class EagleModule extends SpeculativeDecodingModule {
     public EagleModule() { super((Pointer)null); allocate(); }
     @NoException(true) private native void allocate();
 
-    public native @Const @ByRef @NoException(true) EagleChoices getDefaultEagleChoices();
+    public native @Cast("const tensorrt_llm::executor::EagleChoices*") @Const Pointer getDefaultEagleChoices();
 
     public native @NoException(true) int getNumTransformerLayers();
 

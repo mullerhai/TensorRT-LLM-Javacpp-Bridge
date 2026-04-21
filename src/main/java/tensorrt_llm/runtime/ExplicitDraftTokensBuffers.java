@@ -105,7 +105,7 @@ public class ExplicitDraftTokensBuffers extends Pointer {
     public native void reshape(@Cast("tensorrt_llm::runtime::ExplicitDraftTokensBuffers::SizeType32") int numCtxSequences, @Cast("tensorrt_llm::runtime::ExplicitDraftTokensBuffers::SizeType32") int numGenSequences, @Const @ByRef ModelConfig modelConfig);
 
     public native void setFromInputs(@Cast("tensorrt_llm::runtime::ExplicitDraftTokensBuffers::SizeType32") int numCtxSequences, @Cast("tensorrt_llm::runtime::ExplicitDraftTokensBuffers::SizeType32") int numGenSequences, @Const @ByRef ITensor requestTypes,
-            @Const @ByRef ITensor seqSlots, @Const @ByRef Inputs decoderBuffers);
+            @Const @ByRef ITensor seqSlots, @Const @ByRef Inputs decoderBuffers,
             @Const @ByRef ITensor contextPositionIds, @Const @ByRef ModelConfig modelConfig,
             @Const @ByRef WorldConfig worldConfig, @Const @ByRef BufferManager manager,
             @Const @ByRef CudaStream stream);

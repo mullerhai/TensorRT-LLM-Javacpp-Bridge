@@ -19,7 +19,7 @@ public class ModelConfig extends Pointer {
     // The split points are tuned to get better perf, if we need to let
     // users tune that, we can support that by writing and reading the
     // points in `config.json`.
-    @MemberGetter public static native @Const @ByRef Pointer kOPT_PROFILES_SPLIT_POINTS();
+    // [CPP-FIX] @MemberGetter public static native @Const @ByRef Pointer kOPT_PROFILES_SPLIT_POINTS();
     @MemberGetter public static native int kDEFAULT_NUM_TOKENS_PER_BLOCK();
     public static final int kDEFAULT_NUM_TOKENS_PER_BLOCK = kDEFAULT_NUM_TOKENS_PER_BLOCK();
 

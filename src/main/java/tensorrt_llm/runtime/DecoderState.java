@@ -140,10 +140,10 @@ public class DecoderState extends Pointer {
     public native @ByVal SpeculativeDecodingMode getSpeculativeDecodingMode();
 
     /** \brief Get the explicit draft tokens buffers. */
-    public native @Const @ByRef Inputs getExplicitDraftTokensBuffers();
+    public native @Const @ByRef EagleBuffers.Inputs getExplicitDraftTokensBuffers();
 
     /** \brief Get the eagle buffers. */
-    public native @Const @ByRef Inputs getEagleBuffers();
+    public native @Const @ByRef EagleBuffers.Inputs getEagleBuffers();
 
     /** \brief Get the lookahead buffers. */
     public native @Const @ByRef LookaheadDecodingBuffers getLookaheadBuffers();

@@ -5,6 +5,7 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.plugins.SizeType32;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -19,7 +20,7 @@ public class LlmRequest extends Pointer {
     // 
     // // inherit constructors
     // 
-    // public LlmRequest(@ByVal long requestId, @ByVal SizeType32 maxNewTokens, @StdVector TokenIdType inputTokens,
+    // public LlmRequest(@ByVal long requestId, @ByVal SizeType32 maxNewTokens, @StdVector IntPointer inputTokens,
     // // [CPP-FIX] @Const @ByRef SamplingConfig samplingConfig, boolean isStreaming, @Optional SizeType32 endId/*=std::nullopt*/,
     // // [CPP-FIX] @Optional SizeType32 padId/*=std::nullopt*/, @Optional TensorPtr embeddingBias/*=std::nullopt*/,
     // // [CPP-FIX] @Optional TensorPtr badWordsList/*=std::nullopt*/, @Optional TensorPtr stopWordsList/*=std::nullopt*/,
@@ -56,7 +57,7 @@ public class LlmRequest extends Pointer {
     // // [CPP-FIX] @Optional ContextPhaseParams contextPhaseParams/*=std::nullopt*/,
     // // [CPP-FIX] @Optional CacheSaltIDType cacheSaltID/*=std::nullopt*/, @Optional TimePoint arrivalTime/*=std::nullopt*/) { super((Pointer)null); allocate(requestId, maxNewTokens, inputTokens, samplingConfig, isStreaming, endId, padId, embeddingBias, badWordsList, stopWordsList, positionIds, promptEmbeddingTable, promptVocabSize, multimodalHashes, multimodalPositions, multimodalLengths, multimodalUuids, multimodalEmbedding, mropeRotaryCosSin, mropePositionDeltas, loraTaskId, loraWeights, loraConfig, lookaheadConfig, kvCacheRetentionConfig, returnLogProbs, returnContextLogits, returnGenerationLogits, draftTokens, draftLogits, excludeInputFromOutput, logitsPostProcessor, applyLogitsPostProcessorBatched, encoderInputTokens, returnEncoderOutput, clientId, priority, encoderInputFeatures, encoderOutputLength, crossAttentionMask, llmRequestType, inputTokenExtraIds, numReturnSequences, eagleConfig, skipCrossAttnBlocks, returnPerfMetrics, guidedDecodingParams, languageAdapterUid, allottedTimeMs, contextPhaseParams, cacheSaltID, arrivalTime); }
     // // [CPP-FIX] broken signature removed:
-    // // private native void allocate(@ByVal long requestId, @ByVal SizeType32 maxNewTokens, @StdVector TokenIdType inputTokens,
+    // // private native void allocate(@ByVal long requestId, @ByVal SizeType32 maxNewTokens, @StdVector IntPointer inputTokens,
     // // // [CPP-FIX] @Const @ByRef SamplingConfig samplingConfig, boolean isStreaming, @Optional SizeType32 endId/*=std::nullopt*/,
     // // // [CPP-FIX] @Optional SizeType32 padId/*=std::nullopt*/, @Optional TensorPtr embeddingBias/*=std::nullopt*/,
     // // // [CPP-FIX] @Optional TensorPtr badWordsList/*=std::nullopt*/, @Optional TensorPtr stopWordsList/*=std::nullopt*/,
@@ -92,9 +93,11 @@ public class LlmRequest extends Pointer {
     // // // [CPP-FIX] @Optional MillisecondsType allottedTimeMs/*=std::nullopt*/,
     // // // [CPP-FIX] @Optional ContextPhaseParams contextPhaseParams/*=std::nullopt*/,
     // // // [CPP-FIX] @Optional CacheSaltIDType cacheSaltID/*=std::nullopt*/, @Optional TimePoint arrivalTime/*=std::nullopt*/);
-    public LlmRequest(@ByVal long requestId, @ByVal SizeType32 maxNewTokens, @StdVector TokenIdType inputTokens);
-            @Const @ByRef SamplingConfig samplingConfig, boolean isStreaming) { super((Pointer)null); allocate(requestId, maxNewTokens, inputTokens, samplingConfig, isStreaming); }
-    private native void allocate(@ByVal long requestId, @ByVal SizeType32 maxNewTokens, @StdVector TokenIdType inputTokens,
+    public LlmRequest(@ByVal long requestId, @ByVal SizeType32 maxNewTokens,
+            @Cast("std::vector<tensorrt_llm::runtime::TokenIdType>") @StdVector IntPointer inputTokens,
+    @Const @ByRef SamplingConfig samplingConfig, boolean isStreaming) { super((Pointer)null); allocate(requestId, maxNewTokens, inputTokens, samplingConfig, isStreaming); }
+    private native void allocate(@ByVal long requestId, @ByVal SizeType32 maxNewTokens,
+            @Cast("std::vector<tensorrt_llm::runtime::TokenIdType>") @StdVector IntPointer inputTokens,
             @Const @ByRef SamplingConfig samplingConfig, boolean isStreaming);
 
     // [CPP-FIX] broken decl removed:

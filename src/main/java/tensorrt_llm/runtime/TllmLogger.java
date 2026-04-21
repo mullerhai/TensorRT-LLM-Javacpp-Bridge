@@ -27,9 +27,9 @@ public class TllmLogger extends Pointer {
         return new TllmLogger((Pointer)this).offsetAddress(i);
     }
 
-    public native @NoException(true) void log(@ByVal Severity severity, @Const AsciiChar msg);
+    public native @NoException(true) void log(@Cast("nvinfer1::ILogger::Severity") int severity, @Cast("const nvinfer1::AsciiChar*") BytePointer msg);
 
-    public native @ByVal Severity getLevel();
+    public native @Cast("nvinfer1::ILogger::Severity") int getLevel();
 
-    public native void setLevel(@ByVal Severity level);
+    public native void setLevel(@Cast("nvinfer1::ILogger::Severity") int level);
 }

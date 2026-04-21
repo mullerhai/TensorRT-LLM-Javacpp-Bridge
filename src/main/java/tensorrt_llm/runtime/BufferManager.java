@@ -88,14 +88,14 @@ public class BufferManager extends Pointer {
     // [CPP-FIX] broken signature removed:
     // public native @UniquePtr @Name("allocate") IBuffer _allocate(
     // // [CPP-FIX] MemoryType memoryType, long size, int type/*=tensorrt_llm::runtime::BufferManager::kBYTE_TYPE*/);
-    public native @UniquePtr @Name("allocate") IBuffer _allocate();
+    public native @UniquePtr @Name("allocate") IBuffer _allocate(
             MemoryType memoryType, long size);
 
     /** \brief Allocates an {@code ITensor} of the given dimensions and memory type. */
     // [CPP-FIX] broken signature removed:
     // public native @UniquePtr @Name("allocate") ITensor _allocate(
     // // [CPP-FIX] MemoryType memoryType, @ByVal Pointer dims, int type/*=tensorrt_llm::runtime::BufferManager::kBYTE_TYPE*/);
-    public native @UniquePtr @Name("allocate") ITensor _allocate();
+    public native @UniquePtr @Name("allocate") ITensor _allocate(
             MemoryType memoryType, @ByVal Pointer dims);
 
     /** \brief Create an empty {@code IBuffer} of the given memory type. It may be resized later. */

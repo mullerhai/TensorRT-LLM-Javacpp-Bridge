@@ -41,7 +41,8 @@ public class UnifiedBlockTree extends Pointer {
      *  addNextBlock() instead. @param prefix Sequence of BlockKeys leading to the node where the block is stored.
      *  @param windowSize Value key (window size) under which the block is stored at the target node.
      *  @param block The KVCacheBlock to store. */
-    public native void insertBlock(@Const @ByRef PrefixKey prefix, int windowSize, @SharedPtr Pointer block);
+    public native void insertBlock(@Const @ByRef @Cast("tensorrt_llm::batch_manager::kv_cache_manager::PrefixKey") @StdVector BlockKey prefix,
+            int windowSize, @SharedPtr Pointer block);
 
     /** \brief Look up a cached block for a given prefix and window size.
      *  \details Returns the deepest (most specific) valid match found along the prefix path.
@@ -55,7 +56,8 @@ public class UnifiedBlockTree extends Pointer {
     //!
     //!
     public native @SharedPtr @Optional PointerPointer lookupBlock(
-            @Const @ByRef PrefixKey prefix, int windowSize, boolean allowPartialMatch);
+            @Const @ByRef @Cast("tensorrt_llm::batch_manager::kv_cache_manager::PrefixKey") @StdVector BlockKey prefix,
+            int windowSize, boolean allowPartialMatch);
 
     /** \brief Look up cached blocks at every position of the given prefix.
      *  \details Returns one entry per prefix step. The entry is nullopt when no block exists
@@ -74,7 +76,7 @@ public class UnifiedBlockTree extends Pointer {
     //!
     //!
     // [CPP-FIX] public native @StdVector std::optional<tensorrt_llm::batch_manager::radix_block_tree::BlockPtr> lookupBlocksAtAllPositions();
-    // [CPP-FIX] @Const @ByRef PrefixKey prefix, int windowSize);
+    // [CPP-FIX] @Const @ByRef Pointer prefix, int windowSize);
 
     /** \brief Insert blocks at selected positions in the prefix, creating all intermediate nodes.
      *  \details Creates trie nodes for every step in \p prefix. For each position \p i where
@@ -88,5 +90,7 @@ public class UnifiedBlockTree extends Pointer {
      *  @param prefix Full prefix (one BlockKey per block position in the sequence).
      *  @param windowSize Value key under which real blocks are stored (e.g. kRecurrentStates).
      *  @param blocks Parallel to prefix; nullptr entries denote placeholder positions. */
-    public native void insertBlocks(@Const @ByRef PrefixKey prefix, int windowSize, @SharedPtr @StdVector PointerPointer blocks);
+    public native void insertBlocks(
+            @Const @ByRef @Cast("tensorrt_llm::batch_manager::kv_cache_manager::PrefixKey") @StdVector BlockKey prefix,
+            int windowSize, @SharedPtr @StdVector PointerPointer blocks);
 }

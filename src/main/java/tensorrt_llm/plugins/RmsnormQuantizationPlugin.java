@@ -5,7 +5,7 @@ package tensorrt_llm.plugins;
 
 
 import tensorrt_llm.common.QuantMode;
-import tensorrt_llm.runtime.DataType;
+import tensorrt_llm.common.DataType;
 import tensorrt_llm.global.Plugins;
 import tensorrt_llm.presets.PluginsConfig;
 import java.nio.*;

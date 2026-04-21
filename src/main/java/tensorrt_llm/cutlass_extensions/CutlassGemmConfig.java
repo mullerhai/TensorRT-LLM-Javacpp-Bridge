@@ -57,7 +57,7 @@ public class CutlassGemmConfig extends Pointer {
 
     /** enum class tensorrt_llm::cutlass_extensions::CutlassGemmConfig::EpilogueFusionType */
     public static final int
-        NONE = 0,
+        EPILOGUE_NONE = 0,
         FINALIZE = 1;
 
     public native @Cast("tensorrt_llm::cutlass_extensions::CutlassGemmConfig::EpilogueFusionType") int epilogue_fusion_type(); public native CutlassGemmConfig epilogue_fusion_type(int setter);
@@ -91,5 +91,5 @@ public class CutlassGemmConfig extends Pointer {
 
     public native @StdString BytePointer getTileConfigAsName();
 
-    public native @StdString BytePointer toString();
+    @Name("toString") public native @StdString BytePointer toStdString();
 }

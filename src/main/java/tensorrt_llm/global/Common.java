@@ -468,7 +468,7 @@ public class Common extends tensorrt_llm.presets.CommonConfig {
 // __PRETTY_FUNCTION__ is used for neat debugging printing but is not supported on Windows
 // The alternative is __FUNCSIG__, which is similar but not identical
 // #if defined(_WIN32)
-public static final int __PRETTY_FUNCTION__ = __FUNCSIG__;
+// public static final int __PRETTY_FUNCTION__ = __FUNCSIG__; // Windows-only macro, removed
 // #endif
 
 @Namespace("tensorrt_llm::common") @MemberGetter public static native int kDefaultDelimiter();

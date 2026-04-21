@@ -60,7 +60,18 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "tensorrt_llm/batch_manager/stringSetTrie.h",
                         "tensorrt_llm/batch_manager/templatedTrie.h",
                         "tensorrt_llm/batch_manager/transformerBuffers.h",
-                        "tensorrt_llm/batch_manager/updateDecoderBuffers.h"
+                        "tensorrt_llm/batch_manager/updateDecoderBuffers.h",
+                        // Adding missing kernel files
+                        "tensorrt_llm/kernels/KvCacheKernel.h",
+                        "tensorrt_llm/kernels/preQuantScaleKernel.h",
+                        "tensorrt_llm/kernels/moeAlignKernels.h",
+                        "tensorrt_llm/kernels/mlaKernels.h",
+                        "tensorrt_llm/kernels/mambaConv1dKernels.h",
+                        "tensorrt_llm/kernels/layernormKernels.h",
+                        "tensorrt_llm/kernels/globalTimerKernel.h",
+                        "tensorrt_llm/kernels/decodingKernels.h",
+                        "tensorrt_llm/kernels/customAllReduceKernels.h",
+                        "tensorrt_llm/kernels/beamSearchKernels.h",
                 }
         ),
         target = "org.bytedeco.tensorrt_llm",
@@ -374,4 +385,3 @@ public class TRTLLMFullConfig implements InfoMapper {
                 .skip());
     }
 }
-

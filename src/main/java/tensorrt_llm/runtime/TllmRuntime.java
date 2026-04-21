@@ -63,7 +63,7 @@ public class TllmRuntime extends Pointer {
 
     public native @ByRef Pointer getEngine();
 
-    public native @ByRef IEngineInspector getEngineInspector();
+    public native @ByRef @Cast("nvinfer1::IEngineInspector") Pointer getEngineInspector();
 
     public native @ByRef BufferManager getBufferManager();
 

@@ -5,8 +5,10 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.BaseLoopbackAgent;
 
 import static tensorrt_llm.global.Batchmanager.*;
+import tensorrt_llm.runtime.KVCacheIndex;
 
 
 // The WindowBlockManager manages the metadata of KVCacheBlocks.
@@ -35,41 +37,41 @@ public class WindowBlockManager extends Pointer {
 
 
     public WindowBlockManager(int dtype, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int windowSize,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer managedLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int tokensPerBlock, boolean isSWA, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInPrimaryPool,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInSecondaryPool, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int maxNumSequences, @SharedPtr Pointer stream,
-            boolean onboardBlocks, @ByVal int cacheType, @Optional int secondaryOffloadMinPriority,
-            @SharedPtr KVCacheEventManager eventManager, boolean enablePartialReuse, boolean copyOnPartialReuse,
-            @SharedPtr KvCacheConnectorManager kvCacheConnectorManager,
-            @ByRef UnifiedBlockTree lookupTree, @SharedPtr BaseLoopbackAgent loopbackAgent/*=nullptr*/,
-            boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/) { super((Pointer)null); allocate(dtype, windowSize, managedLayers, numKvHeadsPerLayer, sizePerHead, tokensPerBlock, isSWA, blocksInPrimaryPool, blocksInSecondaryPool, maxNumSequences, stream, onboardBlocks, cacheType, secondaryOffloadMinPriority, eventManager, enablePartialReuse, copyOnPartialReuse, kvCacheConnectorManager, lookupTree, loopbackAgent, enableIndexerKCache, indexerKCacheQuantBlockSize, indexerKCacheIndexHeadDim); }
+            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer managedLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int tokensPerBlock, boolean isSWA, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInPrimaryPool,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInSecondaryPool, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int maxNumSequences, @SharedPtr Pointer stream,
+    boolean onboardBlocks, @ByVal int cacheType, @Optional int secondaryOffloadMinPriority,
+    @SharedPtr KVCacheEventManager eventManager, boolean enablePartialReuse, boolean copyOnPartialReuse,
+    @SharedPtr KvCacheConnectorManager kvCacheConnectorManager,
+    @ByRef UnifiedBlockTree lookupTree, @SharedPtr BaseLoopbackAgent loopbackAgent/*=nullptr*/,
+    boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/) { super((Pointer)null); allocate(dtype, windowSize, managedLayers, numKvHeadsPerLayer, sizePerHead, tokensPerBlock, isSWA, blocksInPrimaryPool, blocksInSecondaryPool, maxNumSequences, stream, onboardBlocks, cacheType, secondaryOffloadMinPriority, eventManager, enablePartialReuse, copyOnPartialReuse, kvCacheConnectorManager, lookupTree, loopbackAgent, enableIndexerKCache, indexerKCacheQuantBlockSize, indexerKCacheIndexHeadDim); }
     private native void allocate(int dtype, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int windowSize,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer managedLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int tokensPerBlock, boolean isSWA, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInPrimaryPool,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInSecondaryPool, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int maxNumSequences, @SharedPtr Pointer stream,
-            boolean onboardBlocks, @ByVal int cacheType, @Optional int secondaryOffloadMinPriority,
-            @SharedPtr KVCacheEventManager eventManager, boolean enablePartialReuse, boolean copyOnPartialReuse,
-            @SharedPtr KvCacheConnectorManager kvCacheConnectorManager,
-            @ByRef UnifiedBlockTree lookupTree, @SharedPtr BaseLoopbackAgent loopbackAgent/*=nullptr*/,
-            boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/);
+            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer managedLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int tokensPerBlock, boolean isSWA, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInPrimaryPool,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInSecondaryPool, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int maxNumSequences, @SharedPtr Pointer stream,
+    boolean onboardBlocks, @ByVal int cacheType, @Optional int secondaryOffloadMinPriority,
+    @SharedPtr KVCacheEventManager eventManager, boolean enablePartialReuse, boolean copyOnPartialReuse,
+    @SharedPtr KvCacheConnectorManager kvCacheConnectorManager,
+    @ByRef UnifiedBlockTree lookupTree, @SharedPtr BaseLoopbackAgent loopbackAgent/*=nullptr*/,
+    boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/);
     public WindowBlockManager(int dtype, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int windowSize,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer managedLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int tokensPerBlock, boolean isSWA, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInPrimaryPool,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInSecondaryPool, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int maxNumSequences, @SharedPtr Pointer stream,
-            boolean onboardBlocks, @ByVal int cacheType, @Optional int secondaryOffloadMinPriority,
-            @SharedPtr KVCacheEventManager eventManager, boolean enablePartialReuse, boolean copyOnPartialReuse,
-            @SharedPtr KvCacheConnectorManager kvCacheConnectorManager,
-            @ByRef UnifiedBlockTree lookupTree) { super((Pointer)null); allocate(dtype, windowSize, managedLayers, numKvHeadsPerLayer, sizePerHead, tokensPerBlock, isSWA, blocksInPrimaryPool, blocksInSecondaryPool, maxNumSequences, stream, onboardBlocks, cacheType, secondaryOffloadMinPriority, eventManager, enablePartialReuse, copyOnPartialReuse, kvCacheConnectorManager, lookupTree); }
+            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer managedLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int tokensPerBlock, boolean isSWA, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInPrimaryPool,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInSecondaryPool, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int maxNumSequences, @SharedPtr Pointer stream,
+    boolean onboardBlocks, @ByVal int cacheType, @Optional int secondaryOffloadMinPriority,
+    @SharedPtr KVCacheEventManager eventManager, boolean enablePartialReuse, boolean copyOnPartialReuse,
+    @SharedPtr KvCacheConnectorManager kvCacheConnectorManager,
+    @ByRef UnifiedBlockTree lookupTree) { super((Pointer)null); allocate(dtype, windowSize, managedLayers, numKvHeadsPerLayer, sizePerHead, tokensPerBlock, isSWA, blocksInPrimaryPool, blocksInSecondaryPool, maxNumSequences, stream, onboardBlocks, cacheType, secondaryOffloadMinPriority, eventManager, enablePartialReuse, copyOnPartialReuse, kvCacheConnectorManager, lookupTree); }
     private native void allocate(int dtype, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int windowSize,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer managedLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int tokensPerBlock, boolean isSWA, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInPrimaryPool,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInSecondaryPool, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int maxNumSequences, @SharedPtr Pointer stream,
-            boolean onboardBlocks, @ByVal int cacheType, @Optional int secondaryOffloadMinPriority,
-            @SharedPtr KVCacheEventManager eventManager, boolean enablePartialReuse, boolean copyOnPartialReuse,
-            @SharedPtr KvCacheConnectorManager kvCacheConnectorManager,
-            @ByRef UnifiedBlockTree lookupTree);
+            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer managedLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int tokensPerBlock, boolean isSWA, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInPrimaryPool,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int blocksInSecondaryPool, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::WindowBlockManager::SizeType32") int maxNumSequences, @SharedPtr Pointer stream,
+    boolean onboardBlocks, @ByVal int cacheType, @Optional int secondaryOffloadMinPriority,
+    @SharedPtr KVCacheEventManager eventManager, boolean enablePartialReuse, boolean copyOnPartialReuse,
+    @SharedPtr KvCacheConnectorManager kvCacheConnectorManager,
+    @ByRef UnifiedBlockTree lookupTree);
 
     public native boolean isEnableIndexerKCache();
 

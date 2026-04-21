@@ -40,7 +40,7 @@ public class IGptDecoder extends Pointer {
 
     public static native @UniquePtr IGptDecoder create(@Const @ByRef DecodingMode mode, @ByVal int dtype,
             long maxNumSequences, long maxBeamWidth, long vocabSize, long vocabSizePadded,
-            @SharedPtr CudaStream stream);
+            @SharedPtr CudaStream stream,
             @Const @SharedPtr SpeculativeDecodingModule speculativeDecodingModule/*=nullptr*/);
     public static native @UniquePtr IGptDecoder create(@Const @ByRef DecodingMode mode, @ByVal int dtype,
             long maxNumSequences, long maxBeamWidth, long vocabSize, long vocabSizePadded,

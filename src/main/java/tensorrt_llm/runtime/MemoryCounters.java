@@ -57,5 +57,5 @@ public class MemoryCounters extends Pointer {
     public static native @StdString BytePointer bytesToString(@Cast("tensorrt_llm::runtime::MemoryCounters::SizeType32") long bytes, int precision/*=2*/);
     public static native @StdString BytePointer bytesToString(@Cast("tensorrt_llm::runtime::MemoryCounters::SizeType32") long bytes);
 
-    public native @StdString BytePointer toString();
+    @Name("toString") public native @StdString BytePointer toStdString();
 }

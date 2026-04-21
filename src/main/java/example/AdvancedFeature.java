@@ -127,9 +127,7 @@ public class AdvancedFeature {
                 + "}";
 
         // 设置 GuidedDecodingConfig         kJSON_SCHEMA,
-        GuidedDecodingConfig guidedConfig = new GuidedDecodingConfig(
-                new BytePointer(jsonSchema)
-        );
+        GuidedDecodingConfig guidedConfig = new GuidedDecodingConfig(1); // kJSON_SCHEMA
 
         // 在 ExecutorConfig 级别设置全局 guided decoding
         ExecutorConfig config = new ExecutorConfig();
@@ -144,10 +142,7 @@ public class AdvancedFeature {
         request.setEndId(EOS_TOKEN_ID);
 
         // 也可以用正则表达式
-        GuidedDecodingParams guidedParams = new GuidedDecodingParams(
-                1, // kREGEX enum value
-                new BytePointer("[0-9]{4}-[0-9]{2}-[0-9]{2}")  // 日期格式
-        );
+        GuidedDecodingParams guidedParams = new GuidedDecodingParams(2); // kREGEX enum value
         request.setGuidedDecodingParams(guidedParams);
 
         System.out.println("  ✅ Guided Decoding 请求已构建");

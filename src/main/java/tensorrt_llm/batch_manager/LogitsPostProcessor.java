@@ -35,6 +35,6 @@ public class LogitsPostProcessor extends Pointer {
     // public native @Name("operator ()") boolean apply(@ByRef DecoderInputBuffers inputBuffers, boolean replicateLogitsPostProcessor,
     // @Const @ByRef Pointer worldConfig, @SharedPtr Pointer stream,
     // // [CPP-FIX] @Optional Pointer logitsPostProcessorBatched/*=std::nullopt*/);
-    public native @Name("operator ()") boolean apply(@ByRef DecoderInputBuffers inputBuffers, boolean replicateLogitsPostProcessor);
-            @Const @ByRef Pointer worldConfig, @SharedPtr Pointer stream);
+    public native @Name("operator ()") boolean apply(@ByRef DecoderInputBuffers inputBuffers, boolean replicateLogitsPostProcessor,
+    @Const @ByRef Pointer worldConfig, @SharedPtr Pointer stream);
 }

@@ -31,6 +31,6 @@ public class UpdateDecoderBuffers extends Pointer {
     private native void allocate();
 
     public native @ByVal @Name("operator ()") CudaEvent apply(@Const @ByRef Pointer modelConfig, @ByRef DecoderOutputBuffers decoderOutputBuffers,
-            @Const @ByRef BufferManager copyBufferManager, @Const @ByRef DecoderState decoderState);
-            boolean returnLogProbs, @Const @ByRef CudaEvent decoderFinishEvent);
+            @Const @ByRef BufferManager copyBufferManager, @Const @ByRef DecoderState decoderState,
+    boolean returnLogProbs, @Const @ByRef CudaEvent decoderFinishEvent);
 }

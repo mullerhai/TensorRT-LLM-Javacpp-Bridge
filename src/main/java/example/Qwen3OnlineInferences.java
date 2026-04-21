@@ -63,7 +63,7 @@ public class Qwen3OnlineInferences {
         // ============================================
         // Executor 构造时会加载 TRT 引擎到 GPU TRTLLM.ModelType.kDECODER_ONLY
         Executor executor = new Executor(
-                new BytePointer(engineDir), kDECODER_ONLY.value, executorConfig
+                new BytePointer(engineDir), kDECODER_ONLY, executorConfig
         );
 
         System.out.println("✅ Qwen3 引擎加载成功");

@@ -5,6 +5,7 @@ package tensorrt_llm.executor;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.batch_manager.LoraTaskIdType;
 
 import static tensorrt_llm.global.Executor.*;
 
@@ -18,10 +19,10 @@ public class KVCacheStoredBlockData extends Pointer {
 
 
     public KVCacheStoredBlockData(long blockHash, @ByVal Pointer tokens,
-            @Optional LoraTaskIdType loraId, int cacheLevel, int priority);
-            @StdVector Pointer mmKeys/*={}*/) { super((Pointer)null); allocate(blockHash, tokens, loraId, cacheLevel, priority, mmKeys); }
+                                  @Optional LoraTaskIdType loraId, int cacheLevel, int priority,
+                                  @StdVector Pointer mmKeys/*={}*/) { super((Pointer)null); allocate(blockHash, tokens, loraId, cacheLevel, priority, mmKeys); }
     private native void allocate(long blockHash, @ByVal Pointer tokens,
-            @Optional LoraTaskIdType loraId, int cacheLevel, int priority);
+            @Optional LoraTaskIdType loraId, int cacheLevel, int priority,
             @StdVector Pointer mmKeys/*={}*/);
     public KVCacheStoredBlockData(long blockHash, @ByVal Pointer tokens,
             @Optional LoraTaskIdType loraId, int cacheLevel, int priority) { super((Pointer)null); allocate(blockHash, tokens, loraId, cacheLevel, priority); }

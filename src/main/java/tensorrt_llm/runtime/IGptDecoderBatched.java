@@ -5,6 +5,7 @@ package tensorrt_llm.runtime;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.DecodingMode;
 
 import static tensorrt_llm.global.TrtllmRuntime.*;
 
@@ -19,7 +20,7 @@ public class IGptDecoderBatched extends Pointer {
 
     /** \brief Setup the decoder before calling {@code forward()} */
     public native void setup(@Const @ByRef DecodingMode mode, int maxNumSequences, int maxBeamWidth,
-            int dtype, @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig);
+                             int dtype, @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig);
 
     /** \brief Disable Lookahead decoding. */
     public native void disableLookahead(@SharedPtr LlmRequest genRequests, @SharedPtr ITensor batchSlots);

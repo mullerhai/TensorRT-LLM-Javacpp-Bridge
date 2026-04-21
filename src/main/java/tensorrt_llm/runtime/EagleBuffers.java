@@ -5,6 +5,7 @@ package tensorrt_llm.runtime;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.DecodingConfig;
 
 import static tensorrt_llm.global.TrtllmRuntime.*;
 
@@ -124,16 +125,16 @@ public class EagleBuffers extends Pointer {
         /** [batchSize] */
         @Name("engineOutputs.chunkedContextNextTokens") public native @SharedPtr ITensor engineOutputs_chunkedContextNextTokens(); public native EagleBuffers engineOutputs_chunkedContextNextTokens(ITensor setter);
     public EagleBuffers(@Cast("tensorrt_llm::runtime::EagleBuffers::SizeType32") int maxBatchSize, @Cast("tensorrt_llm::runtime::EagleBuffers::SizeType32") int maxBeamWidth, @Const @ByRef BufferManager manager,
-            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig);
+            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig,
             @Const @ByRef DecodingConfig decodingConfig) { super((Pointer)null); allocate(maxBatchSize, maxBeamWidth, manager, modelConfig, worldConfig, decodingConfig); }
     private native void allocate(@Cast("tensorrt_llm::runtime::EagleBuffers::SizeType32") int maxBatchSize, @Cast("tensorrt_llm::runtime::EagleBuffers::SizeType32") int maxBeamWidth, @Const @ByRef BufferManager manager,
-            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig);
+            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig,
             @Const @ByRef DecodingConfig decodingConfig);
 
     public native void reshape(@Cast("tensorrt_llm::runtime::EagleBuffers::SizeType32") int numCtxSequences, @Cast("tensorrt_llm::runtime::EagleBuffers::SizeType32") int numGenSequences, @Const @ByRef ModelConfig modelConfig);
 
     public native void setFromInputs(@SharedPtr LlmRequest contextRequests, @SharedPtr LlmRequest genRequests,
-            @Const @ByRef ITensor requestTypes, @Const @ByRef ITensor seqSlots, @Const @ByRef Inputs decoderBuffers);
+            @Const @ByRef ITensor requestTypes, @Const @ByRef ITensor seqSlots, @Const @ByRef Inputs decoderBuffers,
             @Const @ByRef BufferManager manager, @Const @ByRef ModelConfig modelConfig,
             @Const @ByRef WorldConfig worldConfig);
 

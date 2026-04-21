@@ -30,7 +30,7 @@ public class TorchView extends ITensor {
 
     public native @Cast("nvinfer1::DataType") int getDataType();
 
-    public native @Cast("tensorrt_llm::runtime::MemoryType") int getMemoryType();
+    @Name("getMemoryType") public native @Cast("tensorrt_llm::runtime::MemoryType") int getMemoryTypeInt();
 
     public native void release();
 

@@ -134,9 +134,9 @@ public class DecodingOutput extends Pointer {
 
     public native @Optional SpeculativeDecodingOutputs speculativeDecodingOutputs(); public native DecodingOutput speculativeDecodingOutputs(SpeculativeDecodingOutputs setter);
 
-    public native @Optional Inputs explicitDraftTokensBuffers(); public native DecodingOutput explicitDraftTokensBuffers(Inputs setter);
+    public native @Optional ExplicitDraftTokensBuffers.Inputs explicitDraftTokensBuffers(); public native DecodingOutput explicitDraftTokensBuffers(ExplicitDraftTokensBuffers.Inputs setter);
 
     public native @Optional LookaheadDecodingBuffers lookaheadOutputs(); public native DecodingOutput lookaheadOutputs(LookaheadDecodingBuffers setter);
 
-    public native @Optional Inputs eagleBuffers(); public native DecodingOutput eagleBuffers(Inputs setter);
+    public native @Optional EagleBuffers.Inputs eagleBuffers(); public native DecodingOutput eagleBuffers(EagleBuffers.Inputs setter);
 }

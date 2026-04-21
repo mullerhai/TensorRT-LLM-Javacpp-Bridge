@@ -35,7 +35,7 @@ public class CacheState extends Pointer {
     // FIXED: @Cast("tensorrt_llm::executor::kv_cache::CacheState::AttentionType") byte attentionType/*=tensorrt_llm::executor::kv_cache::CacheState::AttentionType::kDEFAULT*/, int kvFactor/*=2*/, boolean enableBlockReuse/*=false*/,
     // FIXED: boolean enablePartialReuse/*=false*/, boolean hasIndexerKCache/*=false*/, int indexerDimPerHead/*=0*/,
     // FIXED: int indexerKCacheQuantBlockSize/*=128*/);
-    public CacheState(@ByVal ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig);
+    public CacheState(@ByVal ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig,
             @StdVector IntPointer attentionLayerNumPerPP, @ByVal int dataType) { super((Pointer)null); allocate(modelConfig, worldConfig, attentionLayerNumPerPP, dataType); }
     private native void allocate(@ByVal ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig,
             @StdVector IntPointer attentionLayerNumPerPP, @ByVal int dataType);
@@ -52,7 +52,7 @@ public class CacheState extends Pointer {
     // FIXED: @Cast("tensorrt_llm::executor::kv_cache::CacheState::AttentionType") byte attentionType/*=tensorrt_llm::executor::kv_cache::CacheState::AttentionType::kDEFAULT*/, int kvFactor/*=2*/, boolean enableAttentionDP/*=false*/,
     // FIXED: int DPrank/*=0*/, int DPsize/*=0*/, boolean enableBlockReuse/*=false*/, boolean enablePartialReuse/*=false*/,
     // FIXED: boolean hasIndexerKCache/*=false*/, int indexerDimPerHead/*=0*/, int indexerKCacheQuantBlockSize/*=128*/);
-    public CacheState(@StdVector IntPointer nbKvHeadPerLayer, int sizePerHead, int tokensPerBlock);
+    public CacheState(@StdVector IntPointer nbKvHeadPerLayer, int sizePerHead, int tokensPerBlock,
             int tensorParallelism, int pipelineParallelism, int contextParallelism,
             @StdVector IntPointer attentionLayerNumPerPP, @ByVal int dataType) { super((Pointer)null); allocate(nbKvHeadPerLayer, sizePerHead, tokensPerBlock, tensorParallelism, pipelineParallelism, contextParallelism, attentionLayerNumPerPP, dataType); }
     private native void allocate(@StdVector IntPointer nbKvHeadPerLayer, int sizePerHead, int tokensPerBlock,
@@ -71,7 +71,7 @@ public class CacheState extends Pointer {
     // FIXED: @Cast("tensorrt_llm::executor::kv_cache::CacheState::AttentionType") byte attentionType/*=tensorrt_llm::executor::kv_cache::CacheState::AttentionType::kDEFAULT*/, int kvFactor/*=2*/, boolean enableAttentionDP/*=false*/,
     // FIXED: int DPrank/*=0*/, int DPsize/*=0*/, boolean enableBlockReuse/*=false*/, boolean enablePartialReuse/*=false*/,
     // FIXED: boolean hasIndexerKCache/*=false*/, int indexerDimPerHead/*=0*/, int indexerKCacheQuantBlockSize/*=128*/);
-    public CacheState(int nbAttentionLayers, int nbKvHeads, int sizePerHead, int tokensPerBlock);
+    public CacheState(int nbAttentionLayers, int nbKvHeads, int sizePerHead, int tokensPerBlock,
             int tensorParallelism, int pipelineParallelism, int contextParallelism,
             @StdVector IntPointer attentionLayerNumPerPP, @ByVal int dataType) { super((Pointer)null); allocate(nbAttentionLayers, nbKvHeads, sizePerHead, tokensPerBlock, tensorParallelism, pipelineParallelism, contextParallelism, attentionLayerNumPerPP, dataType); }
     private native void allocate(int nbAttentionLayers, int nbKvHeads, int sizePerHead, int tokensPerBlock,

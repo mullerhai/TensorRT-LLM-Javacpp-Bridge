@@ -4,7 +4,7 @@ package tensorrt_llm.plugins;
 
 
 
-import tensorrt_llm.runtime.DataType;
+import tensorrt_llm.common.DataType;
 import tensorrt_llm.global.Plugins;
 import tensorrt_llm.presets.PluginsConfig;
 import java.nio.*;
@@ -69,10 +69,10 @@ public class CpSplitPlugin extends BasePluginV3 {
     public native @NoException(true) int onShapeChange(@Const PluginTensorDesc in, int nbInputs, @Const PluginTensorDesc out,
             int nbOutputs);
     public native @NoException(true) int enqueue(@Const PluginTensorDesc inputDesc, @Const PluginTensorDesc outputDesc,
-            @Cast("const void*const*") PointerPointer inputs, @Cast("void*const*") PointerPointer outputs, Pointer workspace);
+            @Cast("const void*const*") PointerPointer inputs, @Cast("void*const*") PointerPointer outputs, Pointer workspace,
             Pointer stream);
     public native @NoException(true) int enqueue(@Const PluginTensorDesc inputDesc, @Const PluginTensorDesc outputDesc,
-            @Cast("const void*const*") @ByPtrPtr Pointer inputs, @Cast("void*const*") @ByPtrPtr Pointer outputs, Pointer workspace);
+            @Cast("const void*const*") @ByPtrPtr Pointer inputs, @Cast("void*const*") @ByPtrPtr Pointer outputs, Pointer workspace,
             Pointer stream); // fixed
     public native @NoException(true) IPluginV3 attachToContext(IPluginResourceContext context);
     public native @Const @NoException(true) PluginFieldCollection getFieldsToSerialize();

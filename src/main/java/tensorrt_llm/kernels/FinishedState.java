@@ -5,6 +5,7 @@ package tensorrt_llm.kernels;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.batch_manager.FinishReason;
 
 import static tensorrt_llm.global.Kernels.*;
 

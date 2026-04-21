@@ -4,7 +4,7 @@ package tensorrt_llm.plugins;
 
 
 
-import tensorrt_llm.runtime.DataType;
+import tensorrt_llm.common.DataType;
 import tensorrt_llm.global.Plugins;
 import tensorrt_llm.presets.PluginsConfig;
 import java.nio.*;
@@ -24,22 +24,22 @@ public class LoraPlugin extends BasePlugin {
     
 
     public LoraPlugin(int in_hidden_size, @StdVector IntPointer out_hidden_sizes, int transA, int transB, int num_lora_modules,
-            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank);
+            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank,
             int weight_index) { super((Pointer)null); allocate(in_hidden_size, out_hidden_sizes, transA, transB, num_lora_modules, type, profiler, remove_input_padding, max_low_rank, weight_index); }
     private native void allocate(int in_hidden_size, @StdVector IntPointer out_hidden_sizes, int transA, int transB, int num_lora_modules,
-            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank);
+            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank,
             int weight_index);
     public LoraPlugin(int in_hidden_size, @StdVector IntBuffer out_hidden_sizes, int transA, int transB, int num_lora_modules,
-            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank);
+            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank,
             int weight_index) { super((Pointer)null); allocate(in_hidden_size, out_hidden_sizes, transA, transB, num_lora_modules, type, profiler, remove_input_padding, max_low_rank, weight_index); }
     private native void allocate(int in_hidden_size, @StdVector IntBuffer out_hidden_sizes, int transA, int transB, int num_lora_modules,
-            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank);
+            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank,
             int weight_index);
     public LoraPlugin(int in_hidden_size, @StdVector int[] out_hidden_sizes, int transA, int transB, int num_lora_modules,
-            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank);
+            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank,
             int weight_index) { super((Pointer)null); allocate(in_hidden_size, out_hidden_sizes, transA, transB, num_lora_modules, type, profiler, remove_input_padding, max_low_rank, weight_index); }
     private native void allocate(int in_hidden_size, @StdVector int[] out_hidden_sizes, int transA, int transB, int num_lora_modules,
-            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank);
+            @ByVal int type, @SharedPtr CublasLtGemmPluginProfiler profiler, boolean remove_input_padding, int max_low_rank,
             int weight_index);
 
     public LoraPlugin(@Const Pointer data, long length, @SharedPtr CublasLtGemmPluginProfiler profiler) { super((Pointer)null); allocate(data, length, profiler); }

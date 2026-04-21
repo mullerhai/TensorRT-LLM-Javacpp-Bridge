@@ -71,7 +71,7 @@ public class LoraCache extends Pointer {
         // optional pointer to DoRA magnitude vector. size is outDim.
         public native @Optional LongPointer scalingVecPointer(); public native TaskLayerModuleConfig scalingVecPointer(LongPointer setter);
 
-        public native @StdString BytePointer toString();
+        @Name("toString") public native @StdString BytePointer toStdString();
 
         public native @Name("operator ==") boolean equals(@Const @ByRef TaskLayerModuleConfig o);
     }

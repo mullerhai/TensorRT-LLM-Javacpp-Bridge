@@ -5,6 +5,7 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.runtime.KVCacheIndex;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -42,18 +43,18 @@ public class BlockManager extends Pointer {
     // // // [CPP-FIX] @SharedPtr KvCacheConnectorManager kvCacheConnectorManager/*=nullptr*/,
     // // // [CPP-FIX] @Optional BaseAgentConfig agentConfig/*=std::nullopt*/, boolean enableIndexerKCache/*=false*/,
     // // // [CPP-FIX] @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/);
-    public BlockManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int sizePerHead);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int tokensPerBlock, @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxNumSequences,
-            @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxSequenceLength, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxBeamWidth,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int sinkBubbleLength, boolean onboardBlocks) { super((Pointer)null); allocate(numKvHeadsPerLayer, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, stream, maxSequenceLength, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkBubbleLength, onboardBlocks); }
+    public BlockManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int sizePerHead,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int tokensPerBlock, @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxNumSequences,
+    @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxSequenceLength, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int sinkBubbleLength, boolean onboardBlocks) { super((Pointer)null); allocate(numKvHeadsPerLayer, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, stream, maxSequenceLength, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkBubbleLength, onboardBlocks); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int sizePerHead,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int tokensPerBlock, @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxNumSequences);
-            @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxSequenceLength, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxBeamWidth,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int sinkBubbleLength, boolean onboardBlocks);
+            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int tokensPerBlock, @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxNumSequences,
+    @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxSequenceLength, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int sinkBubbleLength, boolean onboardBlocks);
 
     public native boolean isEnableIndexerKCache();
 
@@ -96,14 +97,14 @@ public class BlockManager extends Pointer {
     // [CPP-FIX] broken signature removed:
     // public native @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheBlock::IdType*") @Optional IntPointer releaseBlocks(
     // // [CPP-FIX] @ByRef GenerationRequest sequence, @ByVal(nullValue = "OptionalRef<const tensorrt_llm::batch_manager::LlmRequest>(std::nullopt)") OptionalRef<const tensorrt_llm::batch_manager::LlmRequest> llmRequest, boolean pinBlocks/*=false*/);
-    public native @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheBlock::IdType*") @Optional IntPointer releaseBlocks();
-            @ByRef GenerationRequest sequence);
+    public native @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheBlock::IdType*") @Optional IntPointer releaseBlocks(
+    @ByRef GenerationRequest sequence);
 
     // [CPP-FIX] broken signature removed:
     // public native @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheBlock::IdType*") @StdVector IntPointer storeBlocksForReuse(
     // // [CPP-FIX] @ByRef GenerationRequest sequence, @ByVal(nullValue = "OptionalRef<const tensorrt_llm::batch_manager::LlmRequest>(std::nullopt)") OptionalRef<const tensorrt_llm::batch_manager::LlmRequest> llmRequest, boolean pinBlocks/*=false*/);
-    public native @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheBlock::IdType*") @StdVector IntPointer storeBlocksForReuse();
-            @ByRef GenerationRequest sequence);
+    public native @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheBlock::IdType*") @StdVector IntPointer storeBlocksForReuse(
+    @ByRef GenerationRequest sequence);
 
     public native void schedulingReleaseBlocks(@ByVal long requestId);
 
@@ -116,7 +117,7 @@ public class BlockManager extends Pointer {
     public native void releaseLastBlock(@ByRef GenerationRequest sequence, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int windowSize);
 
     public native void setOffsets(KVCacheIndex offsetsPtr, @Const @ByRef Pointer offsetsShape, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int beamIdx,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int blockIdx, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheBlock::IdType") int blockId, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int windowSize);
+                                  @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int blockIdx, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheBlock::IdType") int blockId, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BlockManager::SizeType32") int windowSize);
 
     // WILL NOT WORK FOR VARIABLE WINDOW ATTENTION
     public native @Optional Pointer findNewContextBlock(

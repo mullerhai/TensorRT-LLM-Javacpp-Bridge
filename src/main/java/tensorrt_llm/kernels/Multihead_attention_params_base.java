@@ -96,7 +96,7 @@ public class Multihead_attention_params_base extends Pointer {
     // The pre-computed rotary inv freq when building the engines (as constant weights).
     public native @Const FloatPointer rotary_embedding_inv_freq_cache(); public native Multihead_attention_params_base rotary_embedding_inv_freq_cache(FloatPointer setter);
     // The pre-computed cos/sin cache.
-    public native @Const float2 rotary_embedding_cos_sin_cache(); public native Multihead_attention_params_base rotary_embedding_cos_sin_cache(float2 setter);
+    public native @Cast("const float2*") FloatPointer rotary_embedding_cos_sin_cache(); public native Multihead_attention_params_base rotary_embedding_cos_sin_cache(@Cast("const float2*") FloatPointer setter);
     public native float rotary_embedding_short_m_scale(); public native Multihead_attention_params_base rotary_embedding_short_m_scale(float setter);
     public native float rotary_embedding_long_m_scale(); public native Multihead_attention_params_base rotary_embedding_long_m_scale(float setter);
     public native int rotary_embedding_max_positions(); public native Multihead_attention_params_base rotary_embedding_max_positions(int setter);

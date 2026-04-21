@@ -5,6 +5,8 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.CacheState;
+import tensorrt_llm.executor.DataTransceiverState;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -23,7 +25,7 @@ public class CacheTransferLayer extends Pointer {
      *  @param kvFormatter The KV cache formatter.
      *  @param rnnFormatter Optional RNN cache formatter. */
     public CacheTransferLayer(@ByVal CacheState cacheState, @UniquePtr BaseCacheFormatter kvFormatter,
-            @UniquePtr RnnCacheFormatter rnnFormatter/*=nullptr*/) { super((Pointer)null); allocate(cacheState, kvFormatter, rnnFormatter); }
+                              @UniquePtr RnnCacheFormatter rnnFormatter/*=nullptr*/) { super((Pointer)null); allocate(cacheState, kvFormatter, rnnFormatter); }
     private native void allocate(@ByVal CacheState cacheState, @UniquePtr BaseCacheFormatter kvFormatter,
             @UniquePtr RnnCacheFormatter rnnFormatter/*=nullptr*/);
     public CacheTransferLayer(@ByVal CacheState cacheState, @UniquePtr BaseCacheFormatter kvFormatter) { super((Pointer)null); allocate(cacheState, kvFormatter); }

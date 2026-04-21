@@ -5,6 +5,7 @@ package tensorrt_llm.runtime;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.DecodingConfig;
 
 import static tensorrt_llm.global.TrtllmRuntime.*;
 
@@ -17,14 +18,14 @@ public class LookaheadRuntimeBuffers extends Pointer {
 
 
     public LookaheadRuntimeBuffers(int maxBatchSize, int maxBeamWidth, @Const @ByRef BufferManager manager,
-            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig, @Const @ByRef DecodingConfig decodingConfig);
+            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig, @Const @ByRef DecodingConfig decodingConfig,
             @Const @ByRef TllmRuntime runtime) { super((Pointer)null); allocate(maxBatchSize, maxBeamWidth, manager, modelConfig, worldConfig, decodingConfig, runtime); }
     private native void allocate(int maxBatchSize, int maxBeamWidth, @Const @ByRef BufferManager manager,
-            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig, @Const @ByRef DecodingConfig decodingConfig);
+            @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig, @Const @ByRef DecodingConfig decodingConfig,
             @Const @ByRef TllmRuntime runtime);
 
     public native void setFromInputs(int numCtxSequences, int numGenSequences, @Const @ByRef ITensor requestTypes,
-            @Const @ByRef ITensor seqSlots, @Const @ByRef LookaheadDecodingBuffers decoderLookaheadBuffers, @Const @ByRef TllmRuntime runtime);
+            @Const @ByRef ITensor seqSlots, @Const @ByRef LookaheadDecodingBuffers decoderLookaheadBuffers, @Const @ByRef TllmRuntime runtime,
             @Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig);
 
     public native void reshape(int numCtxSequences, int numGenSequences, int tokensPerStep);

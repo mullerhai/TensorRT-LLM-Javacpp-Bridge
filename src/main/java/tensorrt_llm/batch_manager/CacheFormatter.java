@@ -5,6 +5,7 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.CacheState;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -34,4 +35,4 @@ public class CacheFormatter extends BaseCacheFormatter {
     // [CPP-FIX] public native @ByVal std::pair<std::vector<size_t>,std::vector<size_t> > pickRecvConnections(long numConnections,
     // [CPP-FIX] @Const @ByRef CacheState selfConfig, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int selfIdx, @Const @ByRef CacheState destConfig,
     // [CPP-FIX] @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32*") @StdVector IntPointer counterPartRanks);
-});
+}

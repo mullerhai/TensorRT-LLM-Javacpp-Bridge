@@ -5,6 +5,7 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.MpiComm;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -17,17 +18,17 @@ public class DecoderStepAsyncSend extends Pointer {
 
 
     public DecoderStepAsyncSend(@Const @ByRef DecoderOutputBuffers decoderOutputBuffers,
-            @Const @ByRef DecoderState decoderState, boolean returnLogProbs, @Cast("tensorrt_llm::batch_manager::DecoderStepAsyncSend::SizeType32") int maxBeamWidth);
-            boolean useMedusa, @Const @ByRef MpiComm commSession, int peer) { super((Pointer)null); allocate(decoderOutputBuffers, decoderState, returnLogProbs, maxBeamWidth, useMedusa, commSession, peer); }
+            @Const @ByRef DecoderState decoderState, boolean returnLogProbs, @Cast("tensorrt_llm::batch_manager::DecoderStepAsyncSend::SizeType32") int maxBeamWidth,
+    boolean useMedusa, @Const @ByRef MpiComm commSession, int peer) { super((Pointer)null); allocate(decoderOutputBuffers, decoderState, returnLogProbs, maxBeamWidth, useMedusa, commSession, peer); }
     private native void allocate(@Const @ByRef DecoderOutputBuffers decoderOutputBuffers,
-            @Const @ByRef DecoderState decoderState, boolean returnLogProbs, @Cast("tensorrt_llm::batch_manager::DecoderStepAsyncSend::SizeType32") int maxBeamWidth);
-            boolean useMedusa, @Const @ByRef MpiComm commSession, int peer);
+            @Const @ByRef DecoderState decoderState, boolean returnLogProbs, @Cast("tensorrt_llm::batch_manager::DecoderStepAsyncSend::SizeType32") int maxBeamWidth,
+    boolean useMedusa, @Const @ByRef MpiComm commSession, int peer);
 
     public static native void recv(@Const @ByRef DecoderOutputBuffers decoderOutputBuffers,
-            @Const @ByRef DecoderState decoderState, boolean returnLogProbs, @Cast("tensorrt_llm::batch_manager::DecoderStepAsyncSend::SizeType32") int maxBeamWidth);
-            boolean useMedusa, @Const @ByRef MpiComm commSession, int peer);
+            @Const @ByRef DecoderState decoderState, boolean returnLogProbs, @Cast("tensorrt_llm::batch_manager::DecoderStepAsyncSend::SizeType32") int maxBeamWidth,
+    boolean useMedusa, @Const @ByRef MpiComm commSession, int peer);
 
     public static native void bcast(@Const @ByRef DecoderOutputBuffers decoderOutputBuffers,
-            @Const @ByRef DecoderState decoderState, boolean returnLogProbs, @Cast("tensorrt_llm::batch_manager::DecoderStepAsyncSend::SizeType32") int maxBeamWidth);
-            boolean useMedusa, @Const @ByRef MpiComm commSession, int root);
+                                    @Const @ByRef DecoderState decoderState, boolean returnLogProbs, @Cast("tensorrt_llm::batch_manager::DecoderStepAsyncSend::SizeType32") int maxBeamWidth,
+                                    boolean useMedusa, @Const @ByRef MpiComm commSession, int root);
 }

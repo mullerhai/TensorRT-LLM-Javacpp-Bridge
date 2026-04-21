@@ -23,7 +23,7 @@ public class GptJsonConfig extends Pointer {
     // // private native void allocate(@StdString BytePointer name, @StdString BytePointer version, @StdString BytePointer precision, int tensorParallelism,
     // // int pipelineParallelism, int contextParallelism, int gpusPerNode, @ByVal ModelConfig modelConfig,
     // // // [CPP-FIX] @Optional RuntimeDefaults runtimeDefaults/*=std::nullopt*/);
-    public GptJsonConfig(@StdString BytePointer name, @StdString BytePointer version, @StdString BytePointer precision, int tensorParallelism);
+    public GptJsonConfig(@StdString BytePointer name, @StdString BytePointer version, @StdString BytePointer precision, int tensorParallelism,
             int pipelineParallelism, int contextParallelism, int gpusPerNode, @ByVal ModelConfig modelConfig) { super((Pointer)null); allocate(name, version, precision, tensorParallelism, pipelineParallelism, contextParallelism, gpusPerNode, modelConfig); }
     private native void allocate(@StdString BytePointer name, @StdString BytePointer version, @StdString BytePointer precision, int tensorParallelism,
             int pipelineParallelism, int contextParallelism, int gpusPerNode, @ByVal ModelConfig modelConfig);
@@ -35,7 +35,7 @@ public class GptJsonConfig extends Pointer {
     // // private native void allocate(@StdString String name, @StdString String version, @StdString String precision, int tensorParallelism,
     // // int pipelineParallelism, int contextParallelism, int gpusPerNode, @ByVal ModelConfig modelConfig,
     // // // [CPP-FIX] @Optional RuntimeDefaults runtimeDefaults/*=std::nullopt*/);
-    public GptJsonConfig(@StdString String name, @StdString String version, @StdString String precision, int tensorParallelism);
+    public GptJsonConfig(@StdString String name, @StdString String version, @StdString String precision, int tensorParallelism,
             int pipelineParallelism, int contextParallelism, int gpusPerNode, @ByVal ModelConfig modelConfig) { super((Pointer)null); allocate(name, version, precision, tensorParallelism, pipelineParallelism, contextParallelism, gpusPerNode, modelConfig); }
     private native void allocate(@StdString String name, @StdString String version, @StdString String precision, int tensorParallelism,
             int pipelineParallelism, int contextParallelism, int gpusPerNode, @ByVal ModelConfig modelConfig);

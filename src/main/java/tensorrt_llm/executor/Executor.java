@@ -36,7 +36,7 @@ public class Executor extends Pointer {
     // // private native void allocate(@Const @ByRef Pointer engineBuffer, @StdString BytePointer jsonConfigStr, ModelType modelType,
     // // @Const @ByRef ExecutorConfig executorConfig,
     // // // [CPP-FIX] @Optional std::map<std::string,tensorrt_llm::executor::Tensor> managedWeights/*=std::nullopt*/);
-    public Executor(@Const @ByRef Pointer engineBuffer, @StdString BytePointer jsonConfigStr, ModelType modelType);
+    public Executor(@Const @ByRef Pointer engineBuffer, @StdString BytePointer jsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(engineBuffer, jsonConfigStr, modelType, executorConfig); }
     private native void allocate(@Const @ByRef Pointer engineBuffer, @StdString BytePointer jsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig);
@@ -48,22 +48,22 @@ public class Executor extends Pointer {
     // // private native void allocate(@Const @ByRef Pointer engineBuffer, @StdString String jsonConfigStr, ModelType modelType,
     // // @Const @ByRef ExecutorConfig executorConfig,
     // // // [CPP-FIX] @Optional std::map<std::string,tensorrt_llm::executor::Tensor> managedWeights/*=std::nullopt*/);
-    public Executor(@Const @ByRef Pointer engineBuffer, @StdString String jsonConfigStr, ModelType modelType);
+    public Executor(@Const @ByRef Pointer engineBuffer, @StdString String jsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(engineBuffer, jsonConfigStr, modelType, executorConfig); }
     private native void allocate(@Const @ByRef Pointer engineBuffer, @StdString String jsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig);
 
     public Executor(@Const @ByRef Pointer encoderEngineBuffer, @StdString BytePointer encoderJsonConfigStr,
-            @Const @ByRef Pointer decoderEngineBuffer, @StdString BytePointer decoderJsonConfigStr, ModelType modelType);
+            @Const @ByRef Pointer decoderEngineBuffer, @StdString BytePointer decoderJsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(encoderEngineBuffer, encoderJsonConfigStr, decoderEngineBuffer, decoderJsonConfigStr, modelType, executorConfig); }
     private native void allocate(@Const @ByRef Pointer encoderEngineBuffer, @StdString BytePointer encoderJsonConfigStr,
-            @Const @ByRef Pointer decoderEngineBuffer, @StdString BytePointer decoderJsonConfigStr, ModelType modelType);
+            @Const @ByRef Pointer decoderEngineBuffer, @StdString BytePointer decoderJsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig);
     public Executor(@Const @ByRef Pointer encoderEngineBuffer, @StdString String encoderJsonConfigStr,
-            @Const @ByRef Pointer decoderEngineBuffer, @StdString String decoderJsonConfigStr, ModelType modelType);
+            @Const @ByRef Pointer decoderEngineBuffer, @StdString String decoderJsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(encoderEngineBuffer, encoderJsonConfigStr, decoderEngineBuffer, decoderJsonConfigStr, modelType, executorConfig); }
     private native void allocate(@Const @ByRef Pointer encoderEngineBuffer, @StdString String encoderJsonConfigStr,
-            @Const @ByRef Pointer decoderEngineBuffer, @StdString String decoderJsonConfigStr, ModelType modelType);
+            @Const @ByRef Pointer decoderEngineBuffer, @StdString String decoderJsonConfigStr, ModelType modelType,
             @Const @ByRef ExecutorConfig executorConfig);
 
     public Executor(@SharedPtr Model model, @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(model, executorConfig); }
@@ -109,7 +109,7 @@ public class Executor extends Pointer {
     // [CPP-FIX] broken signature removed:
     // public native @ByVal @Cast("std::vector<tensorrt_llm::executor::Response>*") Pointer awaitResponses(
     // // [CPP-FIX] long requestId, @Optional Pointer timeout/*=std::nullopt*/);
-    public native @ByVal @Cast("std::vector<tensorrt_llm::executor::Response>*") Pointer awaitResponses();
+    public native @ByVal @Cast("std::vector<tensorrt_llm::executor::Response>*") Pointer awaitResponses(
             long requestId);
 
     /** \brief Await for multiple ready responses
@@ -127,7 +127,7 @@ public class Executor extends Pointer {
     // [CPP-FIX] broken signature removed:
     // public native @Cast("std::vector<tensorrt_llm::executor::Response>*") @StdVector Pointer awaitResponses(
     // // [CPP-FIX] @StdVector LongPointer requestIds, @Optional Pointer timeout/*=std::nullopt*/);
-    public native @Cast("std::vector<tensorrt_llm::executor::Response>*") @StdVector Pointer awaitResponses();
+    public native @Cast("std::vector<tensorrt_llm::executor::Response>*") @StdVector Pointer awaitResponses(
             @StdVector LongPointer requestIds);
 
     /** \brief Get the number of ready responses

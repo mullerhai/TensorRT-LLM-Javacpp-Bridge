@@ -93,13 +93,13 @@ public class TransformerBuffers extends Pointer {
     public native @SharedPtr MulticastTensor gemmAllReduceOutput(); public native TransformerBuffers gemmAllReduceOutput(MulticastTensor setter);
 
     public TransformerBuffers(@Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxBatchSize, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxBeamWidth,
-            @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32*") @StdVector IntPointer maxAttentionWindowVec, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxAttentionWindow, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int sinkTokenLen);
-            @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig,
-            @Const @ByRef Pointer worldConfig) { super((Pointer)null); allocate(maxBatchSize, maxBeamWidth, maxAttentionWindowVec, maxAttentionWindow, sinkTokenLen, runtime, modelConfig, worldConfig); }
+            @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32*") @StdVector IntPointer maxAttentionWindowVec, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxAttentionWindow, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int sinkTokenLen,
+    @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig,
+    @Const @ByRef Pointer worldConfig) { super((Pointer)null); allocate(maxBatchSize, maxBeamWidth, maxAttentionWindowVec, maxAttentionWindow, sinkTokenLen, runtime, modelConfig, worldConfig); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxBatchSize, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxBeamWidth,
-            @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32*") @StdVector IntPointer maxAttentionWindowVec, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxAttentionWindow, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int sinkTokenLen);
-            @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig,
-            @Const @ByRef Pointer worldConfig);
+            @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32*") @StdVector IntPointer maxAttentionWindowVec, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxAttentionWindow, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int sinkTokenLen,
+    @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig,
+    @Const @ByRef Pointer worldConfig);
 
     public native void reshape(@Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int numSequences, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int numInputTokens);
 
@@ -112,17 +112,17 @@ public class TransformerBuffers extends Pointer {
             boolean isChatGlm, @Cast("const tensorrt_llm::batch_manager::TransformerBuffers::TensorPtr*") @ByRef SharedPtr decoderPositionIds);
 
     public native void copyKvBlockOffsets(@Cast("const tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer contextRequests, @Cast("const tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer genRequests,
-            @Const BaseKVCacheManager kvCacheManager);
-            @Const BaseKVCacheManager crossKvCacheManager, @Const @ByRef BufferManager manager);
+            @Const BaseKVCacheManager kvCacheManager,
+    @Const BaseKVCacheManager crossKvCacheManager, @Const @ByRef BufferManager manager);
 
     // Copy CacheIndirection from `decoderCacheIndirectionOutput` to `this->cacheIndirection`
     public native void copyCacheIndirection(@Cast("const tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer genRequests, @Cast("const tensorrt_llm::batch_manager::TransformerBuffers::TensorPtr*") @ByRef SharedPtr decoderCacheIndirectionOutput,
             @Const @ByRef Pointer stream);
 
     public native void copyCrossAttentionMasks(@Cast("const tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer contextRequests, @Cast("const tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer genRequests,
-            @Cast("const tensorrt_llm::batch_manager::TransformerBuffers::TensorPtr*") @ByRef SharedPtr decoderContextLengthsDevice, @Cast("const tensorrt_llm::batch_manager::TransformerBuffers::TensorPtr*") @ByRef SharedPtr encoderInputLengths);
-            @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxDecoderContextLength, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxEncoderInputLengthInBatch,
-            @Const @ByRef Pointer runtime);
+            @Cast("const tensorrt_llm::batch_manager::TransformerBuffers::TensorPtr*") @ByRef SharedPtr decoderContextLengthsDevice, @Cast("const tensorrt_llm::batch_manager::TransformerBuffers::TensorPtr*") @ByRef SharedPtr encoderInputLengths,
+    @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxDecoderContextLength, @Cast("tensorrt_llm::batch_manager::TransformerBuffers::SizeType32") int maxEncoderInputLengthInBatch,
+    @Const @ByRef Pointer runtime);
 
     public native void copySkipCrossAttnBlocks(boolean _skipCrossAttnBlocks, @Const @ByRef Pointer runtime);
 }

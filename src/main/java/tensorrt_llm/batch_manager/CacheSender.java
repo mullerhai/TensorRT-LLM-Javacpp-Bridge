@@ -5,6 +5,8 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.CommState;
+import tensorrt_llm.executor.ConnectionManager;
 
 import static tensorrt_llm.global.Batchmanager.*;
 

@@ -42,16 +42,16 @@ public class KVCacheManager extends BaseKVCacheManager {
     // // // [CPP-FIX] @SharedPtr KvCacheConnectorManager kvCacheConnectorManager/*=nullptr*/,
     // // // [CPP-FIX] boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
     // // // [CPP-FIX] @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/);
-    public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock);
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength) { super((Pointer)null); allocate(numKvHeadsPerLayer, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength); }
+    public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
+    @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength) { super((Pointer)null); allocate(numKvHeadsPerLayer, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength);
+            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength);
 
     // [CPP-FIX] broken decl removed:
     // public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
@@ -79,16 +79,16 @@ public class KVCacheManager extends BaseKVCacheManager {
     // // // [CPP-FIX] @SharedPtr KvCacheConnectorManager kvCacheConnectorManager/*=nullptr*/,
     // // // [CPP-FIX] boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
     // // // [CPP-FIX] @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/);
-    public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock);
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength) { super((Pointer)null); allocate(numKvHeadsPerLayer, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength); }
+    public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
+    @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength) { super((Pointer)null); allocate(numKvHeadsPerLayer, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer numKvHeadsPerLayer, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength);
+            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength);
 
     // [CPP-FIX] broken decl removed:
     // public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
@@ -116,43 +116,43 @@ public class KVCacheManager extends BaseKVCacheManager {
     // // // [CPP-FIX] @SharedPtr KvCacheConnectorManager kvCacheConnectorManager/*=nullptr*/,
     // // // [CPP-FIX] boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
     // // // [CPP-FIX] @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/);
-    public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock);
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength) { super((Pointer)null); allocate(numLayers, numKvHeads, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength); }
+    public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
+    @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength) { super((Pointer)null); allocate(numLayers, numKvHeads, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength);
+            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, @SharedPtr Pointer stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength);
 
     public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength, boolean enableBlockReuse/*=false*/,
-            boolean onboardBlocks/*=true*/, @ByVal(nullValue = "tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::CacheType::kSELF") int cacheType, boolean enablePartialReuse/*=true*/,
-            boolean copyOnpartialReuse/*=true*/, boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/) { super((Pointer)null); allocate(numLayers, numKvHeads, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength, enableBlockReuse, onboardBlocks, cacheType, enablePartialReuse, copyOnpartialReuse, enableIndexerKCache, indexerKCacheQuantBlockSize, indexerKCacheIndexHeadDim); }
+            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength, boolean enableBlockReuse/*=false*/,
+    boolean onboardBlocks/*=true*/, @ByVal(nullValue = "tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::CacheType::kSELF") int cacheType, boolean enablePartialReuse/*=true*/,
+    boolean copyOnpartialReuse/*=true*/, boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/) { super((Pointer)null); allocate(numLayers, numKvHeads, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength, enableBlockReuse, onboardBlocks, cacheType, enablePartialReuse, copyOnpartialReuse, enableIndexerKCache, indexerKCacheQuantBlockSize, indexerKCacheIndexHeadDim); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength, boolean enableBlockReuse/*=false*/,
-            boolean onboardBlocks/*=true*/, @ByVal(nullValue = "tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::CacheType::kSELF") int cacheType, boolean enablePartialReuse/*=true*/,
-            boolean copyOnpartialReuse/*=true*/, boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/);
+            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength, boolean enableBlockReuse/*=false*/,
+    boolean onboardBlocks/*=true*/, @ByVal(nullValue = "tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::CacheType::kSELF") int cacheType, boolean enablePartialReuse/*=true*/,
+    boolean copyOnpartialReuse/*=true*/, boolean enableIndexerKCache/*=false*/, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheQuantBlockSize/*=128*/,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int indexerKCacheIndexHeadDim/*=0*/);
     public KVCacheManager(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength) { super((Pointer)null); allocate(numLayers, numKvHeads, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength); }
+            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength) { super((Pointer)null); allocate(numLayers, numKvHeads, sizePerHead, tokensPerBlock, blocksPerWindow, maxNumSequences, maxBeamWidth, maxAttentionWindowVec, tempAttentionWindowInputs, dtype, sinkTokenLength, stream, maxSequenceLength); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sizePerHead, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int tokensPerBlock,
-            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth);
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
-            @Optional Pointer tempAttentionWindowInputs, int dtype,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength);
+            @Const @ByRef Pointer blocksPerWindow, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxNumSequences, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32*") @StdVector IntPointer maxAttentionWindowVec,
+    @Optional Pointer tempAttentionWindowInputs, int dtype,
+    @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int sinkTokenLength, long stream, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::KVCacheManager::SizeType32") int maxSequenceLength);
 
     public native void allocatePools(boolean useUvm/*=false*/);
     public native void allocatePools();
@@ -211,7 +211,7 @@ public class KVCacheManager extends BaseKVCacheManager {
     /** \brief Add new request to the KV cache manager.
      *  @param inputLength Input length for which KV cache need to be allocated.
      *  @param beamWidth Beam width for which KV cache need to be allocated.
-     *  @param llmRequest Optional request to use for KV cache lookup.
+//     *  @param llmRequest Optional request to use for KV cache lookup.
      *  \details If llmRequest is supplied and KV cache reuse is enabled, try to recover KV cache blocks for
      *  inputLength - 1 tokens and populate prepopulatedPromptLen. */
     // [CPP-FIX] broken signature removed:
@@ -293,7 +293,7 @@ public class KVCacheManager extends BaseKVCacheManager {
      *  @param inputLength The number of input tokens in the sequence.
      *  @param outputLength The number of output tokens in the sequence.
      *  @param sinkTokenLength The number of sink tokens configured.
-     *  @param maxAttentionWindow The attention window size allowed by the model.
+//     *  @param maxAttentionWindow The attention window size allowed by the model.
      *  @param beamWidth The number of beams to consider for the request.
      *  @param tokensPerBlock The number of tokens a single kv-cache block contains.,
      *  @return SizeType32 A number of blocks. */

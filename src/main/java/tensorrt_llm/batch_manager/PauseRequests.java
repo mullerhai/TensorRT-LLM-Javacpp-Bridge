@@ -27,6 +27,6 @@ public class PauseRequests extends Pointer {
     // // [CPP-FIX] @ByVal(nullValue = "tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::PauseRequests::BaseKVCacheManager>(std::nullopt)") tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::PauseRequests::BaseKVCacheManager> kvCacheManager,
     // // [CPP-FIX] @ByVal(nullValue = "tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::PauseRequests::BaseKVCacheManager>(std::nullopt)") tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::PauseRequests::BaseKVCacheManager> crossKvCacheManager,
     // // [CPP-FIX] @ByVal(nullValue = "tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::BasePeftCacheManager>(std::nullopt)") tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::BasePeftCacheManager> peftCacheManager);
-    public native @Name("operator ()") void apply(@Cast("tensorrt_llm::batch_manager::PauseRequests::RequestVector*") @ByRef Pointer requestsToPause, @Cast("tensorrt_llm::batch_manager::ReqIdsSet*") @ByRef Pointer inflightReqIds, @Cast("tensorrt_llm::batch_manager::ReqIdsSet*") @ByRef Pointer reqIdsToPause);
-            boolean pauseFlagged, @ByRef SequenceSlotManager seqSlotManager);
+    public native @Name("operator ()") void apply(@Cast("tensorrt_llm::batch_manager::PauseRequests::RequestVector*") @ByRef Pointer requestsToPause, @Cast("tensorrt_llm::batch_manager::ReqIdsSet*") @ByRef Pointer inflightReqIds, @Cast("tensorrt_llm::batch_manager::ReqIdsSet*") @ByRef Pointer reqIdsToPause,
+    boolean pauseFlagged, @ByRef SequenceSlotManager seqSlotManager);
 }

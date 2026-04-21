@@ -36,4 +36,4 @@ public class HandleContextLogits extends Pointer {
     // @Const @ByRef SharedPtr logits, @StdVector IntPointer numContextLogitsVec,
     // @Const @ByRef Pointer modelConfig, @Const @ByRef BufferManager manager,
     // // [CPP-FIX] @ByVal tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::MedusaBuffers> medusaBuffers);
-});
+}

@@ -5,6 +5,7 @@ package tensorrt_llm.layers;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.plugins.SharedConstPtr;
 
 import static tensorrt_llm.global.Layers.*;
 
@@ -16,7 +17,7 @@ public class SamplingInputs extends DecodingInputs {
     public SamplingInputs(Pointer p) { super(p); }
 
     public SamplingInputs(@ByVal @Cast("tensorrt_llm::layers::TensorConstPtr*") SharedConstPtr endIds, @ByVal @Cast("tensorrt_llm::layers::TensorConstPtr*") SharedConstPtr batchSlots, int step,
-            int ite, int localBatchSize) { super((Pointer)null); allocate(endIds, batchSlots, step, ite, localBatchSize); }
+                          int ite, int localBatchSize) { super((Pointer)null); allocate(endIds, batchSlots, step, ite, localBatchSize); }
     private native void allocate(@ByVal @Cast("tensorrt_llm::layers::TensorConstPtr*") SharedConstPtr endIds, @ByVal @Cast("tensorrt_llm::layers::TensorConstPtr*") SharedConstPtr batchSlots, int step,
             int ite, int localBatchSize);
 

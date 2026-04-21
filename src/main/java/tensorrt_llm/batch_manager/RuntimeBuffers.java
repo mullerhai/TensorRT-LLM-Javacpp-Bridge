@@ -5,6 +5,10 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.DecodingConfig;
+import tensorrt_llm.runtime.EagleBuffers;
+import tensorrt_llm.runtime.ExplicitDraftTokensBuffers;
+import tensorrt_llm.runtime.LookaheadRuntimeBuffers;
 
 import static tensorrt_llm.global.Batchmanager.*;
  // namespace kv_cache_manager
@@ -93,7 +97,7 @@ public class RuntimeBuffers extends Pointer {
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public GenerationLogitsCache(Pointer p) { super(p); }
         private native void allocate();
-        private native void allocateArray(long size);
+    private native void allocateArray(long size);
         @Override public GenerationLogitsCache position(long position) {
             return (GenerationLogitsCache)super.position(position);
         }
@@ -102,7 +106,7 @@ public class RuntimeBuffers extends Pointer {
         }
     
         @MemberGetter public static native int kCACHE_LENGTH();
-        public static final int kCACHE_LENGTH = kCACHE_LENGTH();
+    public static final int kCACHE_LENGTH = kCACHE_LENGTH();
 
         /** Buffer for logits between steps to prevent from being overwritten
          *  [kCACHE_LENGTH, maxBatchSize * maxBeamWidth, vocabSizePadded] */
@@ -158,16 +162,16 @@ public class RuntimeBuffers extends Pointer {
     // // // [CPP-FIX] boolean gatherGenerationLogits, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32*") @Optional IntPointer maxNumTokens/*=std::nullopt*/,
     // // // [CPP-FIX] @Cast("std::vector<tensorrt_llm::executor::AdditionalModelOutput>*") @Optional Pointer additionalModelOutputs/*=std::nullopt*/,
     // // // [CPP-FIX] boolean promptTableOffloading/*=false*/);
-    public RuntimeBuffers(@Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxBatchSize, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxBeamWidth);
-            @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32*") @StdVector IntPointer maxAttentionWindowVec, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxAttentionWindow, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int sinkTokenLen,
-            @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig,
-            @Const @ByRef Pointer worldConfig, @Const @ByRef DecodingConfig decodingConfig,
-            boolean gatherGenerationLogits) { super((Pointer)null); allocate(maxBatchSize, maxBeamWidth, maxAttentionWindowVec, maxAttentionWindow, sinkTokenLen, runtime, modelConfig, worldConfig, decodingConfig, gatherGenerationLogits); }
+    public RuntimeBuffers(@Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxBatchSize, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxBeamWidth,
+    @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32*") @StdVector IntPointer maxAttentionWindowVec, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxAttentionWindow, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int sinkTokenLen,
+    @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig,
+    @Const @ByRef Pointer worldConfig, @Const @ByRef DecodingConfig decodingConfig,
+    boolean gatherGenerationLogits) { super((Pointer)null); allocate(maxBatchSize, maxBeamWidth, maxAttentionWindowVec, maxAttentionWindow, sinkTokenLen, runtime, modelConfig, worldConfig, decodingConfig, gatherGenerationLogits); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxBatchSize, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxBeamWidth,
-            @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32*") @StdVector IntPointer maxAttentionWindowVec, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxAttentionWindow, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int sinkTokenLen);
-            @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig,
-            @Const @ByRef Pointer worldConfig, @Const @ByRef DecodingConfig decodingConfig,
-            boolean gatherGenerationLogits);
+            @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32*") @StdVector IntPointer maxAttentionWindowVec, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxAttentionWindow, @Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int sinkTokenLen,
+    @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig,
+    @Const @ByRef Pointer worldConfig, @Const @ByRef DecodingConfig decodingConfig,
+    boolean gatherGenerationLogits);
 
     
     
@@ -190,11 +194,11 @@ public class RuntimeBuffers extends Pointer {
 
     public native void prepareBuffersForCudaGraph(@Cast("tensorrt_llm::batch_manager::RuntimeBuffers::SizeType32") int maxSequenceLength);
 
-    public native void prepareExplicitDraftTokenBuffers(@Const @ByRef Inputs explicitDraftTokensBuffers,
-            @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig);
-            @Const @ByRef Pointer worldConfig);
+    public native void prepareExplicitDraftTokenBuffers(@Const @ByRef ExplicitDraftTokensBuffers.Inputs explicitDraftTokensBuffers,
+            @Const @ByRef Pointer runtime, @Const @ByRef Pointer modelConfig,
+    @Const @ByRef Pointer worldConfig);
 
     public native void prepareEagleBuffers(@Cast("const tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer contextRequests, @Cast("const tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer genRequests,
-            @Const @ByRef Inputs eagleBuffers, @Const @ByRef Pointer runtime);
-            @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig);
+                                           @Const @ByRef EagleBuffers.Inputs eagleBuffers, @Const @ByRef Pointer runtime,
+                                           @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig);
 }

@@ -69,7 +69,7 @@ public class BaseKVCacheManager extends Pointer {
     /** \brief Add new request to the KV cache manager.
      *  @param inputLength Input length for which KV cache need to be allocated.
      *  @param beamWidth Beam width for which KV cache need to be allocated.
-     *  @param llmRequest Optional request to use for KV cache lookup.
+//     *  @param llmRequest Optional request to use for KV cache lookup.
      *  \details If llmRequest is supplied and KV cache reuse is enabled, try to recover KV cache blocks for
      *  inputLength - 1 tokens and populate prepopulatedPromptLen. */
     // [CPP-FIX] broken signature removed:
@@ -169,8 +169,8 @@ public class BaseKVCacheManager extends Pointer {
 
     // Sum of numLayers * kvFactor * numKvHeads * sizePerHead for each pool
     public static native @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BaseKVCacheManager::SizeType32") int calculateCacheSizePerTokenForSingleWindowSize(
-            @Const @ByRef Pointer modelConfig, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BaseKVCacheManager::SizeType32*") @StdVector IntPointer windowSizeLayers);
-            boolean isCrossAttention, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BaseKVCacheManager::SizeType32") int kvFactor);
+            @Const @ByRef Pointer modelConfig, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BaseKVCacheManager::SizeType32*") @StdVector IntPointer windowSizeLayers,
+    boolean isCrossAttention, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::BaseKVCacheManager::SizeType32") int kvFactor);
 
     /** \brief Groups model layers by their attention window size.
      *  @param maxAttentionWindowVec Vector of maximum attention window sizes per layer (may have fewer elements than

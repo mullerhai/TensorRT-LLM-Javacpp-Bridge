@@ -5,6 +5,8 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.common.Algorithm;
+import tensorrt_llm.global.Executor;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -28,9 +30,9 @@ public class CapacityScheduler extends Algorithm {
     // // boolean hasKvCacheManager, boolean twoStepsLookAhead/*=false*/,
     // // // [CPP-FIX] @Cast("tensorrt_llm::batch_manager::LlmRequestState") int noScheduleUntilState/*=tensorrt_llm::batch_manager::LlmRequestState::kCONTEXT_INIT*/,
     // // // [CPP-FIX] @Cast("tensorrt_llm::batch_manager::LlmRequestState") int noScheduleAfterState/*=tensorrt_llm::batch_manager::LlmRequestState::kGENERATION_COMPLETE*/);
-    public CapacityScheduler(int maxNumRequests, CapacitySchedulerPolicy capacitySchedulerPolicy);
-            boolean hasKvCacheManager) { super((Pointer)null); allocate(maxNumRequests, capacitySchedulerPolicy, hasKvCacheManager); }
-    private native void allocate(int maxNumRequests, CapacitySchedulerPolicy capacitySchedulerPolicy,
+    public CapacityScheduler(int maxNumRequests, Executor.CapacitySchedulerPolicy capacitySchedulerPolicy,
+    boolean hasKvCacheManager) { super((Pointer)null); allocate(maxNumRequests, capacitySchedulerPolicy, hasKvCacheManager); }
+    private native void allocate(int maxNumRequests, Executor.CapacitySchedulerPolicy capacitySchedulerPolicy,
             boolean hasKvCacheManager);
 
     /**
@@ -50,4 +52,4 @@ public class CapacityScheduler extends Algorithm {
     // [CPP-FIX] @ByVal(nullValue = "tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::BasePeftCacheManager>(std::nullopt)") tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::BasePeftCacheManager> peftCacheManager,
     // [CPP-FIX] @ByVal(nullValue = "tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::kv_cache_manager::BaseKVCacheManager>(std::nullopt)") tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::kv_cache_manager::BaseKVCacheManager> crossKvCacheManager);
     // [CPP-FIX] public native @ByVal @Name("operator ()") std::tuple<tensorrt_llm::batch_manager::RequestVector,tensorrt_llm::batch_manager::RequestVector,tensorrt_llm::batch_manager::RequestVector> apply(@Cast("const tensorrt_llm::batch_manager::RequestList*") @ByRef Pointer activeRequests);
-});
+}

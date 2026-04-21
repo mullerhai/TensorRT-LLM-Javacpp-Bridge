@@ -21,35 +21,35 @@ public class DebugTensor extends Pointer {
     public DebugTensor(Pointer p) { super(p); }
 
     public DebugTensor(@Const @ByRef ITensor tensor, @Cast("const char*") BytePointer name,
-            @SharedPtr BufferManager bufferManager/*=nullptr*/);
+            @SharedPtr BufferManager bufferManager/*=nullptr*/,
             @SharedPtr CudaStream stream/*=nullptr*/) { super((Pointer)null); allocate(tensor, name, bufferManager, stream); }
     private native void allocate(@Const @ByRef ITensor tensor, @Cast("const char*") BytePointer name,
-            @SharedPtr BufferManager bufferManager/*=nullptr*/);
+            @SharedPtr BufferManager bufferManager/*=nullptr*/,
             @SharedPtr CudaStream stream/*=nullptr*/);
     public DebugTensor(@Const @ByRef ITensor tensor, @Cast("const char*") BytePointer name) { super((Pointer)null); allocate(tensor, name); }
     private native void allocate(@Const @ByRef ITensor tensor, @Cast("const char*") BytePointer name);
     public DebugTensor(@Const @ByRef ITensor tensor, String name,
-            @SharedPtr BufferManager bufferManager/*=nullptr*/);
+            @SharedPtr BufferManager bufferManager/*=nullptr*/,
             @SharedPtr CudaStream stream/*=nullptr*/) { super((Pointer)null); allocate(tensor, name, bufferManager, stream); }
     private native void allocate(@Const @ByRef ITensor tensor, String name,
-            @SharedPtr BufferManager bufferManager/*=nullptr*/);
+            @SharedPtr BufferManager bufferManager/*=nullptr*/,
             @SharedPtr CudaStream stream/*=nullptr*/);
     public DebugTensor(@Const @ByRef ITensor tensor, String name) { super((Pointer)null); allocate(tensor, name); }
     private native void allocate(@Const @ByRef ITensor tensor, String name);
 
     public DebugTensor(@ByVal Pointer tensor, @Cast("const char*") BytePointer name,
-            @SharedPtr BufferManager bufferManager/*=nullptr*/);
+            @SharedPtr BufferManager bufferManager/*=nullptr*/,
             @SharedPtr CudaStream stream/*=nullptr*/) { super((Pointer)null); allocate(tensor, name, bufferManager, stream); }
     private native void allocate(@ByVal Pointer tensor, @Cast("const char*") BytePointer name,
-            @SharedPtr BufferManager bufferManager/*=nullptr*/);
+            @SharedPtr BufferManager bufferManager/*=nullptr*/,
             @SharedPtr CudaStream stream/*=nullptr*/);
     public DebugTensor(@ByVal Pointer tensor, @Cast("const char*") BytePointer name) { super((Pointer)null); allocate(tensor, name); }
     private native void allocate(@ByVal Pointer tensor, @Cast("const char*") BytePointer name);
     public DebugTensor(@ByVal Pointer tensor, String name,
-            @SharedPtr BufferManager bufferManager/*=nullptr*/);
+            @SharedPtr BufferManager bufferManager/*=nullptr*/,
             @SharedPtr CudaStream stream/*=nullptr*/) { super((Pointer)null); allocate(tensor, name, bufferManager, stream); }
     private native void allocate(@ByVal Pointer tensor, String name,
-            @SharedPtr BufferManager bufferManager/*=nullptr*/);
+            @SharedPtr BufferManager bufferManager/*=nullptr*/,
             @SharedPtr CudaStream stream/*=nullptr*/);
     public DebugTensor(@ByVal Pointer tensor, String name) { super((Pointer)null); allocate(tensor, name); }
     private native void allocate(@ByVal Pointer tensor, String name);

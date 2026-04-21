@@ -17,19 +17,19 @@ public class MultimodalInput extends Pointer {
     // /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
     // public MultimodalInput(Pointer p) { super(p); }
     // 
-    // public MultimodalInput(@StdVector @StdVector PointerPointer multimodalHashes,
+    // public MultimodalInput(@StdVector PointerPointer multimodalHashes,
     // @StdVector IntPointer multimodalPositions, @StdVector IntPointer multimodalLengths,
     // // [CPP-FIX] @Cast("std::vector<std::optional<std::string> >*") @Optional Pointer multimodalUuids/*=std::nullopt*/) { super((Pointer)null); allocate(multimodalHashes, multimodalPositions, multimodalLengths, multimodalUuids); }
     // // [CPP-FIX] broken signature removed:
-    // // private native void allocate(@StdVector @StdVector PointerPointer multimodalHashes,
+    // // private native void allocate(@StdVector PointerPointer multimodalHashes,
     // // @StdVector IntPointer multimodalPositions, @StdVector IntPointer multimodalLengths,
     // // // [CPP-FIX] @Cast("std::vector<std::optional<std::string> >*") @Optional Pointer multimodalUuids/*=std::nullopt*/);
-    public MultimodalInput(@StdVector @StdVector PointerPointer multimodalHashes);
+    public MultimodalInput(@StdVector PointerPointer multimodalHashes,
             @StdVector IntPointer multimodalPositions, @StdVector IntPointer multimodalLengths) { super((Pointer)null); allocate(multimodalHashes, multimodalPositions, multimodalLengths); }
-    private native void allocate(@StdVector @StdVector PointerPointer multimodalHashes,
+    private native void allocate(@StdVector PointerPointer multimodalHashes,
             @StdVector IntPointer multimodalPositions, @StdVector IntPointer multimodalLengths);
 
-    public native @StdVector @StdVector PointerPointer getMultimodalHashes();
+    public native @StdVector PointerPointer getMultimodalHashes();
     public native @StdVector IntPointer getMultimodalPositions();
     public native @StdVector IntPointer getMultimodalLengths();
     public native @Cast("std::vector<std::optional<std::string> >*") @Optional Pointer getMultimodalUuids();

@@ -7,6 +7,7 @@ import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
 
 import static tensorrt_llm.global.Batchmanager.*;
+import tensorrt_llm.runtime.PromptTuningParams;
 
 
 @Namespace("tensorrt_llm::batch_manager") @NoOffset @Properties(inherit = tensorrt_llm.presets.BatchmanagerConfig.class)

@@ -5,6 +5,7 @@ package tensorrt_llm.runtime;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.layers.DecoderDomain;
 
 import static tensorrt_llm.global.TrtllmRuntime.*;
 
@@ -66,4 +67,4 @@ public class DecodingLayerWorkspace extends Pointer {
     /** \brief A convenience function to initialize curand states from a provided seed. */
     // [CPP-FIX] public native void initializeDeviceCurandStates(@Optional std::vector<uint64_t> randomSeed,
     // [CPP-FIX] int batchSize, @Cast("const tensorrt_llm::runtime::DecodingLayerWorkspace::TensorConstPtr") ITensor batchSlots, @SharedPtr @ByRef PointerPointer statesDevice);
-});
+}

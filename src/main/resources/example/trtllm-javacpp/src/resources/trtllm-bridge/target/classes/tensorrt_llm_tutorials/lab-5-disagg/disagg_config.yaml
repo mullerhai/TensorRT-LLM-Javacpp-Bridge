@@ -1,0 +1,12 @@
+hostname: localhost
+port: 9000
+backend: pytorch
+context_servers:
+  num_instances: 2
+  urls:
+      - "localhost:8005"
+      - "localhost:8006"
+generation_servers:
+  num_instances: 1
+  urls:
+      - "localhost:8007"

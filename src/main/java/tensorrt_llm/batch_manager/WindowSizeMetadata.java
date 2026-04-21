@@ -47,5 +47,5 @@ public class WindowSizeMetadata extends Pointer {
     public native @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int windowSize(); public native WindowSizeMetadata windowSize(int setter);
     public native boolean isSWA(); public native WindowSizeMetadata isSWA(boolean setter);
 
-    public native @StdString BytePointer toString();
+    @Name("toString") public native @StdString BytePointer toStdString();
 }

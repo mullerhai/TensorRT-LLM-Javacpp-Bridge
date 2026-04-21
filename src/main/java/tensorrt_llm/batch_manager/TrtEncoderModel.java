@@ -29,11 +29,11 @@ public class TrtEncoderModel extends TrtGptModel {
 
 
     public TrtEncoderModel(@Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig,
-                           @Const @ByRef RawEngine rawEngine, @SharedPtr Pointer logger);
-                           @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(modelConfig, worldConfig, rawEngine, logger, executorConfig); }
+                           @Const @ByRef RawEngine rawEngine, @SharedPtr Pointer logger,
+    @Const @ByRef ExecutorConfig executorConfig) { super((Pointer)null); allocate(modelConfig, worldConfig, rawEngine, logger, executorConfig); }
     private native void allocate(@Const @ByRef ModelConfig modelConfig, @Const @ByRef WorldConfig worldConfig,
-            @Const @ByRef RawEngine rawEngine, @SharedPtr Pointer logger);
-            @Const @ByRef ExecutorConfig executorConfig);
+            @Const @ByRef RawEngine rawEngine, @SharedPtr Pointer logger,
+    @Const @ByRef ExecutorConfig executorConfig);
 
     public native void terminateRequest(@SharedPtr LlmRequest llmRequest, boolean pause/*=false*/);
     public native void terminateRequest(@SharedPtr LlmRequest llmRequest);

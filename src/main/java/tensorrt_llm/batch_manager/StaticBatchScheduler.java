@@ -31,4 +31,4 @@ public class StaticBatchScheduler extends GuaranteedNoEvictScheduler {
     // [CPP-FIX] @Const @ByRef BaseKVCacheManager kvCacheManager,
     // [CPP-FIX] @ByVal tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::kv_cache_manager::BaseKVCacheManager> crossKvCacheManager,
     // [CPP-FIX] @ByVal tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::BasePeftCacheManager> peftCacheManager, @Cast("const tensorrt_llm::batch_manager::RequestList*") @ByRef Pointer activeRequests);
-});
+}

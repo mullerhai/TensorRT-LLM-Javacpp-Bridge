@@ -5,6 +5,7 @@ package tensorrt_llm.runtime;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.kernels.BeamHypotheses;
 
 import static tensorrt_llm.global.TrtllmRuntime.*;
 
@@ -23,6 +24,6 @@ public class BeamSearchBuffers extends Pointer {
     // temporary buffers for the beam search + streaming case
     public native @ByRef BeamHypotheses mOutputBeamHypotheses(); public native BeamSearchBuffers mOutputBeamHypotheses(BeamHypotheses setter);
     // will store a slice of DecodingOutput::cumLogProbs
-    public native @ByRef TensorPtr mCumLogProbsTmp(); public native BeamSearchBuffers mCumLogProbsTmp(TensorPtr setter);
+    public native @SharedPtr ITensor mCumLogProbsTmp(); public native BeamSearchBuffers mCumLogProbsTmp(ITensor setter);
     public native int mNumSMs(); public native BeamSearchBuffers mNumSMs(int setter);
 }

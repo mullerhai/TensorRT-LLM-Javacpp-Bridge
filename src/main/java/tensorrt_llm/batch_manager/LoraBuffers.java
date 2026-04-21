@@ -5,6 +5,7 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.runtime.LoraManager;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -27,12 +28,12 @@ public class LoraBuffers extends Pointer {
             @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig);
 
     public static native void validate(@Optional LongPointer optTaskId,
-            @Cast("tensorrt_llm::batch_manager::LoraBuffers::TensorPtr*") @Optional SharedPtr optReqLoraWeights, @Cast("tensorrt_llm::batch_manager::LoraBuffers::TensorPtr*") @Optional SharedPtr optReqLoraConfig);
-            @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig);
+            @Cast("tensorrt_llm::batch_manager::LoraBuffers::TensorPtr*") @Optional SharedPtr optReqLoraWeights, @Cast("tensorrt_llm::batch_manager::LoraBuffers::TensorPtr*") @Optional SharedPtr optReqLoraConfig,
+    @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig);
 
     public native @Name("fill") void _fill(@Cast("const tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer contextRequests, @Cast("const tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer genRequests, @Const @ByRef PeftTable peftTable,
-            @Const @ByRef BufferManager manager, @Const @ByRef Pointer modelConfig);
-            @Const @ByRef Pointer worldConfig);
+            @Const @ByRef BufferManager manager, @Const @ByRef Pointer modelConfig,
+    @Const @ByRef Pointer worldConfig);
 
     public native void insertInputTensors(@Cast("tensorrt_llm::batch_manager::LoraBuffers::TensorMap*") @ByRef Pointer inputTensors, @ByVal @Cast("tensorrt_llm::batch_manager::LoraBuffers::TensorPtr*") SharedPtr weightsPtrs, @ByVal @Cast("tensorrt_llm::batch_manager::LoraBuffers::TensorPtr*") SharedPtr adapterSizes,
             @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig);

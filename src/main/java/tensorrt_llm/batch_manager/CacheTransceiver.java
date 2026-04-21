@@ -36,12 +36,12 @@ public class CacheTransceiver extends BaseCacheTransceiver {
     // // [CPP-FIX] @Optional CacheTransceiverConfig cacheTransceiverConfig/*=std::nullopt*/,
     // // [CPP-FIX] RnnStateManager rnnStateManager/*=nullptr*/,
     // // [CPP-FIX] @StdVector IntPointer rnnLayerNumPerPP/*={}*/);
-    public CacheTransceiver(BaseKVCacheManager cacheManager);
-            @Const @ByRef ModelConfig cacheStateModelCfg, @Const @ByRef WorldConfig worldConfig,
-            @StdVector IntPointer attentionLayerNumPerPP, int dataType) { super((Pointer)null); allocate(cacheManager, cacheStateModelCfg, worldConfig, attentionLayerNumPerPP, dataType); }
+    public CacheTransceiver(BaseKVCacheManager cacheManager,
+    @Const @ByRef ModelConfig cacheStateModelCfg, @Const @ByRef WorldConfig worldConfig,
+    @StdVector IntPointer attentionLayerNumPerPP, int dataType) { super((Pointer)null); allocate(cacheManager, cacheStateModelCfg, worldConfig, attentionLayerNumPerPP, dataType); }
     private native void allocate(BaseKVCacheManager cacheManager,
-            @Const @ByRef ModelConfig cacheStateModelCfg, @Const @ByRef WorldConfig worldConfig);
-            @StdVector IntPointer attentionLayerNumPerPP, int dataType);
+            @Const @ByRef ModelConfig cacheStateModelCfg, @Const @ByRef WorldConfig worldConfig,
+    @StdVector IntPointer attentionLayerNumPerPP, int dataType);
 
     // [CPP-FIX] public CacheTransceiver(BaseKVCacheManager cacheManager, @StdVector IntPointer numKvHeadsPerLayer,
     // [CPP-FIX] int sizePerHead, int tokensPerBlock, @Const @ByRef WorldConfig worldConfig,
@@ -57,9 +57,9 @@ public class CacheTransceiver extends BaseCacheTransceiver {
     // [CPP-FIX] @Optional CacheTransceiverConfig cacheTransceiverConfig/*=std::nullopt*/,
     // [CPP-FIX] RnnStateManager rnnStateManager/*=nullptr*/,
     // [CPP-FIX] @StdVector IntPointer rnnLayerNumPerPP/*={}*/);
-    public CacheTransceiver(BaseKVCacheManager cacheManager, @StdVector IntPointer numKvHeadsPerLayer);
-            int sizePerHead, int tokensPerBlock, @Const @ByRef WorldConfig worldConfig,
-            @StdVector IntPointer attentionLayerNumPerPP, int dataType) { super((Pointer)null); allocate(cacheManager, numKvHeadsPerLayer, sizePerHead, tokensPerBlock, worldConfig, attentionLayerNumPerPP, dataType); }
+    public CacheTransceiver(BaseKVCacheManager cacheManager, @StdVector IntPointer numKvHeadsPerLayer,
+    int sizePerHead, int tokensPerBlock, @Const @ByRef WorldConfig worldConfig,
+    @StdVector IntPointer attentionLayerNumPerPP, int dataType) { super((Pointer)null); allocate(cacheManager, numKvHeadsPerLayer, sizePerHead, tokensPerBlock, worldConfig, attentionLayerNumPerPP, dataType); }
     private native void allocate(BaseKVCacheManager cacheManager, @StdVector IntPointer numKvHeadsPerLayer,
             int sizePerHead, int tokensPerBlock, @Const @ByRef WorldConfig worldConfig,
             @StdVector IntPointer attentionLayerNumPerPP, int dataType);

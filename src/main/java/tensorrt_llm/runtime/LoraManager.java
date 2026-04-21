@@ -44,7 +44,7 @@ public class LoraManager extends Pointer {
      * \brief same as fillInputTensors but for an entire batch
      */
     public native void fillInputTensors(@SharedPtr ITensor weightsPtrs, @SharedPtr ITensor adapterSizes, @Cast("const tensorrt_llm::runtime::LoraManager::PeftTable*") @ByRef Pointer peftTable,
-            @StdVector long reqIds, @StdVector IntPointer reqBeamWidth, @Const @ByRef ModelConfig modelConfig);
+            @StdVector long reqIds, @StdVector IntPointer reqBeamWidth, @Const @ByRef ModelConfig modelConfig,
             @Const @ByRef WorldConfig worldConfig);
 
     /**

@@ -12,10 +12,10 @@ import org.bytedeco.javacpp.annotation.*;
 
 @Name("tensorrt_llm::runtime::Pointer")
 @Properties(inherit = tensorrt_llm.presets.BatchmanagerConfig.class)
-public class Pointer extends Pointer {
+public class VecUniqueTokens extends Pointer {
     static { Loader.load(); }
 
-    public Pointer() { super((Pointer) null); allocate(); }
-    public Pointer(Pointer p) { super(p); }
+    public VecUniqueTokens() { super((Pointer) null); allocate(); }
+    public VecUniqueTokens(Pointer p) { super(p); }
     private native void allocate();
 }

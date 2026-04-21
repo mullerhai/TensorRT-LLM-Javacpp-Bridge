@@ -5,6 +5,8 @@ package tensorrt_llm.layers;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.plugins.SharedConstPtr;
+import tensorrt_llm.runtime.DecodingLayerWorkspace;
 
 import static tensorrt_llm.global.Layers.*;
 
@@ -36,7 +38,7 @@ public class BaseLayer extends Pointer {
     
     //!
     public native void setup(int batchSize, int beamWidth, @ByVal @Cast("tensorrt_llm::layers::BaseLayer::TensorConstPtr*") SharedConstPtr batchSlots,
-            @SharedPtr BaseSetupParams setupParams);
+            @SharedPtr BaseSetupParams setupParams,
             @SharedPtr DecodingLayerWorkspace workspace);
 
     // clang-format off
@@ -49,7 +51,7 @@ public class BaseLayer extends Pointer {
     
     //!
     public native void forwardAsync(@SharedPtr BaseDecodingOutputs outputs,
-            @SharedPtr BaseDecodingInputs inputs);
+            @SharedPtr BaseDecodingInputs inputs,
             @SharedPtr DecodingLayerWorkspace workspace);
 
     // clang-format off
@@ -61,6 +63,6 @@ public class BaseLayer extends Pointer {
      *  @param inputs shared pointer to params inherited from BaseForwardParams */
     // clang-format on
     public native void forwardSync(@SharedPtr BaseDecodingOutputs outputs,
-            @SharedPtr BaseDecodingInputs inputs);
+            @SharedPtr BaseDecodingInputs inputs,
             @SharedPtr DecodingLayerWorkspace workspace);
 }

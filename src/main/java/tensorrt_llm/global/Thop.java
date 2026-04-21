@@ -2,6 +2,8 @@
 
 package tensorrt_llm.global;
 
+import tensorrt_llm.executor.Shape;
+import tensorrt_llm.runtime.ScalarType;
 import tensorrt_llm.thop.*;
 
 import java.nio.*;
@@ -88,7 +90,7 @@ public class Thop extends tensorrt_llm.presets.ThopConfig {
 @Namespace("tensorrt_llm::torch_ext") public static native @Optional FloatPointer getFloatEnv(@Cast("const char*") BytePointer name);
 @Namespace("tensorrt_llm::torch_ext") public static native @Optional FloatBuffer getFloatEnv(String name);
 
-@Namespace("tensorrt_llm::torch_ext") public static native @ByVal cudaDataType_t convert_torch_dtype(@ByVal ScalarType dtype);
+@Namespace("tensorrt_llm::torch_ext") public static native @Cast("cudaDataType_t") int convert_torch_dtype(@ByVal ScalarType dtype);
 
  // namespace torch_ext
 
@@ -200,7 +202,7 @@ public class Thop extends tensorrt_llm.presets.ThopConfig {
  * - Speculative decoding
  */
 @Namespace("tensorrt_llm::torch_ext") public static native void attention(@ByVal Pointer q, @Optional Pointer k, @Optional Pointer v, @ByRef Pointer output,
-    @Optional Pointer output_sf, @Optional Pointer workspace_, @ByVal Pointer sequence_length);
+    @Optional Pointer output_sf, @Optional Pointer workspace_, @ByVal Pointer sequence_length,
     @ByVal Pointer host_past_key_value_lengths, @ByVal Pointer host_total_kv_lens, @ByVal Pointer context_lengths,
     @ByVal Pointer host_context_lengths, @ByVal Pointer host_request_types,
     @Optional Pointer kv_cache_block_offsets, @Optional Pointer host_kv_cache_pool_pointers,
@@ -221,7 +223,7 @@ public class Thop extends tensorrt_llm.presets.ThopConfig {
     @Optional LongPointer chunked_prefill_buffer_batch_size, @Optional LongPointer q_lora_rank,
     @Optional LongPointer kv_lora_rank, @Optional LongPointer qk_nope_head_dim,
     @Optional LongPointer qk_rope_head_dim, @Optional LongPointer v_head_dim,
-    @Optional Pointer mrope_rotary_cos_sin, @Optional Pointer mrope_position_deltas,
+    @Optional Pointer mrope_rotary_cos_sin, @Optional Pointer mrope_position_deltas);
     // [CPP-FIX] @StdVector std::optional<torch::Tensor> helix_tensor_params, @Optional LongPointer attention_chunk_size,
     // [CPP-FIX] @Optional Pointer softmax_stats_tensor, @StdVector BoolPointer spec_decoding_bool_params,
     // [CPP-FIX] @StdVector std::optional<torch::Tensor> spec_decoding_tensor_params,
@@ -232,9 +234,9 @@ public class Thop extends tensorrt_llm.presets.ThopConfig {
     // [CPP-FIX] @Optional DoublePointer skip_softmax_threshold_scale_factor_decode, @Optional Pointer skip_softmax_stat,
     // [CPP-FIX] @Optional Pointer cu_q_seqlens, @Optional Pointer cu_kv_seqlens,
     // [CPP-FIX] @Optional Pointer fmha_scheduler_counter, @Optional Pointer mla_bmm1_scale,
-    // [CPP-FIX] @Optional Pointer mla_bmm2_scale, @Optional Pointer quant_q_buffer);
+    // [CPP-FIX] @Optional Pointer mla_bmm2_scale, @Optional Pointer quant_q_buffer
 @Namespace("tensorrt_llm::torch_ext") public static native void attention(@ByVal Pointer q, @Optional Pointer k, @Optional Pointer v, @ByRef Pointer output,
-    @Optional Pointer output_sf, @Optional Pointer workspace_, @ByVal Pointer sequence_length);
+    @Optional Pointer output_sf, @Optional Pointer workspace_, @ByVal Pointer sequence_length,
     @ByVal Pointer host_past_key_value_lengths, @ByVal Pointer host_total_kv_lens, @ByVal Pointer context_lengths,
     @ByVal Pointer host_context_lengths, @ByVal Pointer host_request_types,
     @Optional Pointer kv_cache_block_offsets, @Optional Pointer host_kv_cache_pool_pointers,
@@ -255,7 +257,7 @@ public class Thop extends tensorrt_llm.presets.ThopConfig {
     @Optional LongPointer chunked_prefill_buffer_batch_size, @Optional LongPointer q_lora_rank,
     @Optional LongPointer kv_lora_rank, @Optional LongPointer qk_nope_head_dim,
     @Optional LongPointer qk_rope_head_dim, @Optional LongPointer v_head_dim,
-    @Optional Pointer mrope_rotary_cos_sin, @Optional Pointer mrope_position_deltas,
+    @Optional Pointer mrope_rotary_cos_sin, @Optional Pointer mrope_position_deltas);
     // [CPP-FIX] @StdVector std::optional<torch::Tensor> helix_tensor_params, @Optional LongPointer attention_chunk_size,
     // [CPP-FIX] @Optional Pointer softmax_stats_tensor, @StdVector BoolPointer spec_decoding_bool_params,
     // [CPP-FIX] @StdVector std::optional<torch::Tensor> spec_decoding_tensor_params,
@@ -266,9 +268,9 @@ public class Thop extends tensorrt_llm.presets.ThopConfig {
     // [CPP-FIX] @Optional DoubleBuffer skip_softmax_threshold_scale_factor_decode, @Optional Pointer skip_softmax_stat,
     // [CPP-FIX] @Optional Pointer cu_q_seqlens, @Optional Pointer cu_kv_seqlens,
     // [CPP-FIX] @Optional Pointer fmha_scheduler_counter, @Optional Pointer mla_bmm1_scale,
-    // [CPP-FIX] @Optional Pointer mla_bmm2_scale, @Optional Pointer quant_q_buffer);
+    // [CPP-FIX] @Optional Pointer mla_bmm2_scale, @Optional Pointer quant_q_buffer
 @Namespace("tensorrt_llm::torch_ext") public static native void attention(@ByVal Pointer q, @Optional Pointer k, @Optional Pointer v, @ByRef Pointer output,
-    @Optional Pointer output_sf, @Optional Pointer workspace_, @ByVal Pointer sequence_length);
+    @Optional Pointer output_sf, @Optional Pointer workspace_, @ByVal Pointer sequence_length,
     @ByVal Pointer host_past_key_value_lengths, @ByVal Pointer host_total_kv_lens, @ByVal Pointer context_lengths,
     @ByVal Pointer host_context_lengths, @ByVal Pointer host_request_types,
     @Optional Pointer kv_cache_block_offsets, @Optional Pointer host_kv_cache_pool_pointers,
@@ -289,7 +291,7 @@ public class Thop extends tensorrt_llm.presets.ThopConfig {
     @Optional LongPointer chunked_prefill_buffer_batch_size, @Optional LongPointer q_lora_rank,
     @Optional LongPointer kv_lora_rank, @Optional LongPointer qk_nope_head_dim,
     @Optional LongPointer qk_rope_head_dim, @Optional LongPointer v_head_dim,
-    @Optional Pointer mrope_rotary_cos_sin, @Optional Pointer mrope_position_deltas,
+    @Optional Pointer mrope_rotary_cos_sin, @Optional Pointer mrope_position_deltas);
     // [CPP-FIX] @StdVector std::optional<torch::Tensor> helix_tensor_params, @Optional LongPointer attention_chunk_size,
     // [CPP-FIX] @Optional Pointer softmax_stats_tensor, @StdVector BoolPointer spec_decoding_bool_params,
     // [CPP-FIX] @StdVector std::optional<torch::Tensor> spec_decoding_tensor_params,
@@ -300,7 +302,7 @@ public class Thop extends tensorrt_llm.presets.ThopConfig {
     // [CPP-FIX] @Optional double[] skip_softmax_threshold_scale_factor_decode, @Optional Pointer skip_softmax_stat,
     // [CPP-FIX] @Optional Pointer cu_q_seqlens, @Optional Pointer cu_kv_seqlens,
     // [CPP-FIX] @Optional Pointer fmha_scheduler_counter, @Optional Pointer mla_bmm1_scale,
-    // [CPP-FIX] @Optional Pointer mla_bmm2_scale, @Optional Pointer quant_q_buffer);
+    // [CPP-FIX] @Optional Pointer mla_bmm2_scale, @Optional Pointer quant_q_buffer
 // Targeting ../thop/KvCachePoolPointers.java
 
 
@@ -346,9 +348,9 @@ public class Thop extends tensorrt_llm.presets.ThopConfig {
 // Given the rowIdx and colIdx in the unswizzled SFMatrix, compute the 1D offset in the swizzled SFMatrix.
 // colIdx and totalCloumn should be in SFMatrix, not activation Matrix, so no sfVecSize needed.
 @Namespace("tensorrt_llm::torch_ext") public static native int computeSFIndex(int rowIdx, int colIdx, int totalRow, int totalColumn,
-    @ByVal QuantizationSFLayout layout, boolean useUE8M0/*=false*/);
+    @Cast("tensorrt_llm::common::QuantizationSFLayout") int layout, boolean useUE8M0/*=false*/);
 @Namespace("tensorrt_llm::torch_ext") public static native int computeSFIndex(int rowIdx, int colIdx, int totalRow, int totalColumn,
-    @ByVal QuantizationSFLayout layout);
+    @Cast("tensorrt_llm::common::QuantizationSFLayout") int layout);
 
     // [CPP-FIX] @Namespace("tensorrt_llm::torch_ext") public static native @ByVal std::tuple<torch::Tensor,torch::Tensor> symmetric_quantize_weight(@ByVal Pointer weight);
     // [CPP-FIX] @Namespace("tensorrt_llm::torch_ext") public static native @ByVal std::tuple<torch::Tensor,torch::Tensor> symmetric_quantize_activation(@ByVal Pointer activation);
@@ -527,7 +529,7 @@ public static final long
     @Optional int out_dtype);
 
 @Namespace("tensorrt_llm::torch_ext") public static native @ByVal Pointer cublas_scaled_mm(@Const @ByRef Pointer mat_a, @Const @ByRef Pointer mat_b, @Const @ByRef Pointer scale_a,
-    @Const @ByRef Pointer scale_b, @Optional Pointer bias, @Optional int out_dtype);
+    @Const @ByRef Pointer scale_b, @Optional Pointer bias, @Optional int out_dtype,
     boolean to_userbuffers/*=false*/);
 @Namespace("tensorrt_llm::torch_ext") public static native @ByVal Pointer cublas_scaled_mm(@Const @ByRef Pointer mat_a, @Const @ByRef Pointer mat_b, @Const @ByRef Pointer scale_a,
     @Const @ByRef Pointer scale_b, @Optional Pointer bias, @Optional int out_dtype);

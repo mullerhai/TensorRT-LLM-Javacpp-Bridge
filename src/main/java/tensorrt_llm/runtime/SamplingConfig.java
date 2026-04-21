@@ -61,13 +61,13 @@ public class SamplingConfig extends Pointer {
     public native @Cast("tensorrt_llm::runtime::SamplingConfig::FloatType*") @StdVector FloatPointer beamSearchDiversityRate(); public native SamplingConfig beamSearchDiversityRate(FloatPointer setter);      // [1] or [batchSize]
     public native @Cast("tensorrt_llm::runtime::SamplingConfig::FloatType*") @StdVector FloatPointer lengthPenalty(); public native SamplingConfig lengthPenalty(FloatPointer setter);                // [1] or [batchSize]
     public native @StdVector IntPointer earlyStopping(); public native SamplingConfig earlyStopping(IntPointer setter);               // [1] or [batchSize]
-    public native @StdVector @StdVector PointerPointer beamWidthArray(); public native SamplingConfig beamWidthArray(PointerPointer setter); // [maxBeamWidthArrayLength] or [batchSize, maxBeamWidthArrayLength]
+    public native @StdVector PointerPointer beamWidthArray(); public native SamplingConfig beamWidthArray(PointerPointer setter); // [maxBeamWidthArrayLength] or [batchSize, maxBeamWidthArrayLength]
 
     // speculative decoding, only the first value is used (in gptDecoderBatched.cpp)
     public native @Cast("tensorrt_llm::runtime::SamplingConfig::FloatType*") @StdVector FloatPointer draftAcceptanceThreshold(); public native SamplingConfig draftAcceptanceThreshold(FloatPointer setter); // [1] or [batchSize]
 
     // medusa params
-    public native @StdVector @StdVector PointerPointer topKMedusaHeads(); public native SamplingConfig topKMedusaHeads(PointerPointer setter); // [batchSize, maxMedusaHeads]
+    public native @StdVector PointerPointer topKMedusaHeads(); public native SamplingConfig topKMedusaHeads(PointerPointer setter); // [batchSize, maxMedusaHeads]
 
     public native @Optional BoolPointer normalizeLogProbs(); public native SamplingConfig normalizeLogProbs(BoolPointer setter);
 

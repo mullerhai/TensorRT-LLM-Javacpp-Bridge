@@ -5,6 +5,7 @@ package tensorrt_llm.layers;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.plugins.SharedConstPtr;
 
 import static tensorrt_llm.global.Layers.*;
 
@@ -44,7 +45,7 @@ public class LookaheadAlgorithm extends Pointer {
      *  output @param attentionMask holds the draft tokens dependency mask, and attentionMaskOffset is the index offset
      *  in attentionMask. */
     public native void prepare(@Cast("const tensorrt_llm::layers::LookaheadAlgorithm::TensorPtr*") @ByRef SharedPtr draftTokens, @Cast("const tensorrt_llm::layers::LookaheadAlgorithm::TensorPtr*") @ByRef SharedPtr positionIds, @Cast("const tensorrt_llm::layers::LookaheadAlgorithm::TensorPtr*") @ByRef SharedPtr draftLengthPtr,
-            @Cast("const tensorrt_llm::layers::LookaheadAlgorithm::TensorPtr*") @ByRef SharedPtr attentionMask, int attentionMaskOffset);
+            @Cast("const tensorrt_llm::layers::LookaheadAlgorithm::TensorPtr*") @ByRef SharedPtr attentionMask, int attentionMaskOffset,
             @Cast("const tensorrt_llm::layers::LookaheadAlgorithm::TensorConstPtr*") @ByRef SharedConstPtr lastPositionIdPtr, @Cast("const tensorrt_llm::layers::LookaheadAlgorithm::TensorConstPtr*") @ByRef SharedConstPtr lastTokenPtr);
 
     /** \brief update the internal states and generate accepted tokens from @param outputTokens.

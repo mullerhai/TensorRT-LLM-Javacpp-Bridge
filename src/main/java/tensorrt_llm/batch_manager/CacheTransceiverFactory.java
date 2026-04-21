@@ -38,7 +38,7 @@ public class CacheTransceiverFactory extends Pointer {
     // [CPP-FIX] @Const @ByRef WorldConfig worldConfig,
     // [CPP-FIX] @ByVal(nullValue = "executor::kv_cache::CacheState::AttentionType::kDEFAULT") AttentionType attentionType,
     // [CPP-FIX] @Optional CacheTransceiverConfig cacheTransceiverConfig/*=std::nullopt*/);
-    public static native @UniquePtr BaseCacheTransceiver createCacheTransceiver();
-            BaseKVCacheManager cacheManager, @Const @ByRef ModelConfig modelConfig,
-            @Const @ByRef WorldConfig worldConfig);
+    public static native @UniquePtr BaseCacheTransceiver createCacheTransceiver(
+    BaseKVCacheManager cacheManager, @Const @ByRef ModelConfig modelConfig,
+    @Const @ByRef WorldConfig worldConfig);
 }

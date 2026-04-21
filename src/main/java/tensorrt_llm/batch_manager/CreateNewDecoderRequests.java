@@ -32,4 +32,4 @@ public class CreateNewDecoderRequests extends Pointer {
     // [CPP-FIX] int logitsType, @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig,
     // [CPP-FIX] @Const @ByRef Pointer runtimeStream, @Const @ByRef Pointer decoderStream,
     // [CPP-FIX] @Cast("tensorrt_llm::batch_manager::CreateNewDecoderRequests::SizeType32") int maxSequenceLength, @ByVal tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::MedusaBuffers> medusaBuffers);
-});
+}

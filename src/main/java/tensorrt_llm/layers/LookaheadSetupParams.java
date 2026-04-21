@@ -5,6 +5,8 @@ package tensorrt_llm.layers;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.LookaheadDecodingConfig;
+import tensorrt_llm.plugins.SharedConstPtr;
 
 import static tensorrt_llm.global.Layers.*;
 

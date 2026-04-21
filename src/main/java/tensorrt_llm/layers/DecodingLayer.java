@@ -5,6 +5,9 @@ package tensorrt_llm.layers;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.plugins.SharedConstPtr;
+import tensorrt_llm.runtime.BufferManager;
+import tensorrt_llm.runtime.DecodingLayerWorkspace;
 
 import static tensorrt_llm.global.Layers.*;
 
@@ -22,19 +25,19 @@ public class DecodingLayer extends BaseLayer {
             @SharedPtr BufferManager bufferManager);
 
     public native void setup(int batchSize, int beamWidth, @ByVal @Cast("tensorrt_llm::layers::TensorConstPtr*") SharedConstPtr batchSlots,
-            @SharedPtr BaseSetupParams setupParams);
+            @SharedPtr BaseSetupParams setupParams,
             @SharedPtr DecodingLayerWorkspace workspace);
 
     /** \brief Calls single SamplingLayer::forwardAsync or MedusaDecodingLayer::forwardAsync in batched mode
      *  or runs BeamSearchLayer::forwardAsync in the loop for each request.
      *  Modifies outputs->logits in-place. */
     public native void forwardAsync(@SharedPtr BaseDecodingOutputs outputs,
-            @SharedPtr BaseDecodingInputs inputs);
+            @SharedPtr BaseDecodingInputs inputs,
             @SharedPtr DecodingLayerWorkspace workspace);
 
     /** \brief Calls forwardSync of configured decoding layer. */
     public native void forwardSync(@SharedPtr BaseDecodingOutputs outputs,
-            @SharedPtr BaseDecodingInputs inputs);
+            @SharedPtr BaseDecodingInputs inputs,
             @SharedPtr DecodingLayerWorkspace workspace);
 
     /** @return workspace needed for this layer in bytes */

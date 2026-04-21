@@ -1,21 +1,18 @@
-// Auto-generated JavaCPP wrapper for the C++ typedef ``tensorrt_llm::batch_manager::long``.
-// This class exists because the underlying C++ type has no natural Java
-// counterpart; the minimal shell is sufficient for JavaCPP to marshal values
-// across method boundaries.  Do not add Java-side state here.
+// Auto-generated JavaCPP wrapper for the C++ typedef ``tensorrt_llm::batch_manager::RequestIdType`` (underlying type: long).
 
 package tensorrt_llm.batch_manager;
-
 
 import tensorrt_llm.presets.BatchmanagerConfig;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
 
-@Name("tensorrt_llm::batch_manager::long")
+/** Wrapper for the C++ RequestIdType typedef (a 64-bit integer request identifier). */
+@Name("tensorrt_llm::batch_manager::RequestIdType")
 @Properties(inherit = tensorrt_llm.presets.BatchmanagerConfig.class)
-public class long extends LongPointer {
+public class RequestIdType extends LongPointer {
     static { Loader.load(); }
 
-    public long() { super((Pointer) null); allocate(); }
-    public long(Pointer p) { super(p); }
+    public RequestIdType() { super((Pointer) null); allocate(); }
+    public RequestIdType(Pointer p) { super(p); }
     private native void allocate();
 }

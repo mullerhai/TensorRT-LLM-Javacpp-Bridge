@@ -20,7 +20,7 @@ public class AgentConnectionManager extends ConnectionManager {
     // // [CPP-FIX] private native void allocate(@Cast("batch_manager::BaseTransBufferManager**") @StdVector PointerPointer cacheTransBufferManagers,
     // // [CPP-FIX] @ByVal CacheState cacheState, @StdString BytePointer backendType,
     // // [CPP-FIX] @Optional RnnCacheState rnnCacheState/*=std::nullopt*/);
-    public AgentConnectionManager(@StdVector @ByPtrPtr BaseTransBufferManager cacheTransBufferManagers);
+    public AgentConnectionManager(@StdVector @ByPtrPtr BaseTransBufferManager cacheTransBufferManagers,
             @ByVal Pointer cacheState, @StdString BytePointer backendType) { super((Pointer)null); allocate(cacheTransBufferManagers, cacheState, backendType); }
     private native void allocate(@StdVector @ByPtrPtr BaseTransBufferManager cacheTransBufferManagers,
             @ByVal Pointer cacheState, @StdString BytePointer backendType);
@@ -36,7 +36,7 @@ public class AgentConnectionManager extends ConnectionManager {
     // [CPP-FIX] private native void allocate(@StdVector @ByPtrPtr BaseTransBufferManager cacheTransBufferManagers,
     // [CPP-FIX] @ByVal CacheState cacheState, @StdString String backendType,
     // [CPP-FIX] @Optional RnnCacheState rnnCacheState/*=std::nullopt*/);
-    public AgentConnectionManager(@StdVector @ByPtrPtr BaseTransBufferManager cacheTransBufferManagers);
+    public AgentConnectionManager(@StdVector @ByPtrPtr BaseTransBufferManager cacheTransBufferManagers,
             @ByVal Pointer cacheState, @StdString String backendType) { super((Pointer)null); allocate(cacheTransBufferManagers, cacheState, backendType); }
     private native void allocate(@StdVector @ByPtrPtr BaseTransBufferManager cacheTransBufferManagers,
             @ByVal Pointer cacheState, @StdString String backendType);

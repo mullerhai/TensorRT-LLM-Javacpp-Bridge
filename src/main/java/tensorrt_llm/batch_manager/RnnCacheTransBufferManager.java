@@ -5,6 +5,7 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.CacheTransceiverConfig;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -13,6 +14,8 @@ import static tensorrt_llm.global.Batchmanager.*;
  *  Inherits common buffer management from BaseTransBufferManager. */
 @Namespace("tensorrt_llm::batch_manager::rnn_state_manager") @NoOffset @Properties(inherit = tensorrt_llm.presets.BatchmanagerConfig.class)
 public class RnnCacheTransBufferManager extends BaseTransBufferManager {
+    static { Loader.load(); }
+    public RnnCacheTransBufferManager(Pointer p) { super(p); }
     // [CPP-FIX] broken decl removed:
     // static { Loader.load(); }
     // 

@@ -32,7 +32,12 @@ import org.bytedeco.javacpp.tools.*;
             // Multihead_attention_params, GatherTreeParam, etc.
             "tensorrt_llm/kernels/beamSearchKernels.h",
             "tensorrt_llm/kernels/decoderMaskedMultiheadAttention.h",
-            "tensorrt_llm/kernels/gptKernels.h"
+            "tensorrt_llm/kernels/gptKernels.h",
+            // Additional kernel headers
+            "tensorrt_llm/kernels/globalTimerKernel.h",
+            "tensorrt_llm/kernels/preQuantScaleKernel.h",
+            "tensorrt_llm/kernels/mambaConv1dKernels.h",
+            "tensorrt_llm/kernels/mlaKernels.h"
         }
     ),
     target = "tensorrt_llm.kernels",
@@ -149,5 +154,28 @@ public class KernelsConfig implements InfoMapper {
         // Skip complex lookupKernel template functions
         infoMap.put(new Info("tensorrt_llm::kernels::invokeLookupKernel").pointerTypes("Pointer"));
         infoMap.put(new Info("tensorrt_llm::kernels::invokeTopkLastDim").pointerTypes("Pointer"));
+
+        // ---- globalTimerKernel.h ----
+        // invokeReadGlobalTimer is a plain non-template function - allow it through
+
+        // ---- preQuantScaleKernel.h ----
+        // Template functions - skip concrete generation, exposed via PreQuantScaleKernel.java
+        infoMap.put(new Info("tensorrt_llm::kernels::apply_per_channel_scale_kernel_launcher").skip());
+        infoMap.put(new Info("tensorrt_llm::kernels::apply_per_channel_scale_per_expert_kernel_launcher").skip());
+
+        // ---- mambaConv1dKernels.h ----
+        // Template functions - skip concrete generation
+        infoMap.put(new Info("tensorrt_llm::kernels::invokeMambaConv1dContext").skip());
+        infoMap.put(new Info("tensorrt_llm::kernels::invokeMambaConv1dGeneration").skip());
+
+        // ---- mlaKernels.h ----
+        infoMap.put(new Info("tensorrt_llm::kernels::MlaParams").pointerTypes("Pointer"));
+        infoMap.put(new Info("tensorrt_llm::kernels::invokeMLARopeContext").skip());
+        infoMap.put(new Info("tensorrt_llm::kernels::invokeMLAContextFp8Quantize").skip());
+        infoMap.put(new Info("tensorrt_llm::kernels::invokeMLARopeGeneration").skip());
+        infoMap.put(new Info("tensorrt_llm::kernels::invokeMLALoadPagedKV").skip());
+        infoMap.put(new Info("tensorrt_llm::kernels::invokeMLARopeAppendPagedKVAssignQ").skip());
+        // std::tuple return from MlaMetaParams::data()
+        infoMap.put(new Info("tensorrt_llm::kernels::MlaMetaParams::data").skip());
     }
 }

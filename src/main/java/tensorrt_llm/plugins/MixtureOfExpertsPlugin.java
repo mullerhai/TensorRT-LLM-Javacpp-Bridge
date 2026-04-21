@@ -5,7 +5,7 @@ package tensorrt_llm.plugins;
 
 
 import tensorrt_llm.common.QuantMode;
-import tensorrt_llm.runtime.DataType;
+import tensorrt_llm.common.DataType;
 import tensorrt_llm.global.Plugins;
 import tensorrt_llm.presets.PluginsConfig;
 import java.nio.*;
@@ -24,14 +24,14 @@ public class MixtureOfExpertsPlugin extends IPluginV2DynamicExt {
     
     public MixtureOfExpertsPlugin(boolean remove_input_padding, int number_of_experts, int experts_per_token,
             int expert_hidden_size, int expert_inter_size, int groupwise_quant_algo, int group_size,
-            @ByVal ActivationType activation_type, @ByVal int type, @ByVal int weight_type);
+            @ByVal ActivationType activation_type, @ByVal int type, @ByVal int weight_type,
             @ByVal int output_type, @ByVal QuantMode quant_mode, boolean use_final_scales,
             boolean use_bias, int tp_size, int tp_rank, int ep_size, int ep_rank, boolean force_determinism, int side_stream_id,
             @SharedPtr MixtureOfExpertsGemmProfiler gemm_profiler_ptr, boolean use_lora, @ByVal int lora_type,
             @SharedPtr CublasLtGemmPluginProfiler lora_profiler, int max_low_rank) { super((Pointer)null); allocate(remove_input_padding, number_of_experts, experts_per_token, expert_hidden_size, expert_inter_size, groupwise_quant_algo, group_size, activation_type, type, weight_type, output_type, quant_mode, use_final_scales, use_bias, tp_size, tp_rank, ep_size, ep_rank, force_determinism, side_stream_id, gemm_profiler_ptr, use_lora, lora_type, lora_profiler, max_low_rank); }
     private native void allocate(boolean remove_input_padding, int number_of_experts, int experts_per_token,
             int expert_hidden_size, int expert_inter_size, int groupwise_quant_algo, int group_size,
-            @ByVal ActivationType activation_type, @ByVal int type, @ByVal int weight_type);
+            @ByVal ActivationType activation_type, @ByVal int type, @ByVal int weight_type,
             @ByVal int output_type, @ByVal QuantMode quant_mode, boolean use_final_scales,
             boolean use_bias, int tp_size, int tp_rank, int ep_size, int ep_rank, boolean force_determinism, int side_stream_id,
             @SharedPtr MixtureOfExpertsGemmProfiler gemm_profiler_ptr, boolean use_lora, @ByVal int lora_type,

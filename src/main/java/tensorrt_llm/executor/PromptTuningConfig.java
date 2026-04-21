@@ -22,7 +22,7 @@ public class PromptTuningConfig extends Pointer {
     // // [CPP-FIX] broken signature removed:
     // // private native void allocate(
     // // // [CPP-FIX] @ByVal Tensor embeddingTable, @Optional Pointer inputTokenExtraIds/*=std::nullopt*/);
-    public PromptTuningConfig();
+    public PromptTuningConfig(
             @ByVal Tensor embeddingTable) { super((Pointer)null); allocate(embeddingTable); }
     private native void allocate(
             @ByVal Tensor embeddingTable);

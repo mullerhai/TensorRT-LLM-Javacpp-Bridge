@@ -1078,7 +1078,7 @@ public static final int
     @SharedPtr @Optional PointerPointer optReqLoraConfig);
 
 @Namespace("tensorrt_llm::runtime::lora") public static native void loraValidateRequestTensors(@Optional LongPointer optTaskId,
-    @SharedPtr @Optional PointerPointer optReqLoraWeights);
+    @SharedPtr @Optional PointerPointer optReqLoraWeights,
     @SharedPtr @Optional PointerPointer optReqLoraConfig, @Const @ByRef ModelConfig modelConfig,
     @Const @ByRef WorldConfig worldConfig);
  // namespace tensorrt_llm::runtime::lora

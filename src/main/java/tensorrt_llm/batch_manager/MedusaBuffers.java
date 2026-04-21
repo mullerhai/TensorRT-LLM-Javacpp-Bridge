@@ -5,6 +5,7 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.DecodingConfig;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -17,11 +18,11 @@ public class MedusaBuffers extends Pointer {
 
 
     public MedusaBuffers(@Cast("tensorrt_llm::batch_manager::MedusaBuffers::SizeType32") int maxBatchSize, @Cast("tensorrt_llm::batch_manager::MedusaBuffers::SizeType32") int maxBeamWidth, @Const @ByRef BufferManager manager,
-            @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig);
-            @Const @ByRef DecodingConfig decodingConfig, @Const @ByRef Pointer runtime) { super((Pointer)null); allocate(maxBatchSize, maxBeamWidth, manager, modelConfig, worldConfig, decodingConfig, runtime); }
+                         @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig,
+                         @Const @ByRef DecodingConfig decodingConfig, @Const @ByRef Pointer runtime) { super((Pointer)null); allocate(maxBatchSize, maxBeamWidth, manager, modelConfig, worldConfig, decodingConfig, runtime); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::MedusaBuffers::SizeType32") int maxBatchSize, @Cast("tensorrt_llm::batch_manager::MedusaBuffers::SizeType32") int maxBeamWidth, @Const @ByRef BufferManager manager,
-            @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig);
-            @Const @ByRef DecodingConfig decodingConfig, @Const @ByRef Pointer runtime);
+            @Const @ByRef Pointer modelConfig, @Const @ByRef Pointer worldConfig,
+    @Const @ByRef DecodingConfig decodingConfig, @Const @ByRef Pointer runtime);
 
     public native void reshape(@Cast("tensorrt_llm::batch_manager::MedusaBuffers::SizeType32") int numCtxSequences, @Cast("tensorrt_llm::batch_manager::MedusaBuffers::SizeType32") int numGenSequences, @Cast("tensorrt_llm::batch_manager::MedusaBuffers::SizeType32") int tokensPerStep);
 

@@ -34,6 +34,6 @@ public class AllocateKvCache extends Pointer {
     // public native @Name("operator ()") void apply(@ByRef BaseKVCacheManager kvCacheManager, @Cast("tensorrt_llm::batch_manager::AllocateKvCache::RequestVector*") @ByRef Pointer contextRequests,
     // @Cast("const tensorrt_llm::batch_manager::AllocateKvCache::RequestVector*") @ByRef Pointer generationRequests, @Const @ByRef Pointer modelConfig,
     // // [CPP-FIX] @ByVal(nullValue = "tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::AllocateKvCache::BaseKVCacheManager>(std::nullopt)") tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::AllocateKvCache::BaseKVCacheManager> crossKvCacheManager);
-    public native @Name("operator ()") void apply(@ByRef BaseKVCacheManager kvCacheManager, @Cast("tensorrt_llm::batch_manager::AllocateKvCache::RequestVector*") @ByRef Pointer contextRequests);
-            @Cast("const tensorrt_llm::batch_manager::AllocateKvCache::RequestVector*") @ByRef Pointer generationRequests, @Const @ByRef Pointer modelConfig);
+    public native @Name("operator ()") void apply(@ByRef BaseKVCacheManager kvCacheManager, @Cast("tensorrt_llm::batch_manager::AllocateKvCache::RequestVector*") @ByRef Pointer contextRequests,
+    @Cast("const tensorrt_llm::batch_manager::AllocateKvCache::RequestVector*") @ByRef Pointer generationRequests, @Const @ByRef Pointer modelConfig);
 }

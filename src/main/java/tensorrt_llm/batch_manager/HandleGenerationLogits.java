@@ -36,4 +36,4 @@ public class HandleGenerationLogits extends Pointer {
     // @Const @ByRef SharedPtr logits, int logitsIndex,
     // @Const @ByRef Pointer modelConfig, @Const @ByRef BufferManager manager,
     // // [CPP-FIX] @ByVal tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::RuntimeBuffers> genRuntimeBuffers, @ByVal tensorrt_llm::common::OptionalRef<tensorrt_llm::batch_manager::MedusaBuffers> medusaBuffers);
-});
+}

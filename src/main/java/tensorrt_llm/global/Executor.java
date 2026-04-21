@@ -69,8 +69,8 @@ public class Executor extends tensorrt_llm.presets.ExecutorConfig {
 
     public final int value;
     private DataType(int v) { this.value = v; }
-    private DataType(int e) { this.value = e.value; }
-    public int intern() { for (int e : values()) if (e.value == value) return e; return this; }
+    private DataType(DataType e) { this.value = e.value; }
+    public DataType intern() { for (DataType e : values()) if (e.value == value) return e; return this; }
     @Override public String toString() { return name(); }
 }
 

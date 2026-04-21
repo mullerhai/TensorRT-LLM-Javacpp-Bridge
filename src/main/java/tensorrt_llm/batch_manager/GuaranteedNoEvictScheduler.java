@@ -12,6 +12,8 @@ import static tensorrt_llm.global.Batchmanager.*;
 /** \brief Schedule requests using the GUARANTEED_NO_EVICT policy */
 @Namespace("tensorrt_llm::batch_manager") @NoOffset @Properties(inherit = tensorrt_llm.presets.BatchmanagerConfig.class)
 public class GuaranteedNoEvictScheduler extends BaseCapacityScheduler {
+    static { Loader.load(); }
+    public GuaranteedNoEvictScheduler(Pointer p) { super(p); }
     // [CPP-FIX] broken decl removed:
     // static { Loader.load(); }
     // /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
@@ -31,4 +33,4 @@ public class GuaranteedNoEvictScheduler extends BaseCapacityScheduler {
     // [CPP-FIX] @Const @ByRef BaseKVCacheManager kvCacheManager,
     // [CPP-FIX] @ByVal tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::kv_cache_manager::BaseKVCacheManager> crossKvCacheManager,
     // [CPP-FIX] @ByVal tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::BasePeftCacheManager> peftCacheManager, @Cast("const tensorrt_llm::batch_manager::RequestList*") @ByRef Pointer activeRequests);
-});
+}

@@ -123,7 +123,7 @@ public class GPTAttentionPlugin extends GPTAttentionPluginCommon {
     // // [CPP-FIX] boolean is_mla_enabled/*=false*/, int q_lora_rank/*=0*/, int kv_lora_rank/*=0*/, int qk_nope_head_dim/*=0*/,
     // // [CPP-FIX] int qk_rope_head_dim/*=0*/, int v_head_dim/*=0*/, boolean fuse_fp4_quant/*=false*/, boolean skip_attn/*=false*/,
     // // [CPP-FIX] int cp_size/*=1*/, int cp_rank/*=0*/, @ByVal(nullValue = "std::set<int32_t>{}") std::set<int32_t> cp_group);
-    public GPTAttentionPlugin(int layer_idx, int num_heads, int vision_start, int vision_length, int num_kv_heads);
+    public GPTAttentionPlugin(int layer_idx, int num_heads, int vision_start, int vision_length, int num_kv_heads,
             int num_kv_heads_origin, int head_size, int unidirectional, float q_scaling, float attn_logit_softcapping_scale,
             @ByVal PositionEmbeddingType position_embedding_type,
             int rotary_embedding_dim,
@@ -139,7 +139,7 @@ public class GPTAttentionPlugin extends GPTAttentionPluginCommon {
             @ByVal int type, int max_context_length, boolean qkv_bias_enabled) { super((Pointer)null); allocate(layer_idx, num_heads, vision_start, vision_length, num_kv_heads, num_kv_heads_origin, head_size, unidirectional, q_scaling, attn_logit_softcapping_scale, position_embedding_type, rotary_embedding_dim, rotary_embedding_base, rotary_embedding_scale_type, rotary_embedding_scale, rotary_embedding_short_m_scale, rotary_embedding_long_m_scale, rotary_embedding_max_positions, rotary_embedding_original_max_positions, tp_size, tp_rank, unfuse_qkv_gemm, use_logn_scaling, context_fmha_type, kv_cache_quant_mode, remove_input_padding, mask_type, block_sparse_params, paged_kv_cache, tokens_per_block, type, max_context_length, qkv_bias_enabled); }
     private native void allocate(int layer_idx, int num_heads, int vision_start, int vision_length, int num_kv_heads,
             int num_kv_heads_origin, int head_size, int unidirectional, float q_scaling, float attn_logit_softcapping_scale,
-            @ByVal PositionEmbeddingType position_embedding_type);
+            @ByVal PositionEmbeddingType position_embedding_type,
             int rotary_embedding_dim,
             float rotary_embedding_base, @ByVal RotaryScalingType rotary_embedding_scale_type,
             float rotary_embedding_scale, float rotary_embedding_short_m_scale, float rotary_embedding_long_m_scale,

@@ -33,7 +33,7 @@ public class BertAttentionPlugin extends BasePlugin {
     // // [CPP-FIX] boolean do_relative_attention/*=false*/, int max_distance/*=0*/, boolean remove_padding/*=false*/, boolean sage_attn/*=false*/,
     // // [CPP-FIX] int sage_attn_q_block_size/*=0*/, int sage_attn_k_block_size/*=0*/, int sage_attn_v_block_size/*=0*/, int cp_size/*=1*/,
     // // [CPP-FIX] int cp_rank/*=0*/, @ByVal(nullValue = "std::set<int>{}") std::set<int> cp_group);
-    public BertAttentionPlugin(int num_heads, int head_size, float q_scaling);
+    public BertAttentionPlugin(int num_heads, int head_size, float q_scaling,
             @ByVal ContextFMHAType context_fmha_type, @ByVal int type) { super((Pointer)null); allocate(num_heads, head_size, q_scaling, context_fmha_type, type); }
     private native void allocate(int num_heads, int head_size, float q_scaling,
             @ByVal ContextFMHAType context_fmha_type, @ByVal int type);

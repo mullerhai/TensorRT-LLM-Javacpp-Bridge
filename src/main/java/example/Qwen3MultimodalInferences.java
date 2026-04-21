@@ -49,7 +49,7 @@ public class Qwen3MultimodalInferences {
         executorConfig.setKvCacheConfig(kvCacheConfig);
 
         Executor executor = new Executor(
-                new BytePointer(engineDir), kDECODER_ONLY.value, executorConfig
+                new BytePointer(engineDir), kDECODER_ONLY, executorConfig
         );
         System.out.println("✅ Qwen3-VL 引擎加载成功");
 

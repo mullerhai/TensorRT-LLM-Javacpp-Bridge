@@ -53,7 +53,7 @@ public class Qwen3InferenceServices implements AutoCloseable {
         executorConfig.setEnableChunkedContext(true);
         executorConfig.setMaxBeamWidth(1);
         executor = new Executor(
-                new BytePointer(engineDir), kDECODER_ONLY.value, executorConfig
+                new BytePointer(engineDir), kDECODER_ONLY, executorConfig
         );
         // 加载引擎 TRTLLM.ModelType.kDECODER_ONLY
         System.out.println("✅ InferenceService 初始化完成, engine=" + engineDir);
@@ -122,7 +122,7 @@ public class Qwen3InferenceServices implements AutoCloseable {
     public boolean isReady(long requestId) {
         LongPointer reqIdPtr = new LongPointer(1);
         reqIdPtr.put(0, requestId);
-        return executor.getNumResponsesReady(reqIdPtr) > 0;
+        return executor.getNumResponsesReady() > 0;
     }
 
     /**
@@ -198,7 +198,7 @@ public class Qwen3InferenceServices implements AutoCloseable {
 
                 @PostMapping("/v1/chat/completions")
                 public ResponseEntity<?> chat(@RequestBody ChatRequest chatRequest) {
-                    int[] tokens = tokenizer.encode(chatRequest.getMessages());
+                    int[] tokens = tokenizer.encode(chatRequest.getMessages(),
                     long requestId = inferenceService.submit(
                         tokens,
                         chatRequest.getMaxTokens(),
@@ -219,7 +219,7 @@ public class Qwen3InferenceServices implements AutoCloseable {
                 @PostMapping("/v1/embeddings")
                 public ResponseEntity<?> embeddings(@RequestBody EmbeddingRequest request) {
                     // Embedding 推理
-                    int[] tokens = tokenizer.encode(request.getInput());
+                    int[] tokens = tokenizer.encode(request.getInput(),
                     long requestId = inferenceService.submit(tokens, 1, 0, 0, 0, false);
                     // ...
                 }

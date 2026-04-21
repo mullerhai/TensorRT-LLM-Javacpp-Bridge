@@ -32,13 +32,13 @@ public class KVCacheBlockPool extends Pointer {
     public native boolean containsIndexerKCache(); public native KVCacheBlockPool containsIndexerKCache(boolean setter);
 
     public KVCacheBlockPool(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int kvFactor, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int sizePerHead,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int tokensPerBlock, @ByVal(nullValue = "runtime::ITensor::SharedPtr(nullptr)") SharedPtr primaryPtr);
-            @ByVal(nullValue = "runtime::ITensor::SharedPtr(nullptr)") SharedPtr secondaryPtr, boolean containsBlockScales/*=false*/,
-            boolean containsIndexerKCache/*=false*/) { super((Pointer)null); allocate(numLayers, kvFactor, numKvHeads, sizePerHead, tokensPerBlock, primaryPtr, secondaryPtr, containsBlockScales, containsIndexerKCache); }
+            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int tokensPerBlock, @ByVal(nullValue = "runtime::ITensor::SharedPtr(nullptr)") SharedPtr primaryPtr,
+    @ByVal(nullValue = "runtime::ITensor::SharedPtr(nullptr)") SharedPtr secondaryPtr, boolean containsBlockScales/*=false*/,
+    boolean containsIndexerKCache/*=false*/) { super((Pointer)null); allocate(numLayers, kvFactor, numKvHeads, sizePerHead, tokensPerBlock, primaryPtr, secondaryPtr, containsBlockScales, containsIndexerKCache); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int kvFactor, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int sizePerHead,
-            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int tokensPerBlock, @ByVal(nullValue = "runtime::ITensor::SharedPtr(nullptr)") SharedPtr primaryPtr);
-            @ByVal(nullValue = "runtime::ITensor::SharedPtr(nullptr)") SharedPtr secondaryPtr, boolean containsBlockScales/*=false*/,
-            boolean containsIndexerKCache/*=false*/);
+            @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int tokensPerBlock, @ByVal(nullValue = "runtime::ITensor::SharedPtr(nullptr)") SharedPtr primaryPtr,
+    @ByVal(nullValue = "runtime::ITensor::SharedPtr(nullptr)") SharedPtr secondaryPtr, boolean containsBlockScales/*=false*/,
+    boolean containsIndexerKCache/*=false*/);
     public KVCacheBlockPool(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int kvFactor, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int sizePerHead,
             @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int tokensPerBlock) { super((Pointer)null); allocate(numLayers, kvFactor, numKvHeads, sizePerHead, tokensPerBlock); }
     private native void allocate(@Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int numLayers, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int kvFactor, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int numKvHeads, @Cast("tensorrt_llm::batch_manager::kv_cache_manager::SizeType32") int sizePerHead,

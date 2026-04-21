@@ -32,4 +32,4 @@ public class MaxUtilizationScheduler extends BaseCapacityScheduler {
     // [CPP-FIX] public native @ByVal @Name("operator ()") std::tuple<tensorrt_llm::batch_manager::RequestVector,tensorrt_llm::batch_manager::RequestVector> apply(
     // [CPP-FIX] @ByRef BaseKVCacheManager kvCacheManager, @ByVal tensorrt_llm::common::OptionalRef<const tensorrt_llm::batch_manager::BasePeftCacheManager> peftCacheManager,
     // [CPP-FIX] @Cast("const tensorrt_llm::batch_manager::RequestList*") @ByRef Pointer activeRequests);
-});
+}

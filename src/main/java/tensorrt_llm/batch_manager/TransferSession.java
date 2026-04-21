@@ -5,6 +5,10 @@ package tensorrt_llm.batch_manager;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.Connection;
+import tensorrt_llm.executor.DataContext;
+import tensorrt_llm.executor.DataTransceiverState;
+import tensorrt_llm.executor.TimePoint;
 
 import static tensorrt_llm.global.Batchmanager.*;
 
@@ -25,7 +29,7 @@ public class TransferSession extends Pointer {
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public Measure(Pointer p) { super(p); }
         private native void allocate();
-        private native void allocateArray(long size);
+    private native void allocateArray(long size);
         @Override public Measure position(long position) {
             return (Measure)super.position(position);
         }
@@ -34,8 +38,8 @@ public class TransferSession extends Pointer {
         }
     
         public native @ByRef TimePoint start(); public native Measure start(TimePoint setter);
-        public native @ByRef TimePoint end(); public native Measure end(TimePoint setter);
-        public native long size(); public native Measure size(long setter);
+    public native @ByRef TimePoint end(); public native Measure end(TimePoint setter);
+    public native long size(); public native Measure size(long setter);
     }
 
     /** enum tensorrt_llm::batch_manager::TransferSession::TimeNames */
@@ -56,7 +60,7 @@ public class TransferSession extends Pointer {
         /** Pointer cast constructor. Invokes {@link Pointer#Pointer(Pointer)}. */
         public KVCacheTimes(Pointer p) { super(p); }
         private native void allocate();
-        private native void allocateArray(long size);
+    private native void allocateArray(long size);
         @Override public KVCacheTimes position(long position) {
             return (KVCacheTimes)super.position(position);
         }
@@ -64,34 +68,34 @@ public class TransferSession extends Pointer {
             return new KVCacheTimes((Pointer)this).offsetAddress(i);
         }
     
-    // [CPP-FIX] public native @ByRef std::array<LlmRequest::TimePoint,tensorrt_llm::batch_manager::TransferSession::kTimeCounts> times(); public native KVCacheTimes times(std::array<LlmRequest::TimePoint,tensorrt_llm::batch_manager::TransferSession::kTimeCounts> setter);
-        public native @StdVector Measure measures(); public native KVCacheTimes measures(Measure setter);
+    // [CPP-FIX] public native @ByRef std::array<LlmRequest::TimePoint,tensorrt_llm::batch_manager::TransferSession::kTimeCounts> times(); public native KVCacheTimes times(std::array<LlmRequest::TimePoint,tensorrt_llm::batch_manager::TransferSession::kTimeCounts> setter,
+    public native @StdVector Measure measures(); public native KVCacheTimes measures(Measure setter);
     }
 
     public TransferSession(@Cast("const tensorrt_llm::batch_manager::Connection**") @StdVector PointerPointer connections, @ByVal DataContext dataContext,
-            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState);
-            @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
-            @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey, @Const LlmRequest llmRequest/*=nullptr*/, boolean recordTiming/*=false*/) { super((Pointer)null); allocate(connections, dataContext, counterPartRanks, selfState, otherState, bufferManager, indexFromEnd, lastBlockKey, llmRequest, recordTiming); }
+                           @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState,
+                           @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
+                           @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey, @Const LlmRequest llmRequest/*=nullptr*/, boolean recordTiming/*=false*/) { super((Pointer)null); allocate(connections, dataContext, counterPartRanks, selfState, otherState, bufferManager, indexFromEnd, lastBlockKey, llmRequest, recordTiming); }
     private native void allocate(@Cast("const tensorrt_llm::batch_manager::Connection**") @StdVector PointerPointer connections, @ByVal DataContext dataContext,
-            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState);
-            @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
-            @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey, @Const LlmRequest llmRequest/*=nullptr*/, boolean recordTiming/*=false*/);
+            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState,
+    @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
+    @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey, @Const LlmRequest llmRequest/*=nullptr*/, boolean recordTiming/*=false*/);
     public TransferSession(@Const @StdVector @ByPtrPtr Connection connections, @ByVal DataContext dataContext,
-            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState);
-            @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
-            @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey) { super((Pointer)null); allocate(connections, dataContext, counterPartRanks, selfState, otherState, bufferManager, indexFromEnd, lastBlockKey); }
+            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState,
+    @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
+    @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey) { super((Pointer)null); allocate(connections, dataContext, counterPartRanks, selfState, otherState, bufferManager, indexFromEnd, lastBlockKey); }
     private native void allocate(@Const @StdVector @ByPtrPtr Connection connections, @ByVal DataContext dataContext,
-            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState);
-            @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
-            @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey);
+            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState,
+    @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
+    @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey);
     public TransferSession(@Const @StdVector @ByPtrPtr Connection connections, @ByVal DataContext dataContext,
-            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState);
-            @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
-            @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey, @Const LlmRequest llmRequest/*=nullptr*/, boolean recordTiming/*=false*/) { super((Pointer)null); allocate(connections, dataContext, counterPartRanks, selfState, otherState, bufferManager, indexFromEnd, lastBlockKey, llmRequest, recordTiming); }
+                           @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState,
+                           @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
+                           @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey, @Const LlmRequest llmRequest/*=nullptr*/, boolean recordTiming/*=false*/) { super((Pointer)null); allocate(connections, dataContext, counterPartRanks, selfState, otherState, bufferManager, indexFromEnd, lastBlockKey, llmRequest, recordTiming); }
     private native void allocate(@Const @StdVector @ByPtrPtr Connection connections, @ByVal DataContext dataContext,
-            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState);
-            @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
-            @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey, @Const LlmRequest llmRequest/*=nullptr*/, boolean recordTiming/*=false*/);
+            @Cast("tensorrt_llm::batch_manager::SizeType32*") @StdVector IntPointer counterPartRanks, @Const @ByRef DataTransceiverState selfState,
+    @ByVal DataTransceiverState otherState, @Const @ByRef BufferManager bufferManager, int indexFromEnd,
+    @Cast("const tensorrt_llm::batch_manager::BlockKey*") @ByRef Pointer lastBlockKey, @Const LlmRequest llmRequest/*=nullptr*/, boolean recordTiming/*=false*/);
 
     public native @Cast("const tensorrt_llm::batch_manager::Connection**") @StdVector PointerPointer getConnections();
 

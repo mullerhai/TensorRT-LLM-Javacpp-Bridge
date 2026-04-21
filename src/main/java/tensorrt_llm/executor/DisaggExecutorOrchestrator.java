@@ -25,12 +25,12 @@ public class DisaggExecutorOrchestrator extends Pointer {
      *  @param hasGenAwaitThreads Whether or not there are threads that receive response for each generation executor. */
 
     public DisaggExecutorOrchestrator(@StdVector path ctxEnginePaths,
-            @StdVector path genEnginePaths);
+            @StdVector path genEnginePaths,
             @StdVector ExecutorConfig ctxExecutorConfigs,
             @StdVector ExecutorConfig genExecutorConfigs, boolean hasContextAwaitThreads,
             boolean hasGenAwaitThreads) { super((Pointer)null); allocate(ctxEnginePaths, genEnginePaths, ctxExecutorConfigs, genExecutorConfigs, hasContextAwaitThreads, hasGenAwaitThreads); }
     private native void allocate(@StdVector path ctxEnginePaths,
-            @StdVector path genEnginePaths);
+            @StdVector path genEnginePaths,
             @StdVector ExecutorConfig ctxExecutorConfigs,
             @StdVector ExecutorConfig genExecutorConfigs, boolean hasContextAwaitThreads,
             boolean hasGenAwaitThreads);
@@ -74,7 +74,7 @@ public class DisaggExecutorOrchestrator extends Pointer {
 
     // [CPP-FIX] public native @StdVector ResponseWithId awaitContextResponses(
     // [CPP-FIX] @Optional long timeout, @Optional IntPointer contextIdx/*=std::nullopt*/);
-    public native @StdVector ResponseWithId awaitContextResponses();
+    public native @StdVector ResponseWithId awaitContextResponses(
             @Optional long timeout);
     // [CPP-FIX] 
     // [CPP-FIX] public native @StdVector ResponseWithId awaitContextResponses();
@@ -87,7 +87,7 @@ public class DisaggExecutorOrchestrator extends Pointer {
      *  @return A vector of responses with corresponding global request ids. */
     // [CPP-FIX] public native @StdVector ResponseWithId awaitGenerationResponses(
     // [CPP-FIX] @Optional long timeout, @Optional IntPointer genIdx/*=std::nullopt*/);
-    public native @StdVector ResponseWithId awaitGenerationResponses();
+    public native @StdVector ResponseWithId awaitGenerationResponses(
             @Optional long timeout);
     // [CPP-FIX] 
     // [CPP-FIX] public native @StdVector ResponseWithId awaitGenerationResponses();

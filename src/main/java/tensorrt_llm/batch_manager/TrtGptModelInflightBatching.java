@@ -36,20 +36,20 @@ public class TrtGptModelInflightBatching extends TrtGptModel {
         private native void allocate(@Cast("tensorrt_llm::batch_manager::SizeType32") int microBatchId);
 
         public native @Cast("tensorrt_llm::batch_manager::SizeType32") int microBatchId(); public native IterationStatsIFB microBatchId(int setter);
-        public native @Cast("tensorrt_llm::batch_manager::SizeType32") int numCtxRequests(); public native IterationStatsIFB numCtxRequests(int setter);
-        public native @Cast("tensorrt_llm::batch_manager::SizeType32") int numGenRequests(); public native IterationStatsIFB numGenRequests(int setter);
-        public native @Cast("tensorrt_llm::batch_manager::SizeType32") int numCtxTokens(); public native IterationStatsIFB numCtxTokens(int setter);
-        public native float avgNumDecodedTokensPerIter(); public native IterationStatsIFB avgNumDecodedTokensPerIter(float setter);
+    public native @Cast("tensorrt_llm::batch_manager::SizeType32") int numCtxRequests(); public native IterationStatsIFB numCtxRequests(int setter);
+    public native @Cast("tensorrt_llm::batch_manager::SizeType32") int numGenRequests(); public native IterationStatsIFB numGenRequests(int setter);
+    public native @Cast("tensorrt_llm::batch_manager::SizeType32") int numCtxTokens(); public native IterationStatsIFB numCtxTokens(int setter);
+    public native float avgNumDecodedTokensPerIter(); public native IterationStatsIFB avgNumDecodedTokensPerIter(float setter);
     // [CPP-FIX] public native @ByRef @Cast("tensorrt_llm::batch_manager::ReqIdsSet*") std::unordered_set<tensorrt_llm::batch_manager::long> scheduledRequests(); public native IterationStatsIFB scheduledRequests(std::unordered_set<tensorrt_llm::batch_manager::long> setter);
     // [CPP-FIX] public native @ByRef @Cast("tensorrt_llm::batch_manager::ReqIdsSet*") std::unordered_set<tensorrt_llm::batch_manager::long> pausedRequests(); public native IterationStatsIFB pausedRequests(std::unordered_set<tensorrt_llm::batch_manager::long> setter);
     }
 
     public TrtGptModelInflightBatching(@SharedPtr Pointer logger, @Const @ByRef ModelConfig modelConfig,
-                                       @Const @ByRef WorldConfig worldConfig, @Const @ByRef RawEngine rawEngine, boolean ctxGenFusion);
-                                       @Const @ByRef ExecutorConfig executorConfig, boolean isLeaderInOrchMode) { super((Pointer)null); allocate(logger, modelConfig, worldConfig, rawEngine, ctxGenFusion, executorConfig, isLeaderInOrchMode); }
+                                       @Const @ByRef WorldConfig worldConfig, @Const @ByRef RawEngine rawEngine, boolean ctxGenFusion,
+    @Const @ByRef ExecutorConfig executorConfig, boolean isLeaderInOrchMode) { super((Pointer)null); allocate(logger, modelConfig, worldConfig, rawEngine, ctxGenFusion, executorConfig, isLeaderInOrchMode); }
     private native void allocate(@SharedPtr Pointer logger, @Const @ByRef ModelConfig modelConfig,
-            @Const @ByRef WorldConfig worldConfig, @Const @ByRef RawEngine rawEngine, boolean ctxGenFusion);
-            @Const @ByRef ExecutorConfig executorConfig, boolean isLeaderInOrchMode);
+            @Const @ByRef WorldConfig worldConfig, @Const @ByRef RawEngine rawEngine, boolean ctxGenFusion,
+    @Const @ByRef ExecutorConfig executorConfig, boolean isLeaderInOrchMode);
 
     /** \brief Calculate the cache size per token for the disaggregated serving.
      *  @param modelConfig Model configuration.

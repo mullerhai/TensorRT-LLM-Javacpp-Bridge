@@ -1,21 +1,18 @@
-// Auto-generated JavaCPP wrapper for the C++ typedef ``tensorrt_llm::executor::int``.
-// This class exists because the underlying C++ type has no natural Java
-// counterpart; the minimal shell is sufficient for JavaCPP to marshal values
-// across method boundaries.  Do not add Java-side state here.
+// Auto-generated JavaCPP wrapper for the C++ typedef ``tensorrt_llm::executor::RetentionPriority`` (underlying type: int).
 
 package tensorrt_llm.batch_manager;
-
 
 import tensorrt_llm.presets.BatchmanagerConfig;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
 
-@Name("tensorrt_llm::executor::int")
+/** Wrapper for the C++ RetentionPriority typedef (a 32-bit integer priority value). */
+@Name("tensorrt_llm::executor::RetentionPriority")
 @Properties(inherit = tensorrt_llm.presets.BatchmanagerConfig.class)
-public class int extends IntPointer {
+public class RetentionPriority extends IntPointer {
     static { Loader.load(); }
 
-    public int() { super((Pointer) null); allocate(); }
-    public int(Pointer p) { super(p); }
+    public RetentionPriority() { super((Pointer) null); allocate(); }
+    public RetentionPriority(Pointer p) { super(p); }
     private native void allocate();
 }

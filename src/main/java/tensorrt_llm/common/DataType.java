@@ -18,7 +18,7 @@ import static tensorrt_llm.global.Common.*;
  * Source: NvInferRuntime.h (nvinfer1::DataType)
  */
 @Namespace("nvinfer1") @Properties(inherit = tensorrt_llm.presets.CommonConfig.class)
-public class int extends Pointer {
+public class DataType extends Pointer {
     static { Loader.load(); }
 
     /** Pointer cast constructor. */

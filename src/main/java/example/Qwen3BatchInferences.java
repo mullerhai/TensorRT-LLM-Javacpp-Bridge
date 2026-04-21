@@ -56,7 +56,7 @@ public class Qwen3BatchInferences {
         // 2. 加载引擎
         // ============================================
         Executor executor = new Executor(
-                new BytePointer(engineDir), kDECODER_ONLY.value, executorConfig
+                new BytePointer(engineDir), kDECODER_ONLY, executorConfig
         );
         System.out.println("✅ 引擎加载成功");
 
@@ -118,7 +118,7 @@ public class Qwen3BatchInferences {
                 // 检查该请求是否有响应就绪
                 LongPointer reqIdPtr = new LongPointer(1);
                 reqIdPtr.put(0, requestIds[i]);
-                int numReady = executor.getNumResponsesReady(reqIdPtr);
+                int numReady = executor.getNumResponsesReady();
 
                 if (numReady > 0) {
                     // TODO: 调用 awaitResponses 获取结果

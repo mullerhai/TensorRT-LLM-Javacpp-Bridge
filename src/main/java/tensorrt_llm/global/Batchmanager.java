@@ -7,6 +7,8 @@ import tensorrt_llm.batch_manager.*;
 import java.nio.*;
 import org.bytedeco.javacpp.*;
 import org.bytedeco.javacpp.annotation.*;
+import tensorrt_llm.executor.CacheState;
+import tensorrt_llm.executor.TargetRanksInfo;
 
 public class Batchmanager extends tensorrt_llm.presets.BatchmanagerConfig {
     static { Loader.load(); }
@@ -1541,12 +1543,12 @@ public static final int
 @Namespace("tensorrt_llm::batch_manager") public static native long computeBufferIdx(long processIdx, @Const @ByRef TargetRanksInfo targetInfo);
 
 @Namespace("tensorrt_llm::batch_manager") public static native void sendBuffer(@ByRef TransferSession session, int deviceId, long processIdx,
-    @Cast("const std::vector<runtime::ITensor::SharedPtr>*") @ByRef Pointer outputBuffers, long bufferCoverTargetNum);
+    @Cast("const std::vector<runtime::ITensor::SharedPtr>*") @ByRef Pointer outputBuffers, long bufferCoverTargetNum,
     @Const @ByRef SharedPtr preAllocSendBuffer, @Const @ByRef BufferManager bufferManager,
     @Const @ByRef TargetRanksInfo targetInfo);
 
 @Namespace("tensorrt_llm::batch_manager") public static native void sendAllBuffers(@ByRef TransferSession session, int deviceId,
-    @Cast("const std::vector<runtime::ITensor::SharedPtr>*") @ByRef Pointer outputBuffers, long bufferCoverTargetNum);
+    @Cast("const std::vector<runtime::ITensor::SharedPtr>*") @ByRef Pointer outputBuffers, long bufferCoverTargetNum,
     @Const @ByRef SharedPtr preAllocSendBuffer, @Const @ByRef BufferManager bufferManager,
     @Const @ByRef TargetRanksInfo targetInfo, @StdVector LongPointer pickUpConnections);
 
@@ -1556,7 +1558,7 @@ public static final int
  * Callers that need RNN-specific target ranks should pass the result of targetIRanksForRnn().
  */
 @Namespace("tensorrt_llm::batch_manager::cache_formatter_utils") public static native boolean needSendCache(@Const @ByRef CacheState selfConfig, @Const @ByRef CacheState destConfig, int selfIdx,
-    @Const @ByRef TargetRanksInfo targetInfo);
+                                                                                                            @Const @ByRef TargetRanksInfo targetInfo);
 
 /** \brief Convenience overload that computes KV-cache target ranks automatically. */
 @Namespace("tensorrt_llm::batch_manager::cache_formatter_utils") public static native boolean needSendCache(@Const @ByRef CacheState selfConfig, @Const @ByRef CacheState destConfig, int selfIdx);
@@ -1565,7 +1567,7 @@ public static final int
  * \brief Pick send connections, given a pre-computed TargetRanksInfo.
  */
 @Namespace("tensorrt_llm::batch_manager::cache_formatter_utils") public static native @StdVector LongPointer pickSendConnections(long numConnections, @Const @ByRef CacheState selfConfig, int selfIdx,
-    @Const @ByRef CacheState destConfig, @StdVector IntPointer counterPartRanks);
+    @Const @ByRef CacheState destConfig, @StdVector IntPointer counterPartRanks,
     @Const @ByRef TargetRanksInfo targetInfo);
 
 /** \brief Convenience overload that computes KV-cache target ranks automatically. */

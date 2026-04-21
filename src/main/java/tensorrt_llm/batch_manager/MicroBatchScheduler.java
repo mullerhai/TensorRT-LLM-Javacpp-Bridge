@@ -43,6 +43,6 @@ public class MicroBatchScheduler extends Pointer {
     // [CPP-FIX] @Cast("tensorrt_llm::batch_manager::MicroBatchScheduler::SizeType32") int maxBatchSizeRuntime, @Cast("tensorrt_llm::batch_manager::MicroBatchScheduler::SizeType32*") @Optional IntPointer maxNumTokensRuntime);
 
     public static native void setCtxRequestsChunkSize(@Cast("tensorrt_llm::batch_manager::RequestVector*") @ByRef Pointer contextsToBeChunked, ContextChunkingPolicy ctxChunkPolicy,
-            @Cast("tensorrt_llm::batch_manager::MicroBatchScheduler::SizeType32*") @Optional IntPointer ctxTokensCapacity, @Cast("tensorrt_llm::batch_manager::MicroBatchScheduler::SizeType32") int chunkUnitSize);
-            @Cast("tensorrt_llm::batch_manager::MicroBatchScheduler::SizeType32*") @Optional IntPointer maxContextLength);
+            @Cast("tensorrt_llm::batch_manager::MicroBatchScheduler::SizeType32*") @Optional IntPointer ctxTokensCapacity, @Cast("tensorrt_llm::batch_manager::MicroBatchScheduler::SizeType32") int chunkUnitSize,
+    @Cast("tensorrt_llm::batch_manager::MicroBatchScheduler::SizeType32*") @Optional IntPointer maxContextLength);
 }
