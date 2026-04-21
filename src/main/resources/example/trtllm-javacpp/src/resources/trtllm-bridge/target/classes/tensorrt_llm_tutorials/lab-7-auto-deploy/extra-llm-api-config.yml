@@ -1,2 +1,0 @@
-kv_cache_config:
-    copy_on_partial_reuse: false
