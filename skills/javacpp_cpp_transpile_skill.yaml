@@ -1,0 +1,58 @@
+name: javacpp_cpp_transpile_skill
+version: 1.1.0
+description: Reusable JavaCPP C++ transpilation skill, validated with modular Open3D output.
+inputs:
+  project_name: open3d-javacpp-bridge
+  cpp_root: /Users/mullerzhang/Documents/code/Open3D
+  include_root: /Users/mullerzhang/Documents/code/Open3D/cpp
+  primary_header: open3d/Open3D.h
+  output_root: /Users/mullerzhang/IdeaProjects/TRTLLM-Java-Bridge/open3d-javacpp-bridge
+  package_base: org.bytedeco.open3d
+  javacpp_version: 1.5.13
+  artifact_version: 0.19.0-1.5.13
+
+phases:
+  - id: discover
+    goal: Validate source tree and collect header inventory.
+    checks:
+      - type: path_exists
+        value: "${cpp_root}"
+      - type: path_exists
+        value: "${include_root}/open3d"
+      - type: file_exists
+        value: "${include_root}/${primary_header}"
+
+  - id: preset_generation
+    goal: Generate modular JavaCPP presets + Maven project skeleton.
+    rules:
+      - map_primitives
+      - map_enums
+      - opaque_heavy_templates
+      - skip_unbound_function_types
+      - split_by_module_directory
+
+  - id: parse
+    goal: Run javacpp parser on Open3D headers.
+    command_template: >-
+      mvn -q org.bytedeco:javacpp:parse
+      -Djavacpp.parser.skip=false
+      -Dopen3d.include.path=${include_root}
+
+  - id: build
+    goal: Build Java stubs and optionally native JNI libs.
+    command_template: >-
+      mvn -q package -DskipTests=true
+
+acceptance:
+  - modular_preset_exists: src/main/java/org/bytedeco/open3d/presets/Open3DGeometryConfig.java
+  - modular_output_dir_exists: org/bytedeco/open3d/geometry
+  - modular_output_dir_exists_2: org/bytedeco/open3d/io
+  - modular_output_dir_exists_3: org/bytedeco/open3d/pipelines
+  - parse_log_contains_no_fatal: true
+  - bridge_project_compiles: true
+
+notes:
+  - "Full native linking requires Linux + Open3D built shared libs."
+  - "On macOS, parser/Java generation can be validated first, native compile is optional."
+  - "Vector3d/Matrix3d/SizeVector and related wrappers must come from C++ transpilation, not handwritten synthetic stubs."
+
